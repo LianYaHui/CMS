@@ -1,0 +1,56 @@
+2014-10-20 20:40:18 748 Message: Unable to connect to any of the specified MySQL hosts.
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Device.DeviceStatusManage.UpdateOvertimeDeviceStatus3G(Int32 status, Int32 seconds, Int32 statusType, String strUpdateTime)
+   在 DeviceStatusWebCheck.UpdateOvertimeDeviceStatus3G() 位置 f:\Git\zyrhcms\App_Code\Device\DeviceStatusWebCheck.cs:行号 38
+TargetSite: Zyrh.Model.DBResultInfo UpdateOvertimeDeviceStatus3G(Int32, Int32, Int32, System.String)
+RawUrl: /login.aspx
+
+2014-10-20 22:08:40 899 Message: 未能加载文件或程序集“MySql.Data, Version=5.0.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d”或它的某一个依赖项。找到的程序集清单定义与程序集引用不匹配。 (异常来自 HRESULT:0x80131040)
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Device.DeviceStatusManage.UpdateOvertimeDeviceStatus3G(Int32 status, Int32 seconds, Int32 statusType, String strUpdateTime)
+   在 DeviceStatusWebCheck.UpdateOvertimeDeviceStatus3G() 位置 f:\Git\zyrhcms\App_Code\Device\DeviceStatusWebCheck.cs:行号 38
+TargetSite: Zyrh.Model.DBResultInfo UpdateOvertimeDeviceStatus3G(Int32, Int32, Int32, System.String)
+RawUrl: /default.aspx
+
+2014-10-20 22:08:41 071 Message: 未能加载文件或程序集“MySql.Data, Version=5.0.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d”或它的某一个依赖项。找到的程序集清单定义与程序集引用不匹配。 (异常来自 HRESULT:0x80131040)
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.UserManage.GetUserInfo(String strUserName)
+   在 _default.Page_Load(Object sender, EventArgs e) 位置 f:\Git\zyrhcms\default.aspx.cs:行号 40
+TargetSite: Zyrh.Model.UserInfo GetUserInfo(System.String)
+RawUrl: /default.aspx
+
+2014-10-20 22:08:41 191 Message: 未能加载文件或程序集“MySql.Data, Version=5.0.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d”或它的某一个依赖项。找到的程序集清单定义与程序集引用不匹配。 (异常来自 HRESULT:0x80131040)
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.UserManage.GetUserInfo(String strUserName)
+   在 master_mpMain.Page_Load(Object sender, EventArgs e) 位置 f:\Git\zyrhcms\master\mpMain.master.cs:行号 43
+TargetSite: Zyrh.Model.UserInfo GetUserInfo(System.String)
+RawUrl: /default.aspx
+
+2014-10-20 22:08:58 724 Message: 未能加载文件或程序集“MySql.Data, Version=5.0.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d”或它的某一个依赖项。找到的程序集清单定义与程序集引用不匹配。 (异常来自 HRESULT:0x80131040)
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Info.BulletinManage.GetBulletin(Int32 isValidate, Int32 unitId, Int32 pageIndex, Int32 pageSize)
+   在 ajax_bulletin.GetBulletin(Int32 isValidate, Int32 unitId, Int32 pageIndex, Int32 pageSize) 位置 f:\Git\zyrhcms\ajax\bulletin.aspx.cs:行号 102
+TargetSite: Zyrh.Model.DBResultInfo GetBulletin(Int32, Int32, Int32, Int32)
+RawUrl: /ajax/bulletin.aspx
+
+2014-10-20 22:09:02 276 Message: 未能加载文件或程序集“MySql.Data, Version=5.0.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d”或它的某一个依赖项。找到的程序集清单定义与程序集引用不匹配。 (异常来自 HRESULT:0x80131040)
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Info.DatumManage.GetDatum(Int32 isValidate, Int32 pageIndex, Int32 pageSize)
+   在 ajax_datum.GetDatum(Int32 isValidate, Int32 unitId, Int32 pageIndex, Int32 pageSize) 位置 f:\Git\zyrhcms\ajax\datum.aspx.cs:行号 103
+TargetSite: Zyrh.Model.DBResultInfo GetDatum(Int32, Int32, Int32)
+RawUrl: /ajax/datum.aspx
+
+2014-10-20 22:11:19 874 Message: 未能加载文件或程序集“MySql.Data, Version=5.0.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d”或它的某一个依赖项。找到的程序集清单定义与程序集引用不匹配。 (异常来自 HRESULT:0x80131040)
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Device.DeviceStatusManage.UpdateOvertimeDeviceStatus3G(Int32 status, Int32 seconds, Int32 statusType, String strUpdateTime)
+   在 DeviceStatusWebCheck.UpdateOvertimeDeviceStatus3G() 位置 f:\Git\zyrhcms\App_Code\Device\DeviceStatusWebCheck.cs:行号 38
+TargetSite: Zyrh.Model.DBResultInfo UpdateOvertimeDeviceStatus3G(Int32, Int32, Int32, System.String)
+RawUrl: /login.aspx
+
+2014-10-20 22:11:46 173 Message: 未能加载文件或程序集“MySql.Data, Version=5.0.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d”或它的某一个依赖项。找到的程序集清单定义与程序集引用不匹配。 (异常来自 HRESULT:0x80131040)
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Device.DeviceStatusManage.UpdateOvertimeDeviceStatus3G(Int32 status, Int32 seconds, Int32 statusType, String strUpdateTime)
+   在 DeviceStatusWebCheck.UpdateOvertimeDeviceStatus3G() 位置 f:\Git\zyrhcms\App_Code\Device\DeviceStatusWebCheck.cs:行号 38
+TargetSite: Zyrh.Model.DBResultInfo UpdateOvertimeDeviceStatus3G(Int32, Int32, Int32, System.String)
+RawUrl: /login.aspx
+

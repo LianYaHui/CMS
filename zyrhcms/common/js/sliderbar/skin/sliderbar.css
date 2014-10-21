@@ -1,0 +1,28 @@
+.sliderbar-box{
+	position:relative; height:25px; display:block; overflow:hidden; cursor:default; border:dotted 1px #ccc;
+	-moz-user-select:none; -khtml-user-select:none; user-select:none;
+}
+.sliderbar-box .bg{
+	height:25px; display:block; overflow:hidden; cursor:default; position:absolute; left:7px; z-index:1;
+	background:url("img/sliderbar.gif") repeat-x;
+	-moz-user-select:none; -khtml-user-select:none; user-select:none;
+}
+.sliderbar-box .sliderbar{
+	height:25px; display:block; overflow:hidden; cursor:default; position:absolute; left:7px; z-index:2;
+	background:url("img/sliderbar.gif") repeat-x 0 -25px; background-color:Transparent;
+	-moz-user-select:none; -khtml-user-select:none; user-select:none;
+}
+.sliderbar-box .handle{
+	height:15px; width:14px; position:absolute; cursor:default; display:block; overflow:hidden; z-index:3; top:5px; left:0;
+	background:url("img/sliderbar.gif") no-repeat 0 -50px;
+}
+.sliderbar-box .handle:hover,.sliderbar-box .move{
+	height:15px; width:14px; position:absolute; cursor:default; display:block; overflow:hidden; z-index:3; top:5px; left:0;
+	background:url("img/sliderbar.gif") no-repeat 0 -65px;
+}
+.sliderbar-left{
+	width:7px;height:15px;background:url("img/sliderbar.gif") repeat-x 0 -25px; position:absolute; left:0;
+}
+.sliderbar-right{
+	width:7px;height:15px;background:url("img/sliderbar.gif") repeat-x; position:absolute; right:0;
+}

@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="remoteSetting.aspx.cs" Inherits="ajax_remoteSetting" ValidateRequest="false" %>

@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="alarm.aspx.cs" Inherits="ajax_alarm" %>

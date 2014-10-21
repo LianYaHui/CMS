@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" ?>
+<!-- //////////////////////////////////////////////////////////////////////////////// 
+	// // Read more about ArcGIS Viewer for Flex - http://links.esri.com/flexviewer 
+	// //////////////////////////////////////////////////////////////////////////////// -->
+<configuration>
+  <title></title>
+  <subtitle></subtitle>
+  <style>
+    <!-- <colors>0xFFFFFF,0x333333,0x101010,0x000000,0xFFD700</colors> -->
+    <colors>0x444444,0xEBF4FF,0xEBF4FF,0xDEEBFF,0x444444</colors>
+    <alpha>0.8</alpha>
+    <font name="微软雅黑" />
+  </style>
+  <!-- replace the following url with your own geometryservice -->
+
+  <!-- UI elements -->
+  <!--	<widget left="0" bottom="0"-->
+  <!--	config="widgets/ShiZheng/Tool/mapclick.xml" url="widgets/ShiZheng/Tool/mapclick.swf" />-->
+  <!--		 <widget left="0" bottom="0"-->
+  <!--	config="widgets/ShiZheng/Tool/IdentifyFeature.xml" url="widgets/ShiZheng/Tool/IdentifyFeature.swf" />-->
+  <widget right="0" bottom="0"
+	config="widgets/OverviewMap/OverviewMapWidget.xml" url="widgets/OverviewMap/OverviewMapWidget.swf" />
+  <widget left="10" top="80" config="widgets/Navigation/NavigationWidget.xml" url="widgets/Navigation/NavigationWidget.swf" />
+  <widget left="20" bottom="0" config="widgets/ShiZheng/Initialize/Initialize.xml" url="widgets/ShiZheng/Initialize/Initialize.swf" />
+  <widget left="20" bottom="0" config="widgets/ShiZheng/Tool/DrawLayer.xml" url="widgets/ShiZheng/Tool/DrawLayer.swf" />
+  <widget left="20" bottom="0" config="widgets/ShiZheng/Tool/Searchlocation.xml" url="widgets/ShiZheng/Tool/Searchlocation.swf" />
+  <widget left="20" bottom="0" url="widgets/ShiZheng/Tool/DrawPoint.swf" />
+  <widget left="20" bottom="0" url="widgets/ShiZheng/Tool/DrawLine.swf" />
+  <!--<widget left="20" top="20"
+config="widgets/HeaderController/HeaderControllerWidget.xml" url="widgets/HeaderController/HeaderControllerWidget.swf" />
+	-->
+  <widget left="0" top="0" url="widgets/ShiZheng/InfoQuery/GPS.swf" />
+  <map esrilogovisible="false"
+		initialextent="107.968764459 28.82058125 116.639086361 33.48541175"
+		fullextent="107.968764459 28.82058125 116.639086361 33.48541175"
+		top="0">
+    <basemaps>
+      <layer label="地图" type="tiled" visible="true" url="http://119.97.245.250:8012/ArcGIS/rest/services/hbxm/MapServer" />
+    </basemaps>
+  </map>
+
+
+  <!-- widgets organized into widget containers that manage close/open etc -->
+  <!-- supported layout property options: horizontal(default)|float|vertical|fix -->
+  <widgetcontainer layout="float">
+    <widget id="draw" label="测量" left="60" top="100" icon="assets/images/i_draw.png" url="widgets/ShiZheng/Tool/DrawWidget.swf" config="widgets/ShiZheng/Tool/DrawWidget.xml" />
+    <widget label="图层控制" id="LayerListWidget" icon="assets/images/i_layers.png" config="widgets/LayerList/LayerListWidget.xml" url="widgets/LayerList/LayerListWidget.swf" />
+    <widget label="地图打印" id="PrintWidget" icon="assets/images/i_print.png" config="widgets/Print/PrintWidget.xml" url="widgets/Print/PrintWidget.swf" />
+  </widgetcontainer>
+
+  <geometryservice url="http://119.97.245.250:8012/ArcGIS/rest/services/Geometry/GeometryServer" />
+
+  <services>
+    <amf></amf>
+    <querymap>http://119.97.245.250:8012/ArcGIS/rest/services/hbxm/MapServer/</querymap>
+    <querymap1>http://119.97.245.250:8012/ArcGIS/rest/services/hbxm/MapServer/</querymap1>
+    <geometryserviceMao>http://119.97.245.250:8012/ArcGIS/rest/services/Geometry/GeometryServer</geometryserviceMao>
+  </services>
+</configuration>

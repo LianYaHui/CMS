@@ -1,0 +1,10 @@
+.aac
+.mp4
+.apk
+.mp3
+.3pg
+
+在IIS站点中 添加 MIME类型
+
+文件扩展名： .aac
+MIME类型：   application/octet-stream

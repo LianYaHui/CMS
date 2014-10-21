@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="sms.aspx.cs" Inherits="ajax_sms" %>

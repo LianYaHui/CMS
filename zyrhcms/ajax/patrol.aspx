@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="patrol.aspx.cs" Inherits="ajax_patrol" %>

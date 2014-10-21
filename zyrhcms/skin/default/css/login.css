@@ -1,0 +1,83 @@
+﻿body{background:#dfe8f6;font-size:12px;font-family:宋体,Arial,Verdana;line-height:24px;overflow:hidden;}
+body {background:#d2e7fa;	margin:0 auto;padding:0;font-size:12px;	font-family:宋体,Arial,Verdana;}
+.login-box {width:800px; height:500px; margin:0 auto; display:block; overflow:hidden; background:#c8e0f9; }
+.login-banner {	width:100%;	height:320px;background:#cecfcf /*url("../images/login-bg.png")*/ no-repeat center;}
+.login-form {width:100%;height:180px;text-align:center;}
+.login {margin:8px auto 0;text-align:left;}
+.login td {	height:32px;}
+.login .txt {width:178px;height:20px;line-height:20px;font-size:12px;padding:0 3px;	font-family:宋体,Arial,Verdana;
+	border:solid 1px #b5b8c8;background:url("../images/common/form/txt_bg.png") repeat-x;}
+.login .pwd{font-family:Arial; font-size:12px;}
+
+.login .select{width:186px; height:22px;line-height:20px; border:solid 1px #b5b8c8; font-size:12px; font-family:宋体,Arial,Verdana; margin:0;
+	background:url("../images/common/form/txt_bg.png") repeat-x;}
+.login .img-vc{float:right;display:block; cursor:pointer;}
+.login .txt-vc{width:40px;margin-top:5px;float:left;padding:0 2px;}
+
+#lblVerifyCode{width:10px;height:10px;}
+
+.login .lbl-right{background:url("../images/common/icon/icon.png");width:10px;height:10px; float:left; overflow:hidden; display:block;margin:12px 0 0 2px;}
+.login .lbl-error{background:url("../images/common/icon/icon.png") 0 -10px;width:10px;height:10px; float:left; overflow:hidden; display:block;margin:12px 0 0 2px;}
+.login .lbl-warning{background:url("../images/common/icon/icon.png") 0 -20px;width:10px;height:10px; float:left; overflow:hidden; display:block;margin:12px 0 0 2px;}
+.login .lbl-none{background:none;}
+
+/*按钮*/
+.btn{height:22px; padding:0; padding-right:5px; font-size:12px; line-height:22px; font-family:宋体,Arial,Verdana; border:none 0; text-align:center; color:#000; 
+	text-decoration:none; display:inline-block; cursor:pointer; background:url("../images/common/button/btn.png") no-repeat scroll right -30px transparent;}
+.btn span{margin:0; padding:0; padding-left:5px; font-size:12px; line-height:22px; font-family:宋体,Arial,Verdana; border:none 0; color:#000; 
+	display:block; background:url("../images/common/button/btn.png") no-repeat scroll transparent;}
+
+.btnc22{height:22px; background-position:right -30px;}
+.btn22,.btnc22:hover{height:22px; background-position:right -90px;}
+.btnc22 span{background-position:0 0;}
+.btn22 span,.btnc22:hover span{line-height:22px; background-position:0 -60px;}
+
+.btnc24{height:24px; line-height:24px; background-position:right -150px;}
+.btn24,.btnc24:hover{height:24px; background-position:right -210px;}
+.btnc24 span{line-height:24px; background-position:0 -120px;}
+.btn24 span,.btnc24:hover span{line-height:24px; background-position:0 -180px;}
+
+.btnc26{height:26px; line-height:26px; background-position:right -270px;}
+.btn26,.btnc26:hover{height:26px; background-position:right -330px;}
+.btnc26 span{ line-height:26px; background-position:0 -240px;}
+.btn26 span,.btnc26:hover span{line-height:26px;background-position:0 -300px;}
+
+.btnc30{height:30px; line-height:30px; background-position:right -390px;}
+.btn30,.btnc30:hover{height:30px; background-position:right -450px;}
+.btnc30 span{line-height:30px; background-position:0 -360px;}
+.btn30 span,.btnc30:hover span{line-height:30px;background-position:0 -420px;}
+
+.bigbtn{width:55px; height:52px; line-height:52px; padding:0; font-size:12px; border:none 0; text-align:center; color:#000;
+	text-decoration:none; display:inline-block; cursor:pointer; background:url("../images/common/button/bigbtn.png") no-repeat;}
+.bigbtn:hover{width:55px; height:52px; line-height:52px; padding:0; font-size:12px; border:none 0; text-align:center; color:#000;
+	text-decoration:none; display:inline-block; cursor:pointer; background:url("../images/common/button/bigbtn.png") no-repeat 0 -52px;}
+
+/*复选框按钮*/
+.chb-label,.chb-label-nobg{height:22px; width:auto; display:inline-block; margin:1px 0 0 5px;
+	background:url("../images/common/button/btn.png") no-repeat 0 -30px; padding:0 0 0 2px;}
+.chb-label span,.chb-label-nobg span{float:left; height:21px; display:inline-block; border:none; line-height:20px; *line-height:20px; line-height:20px \9; cursor:default; 
+	margin:0; padding:1px 5px 0 1px; _width:auto; background:url("../images/common/button/btn.png") no-repeat right 0; }
+.chb-label .chb,.chb-label-nobg .chb{float:left; _width:auto; line-height:22px; padding:0; margin:4px 3px 0 3px !important; margin:4px 3px 0 3px \9 !important; *margin:4px 2px 0 3px !important;*width:14px; *height:14px; _margin:0;}
+
+.chb-label-nobg{background:none;margin:0; padding:0;}
+.chb-label-nobg span{float:left; background:none;width:auto; height:21px; display:inline-block; text-indent:0; padding:1px 0 0 0; margin:0; border:none; line-height:20px; *line-height:20px; line-height:20px \9;}
+.chb-label-nobg .chb{float:left; padding:0; margin:4px 3px 0 0 !important; margin:4px 3px 0 0 \9 !important; *margin:4px 2px 0 0 !important;*width:14px; *height:14px; _margin:0;}
+
+.w10{width:10px;}
+.w15{width:15px;}
+.w20{width:20px;}
+.w25{width:25px;}
+.w30{width:30px;}
+.w35{width:35px;}
+.w40{width:40px;}
+.w50{width:50px;}
+.w55{width:55px;}
+.w60{width:60px;}
+.w65{width:65px;}
+.w70{width:70px;}
+.w75{width:75px;}
+.w80{width:80px;}
+.w85{width:85px;}
+.w90{width:90px;}
+.w95{width:95px;}
+.w100{width:100px;}

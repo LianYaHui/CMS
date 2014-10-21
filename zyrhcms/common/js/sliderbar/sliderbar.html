@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+body{font-size:12px;}
+</style>
+<script type="text/javascript" src="sliderbar.pack.js"></script>
+</head>
+
+<body>
+
+<input type="text" id="txt1" />
+<div id="div1" style="margin:50px;"></div>
+
+<a onclick="changeSize();">改变大小</a>
+<br />
+
+<input type="text" id="txt2" />
+<div id="div2"></div>
+
+<a href="#" onclick="stepping(1);">增加</a>
+
+<a href="#" onclick="stepping(-1);">减少</a>
+</body>
+</html>
+
+<script type="text/javascript">
+var $ = function(i){return document.getElementById(i);}
+function ShowResult(num, obj){
+	$(obj).value = num;
+}
+
+var strHtml = '<div id="divOne"></div>';
+$('div1').innerHTML = strHtml;
+
+var sbar1 = new SliderBar($('divOne'),{id:1,width:300,min:0,defaultValue:60,title:'亮度',border:'none',max:100,limit:{},callBack:ShowResult, returnValue:'txt1'});
+var sbar2 = new SliderBar($('div2'),{id:2,width:150,min:0, defaultValue:3,max:6,callBack:ShowResult,moveCall:false, returnValue:'txt2',clickAble:false,showButton:false});
+//sbar1.disabled(true);
+sbar1.setting(0);
+
+window.setTimeout(Test, 1000);
+
+function Test(){
+	sbar1.setting(30);
+}
+
+function stepping(num){
+	sbar2.stepping(num);
+}	
+
+function changeSize(){
+	sbar1.changeSize(500, 30);
+}
+</script>

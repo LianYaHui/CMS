@@ -1,0 +1,98 @@
+﻿<div style="height:100%; overflow:auto;">
+    <table cellpadding="0" cellspacing="0" class="tblist" id="tbPreviceDev"></table>
+</div>
+<script type="text/javascript">
+var safety = safety || {};
+safety.preview = safety.preview || {};
+
+var previewDevList = [
+    ['92621', '武南网工区-92621', 4, 1],
+    ['92630', '武南网工区激光摄像头-92630', 1],
+    ['92623', '武东网工区-92623', 4],
+    ['92624', '武东网工区激光摄像头92624', 1],
+    ['92625', '汉川网工区-92625', 4],
+    ['92626', '汉川网工区激光摄像头92626', 1],
+    ['92627', '咸宁北网工区-92627', 4],
+    ['92628', '咸宁北网工区激光摄像头92628', 1],
+    ['92629', '麻城北网工区-92629', 4],
+    ['92622', '麻城北网工区激光摄像头92622', 1, 1],
+    ['92631', '武汉北网工区-92631', 4],
+    ['92632', '武汉北网工区激光摄像头92632', 1],
+    ['92633', '麻城网工区-92633', 4],
+    ['92634', '麻城网工区激光摄像头92634', 1],
+    ['92635', '蕲春网工区-92635', 4],
+    ['92636', '蕲春网工区激光摄像头92636', 1],
+    ['100003025', '手提箱-100003025', 1],
+    ['100003027', '手提箱-100003027', 1]
+];
+
+safety.preview.iniPreviceDev = function(){
+    var objList = cms.util.$('tbPreviceDev');
+
+    cms.util.clearDataRow(objList, 0);
+    
+    var rid = 0;
+    var rowData = [];
+    
+    for(var i=0; i<previewDevList.length; i++){
+        var dr = previewDevList[i];
+        var row = objList.insertRow(rid);
+        var cellid = 0;
+        
+        row.lang = '{devCode:' + dr[0] + ',name:\'' + dr[1] + '\',channel:\'' + dr[2] + '\'}';
+        /*
+        row.ondblclick = function(){
+            var lang = eval('(' + this.lang + ')');
+            if(lang.lat == ''){
+                showPreview(lang.devCode, lang.channel);
+            } else {
+                showPreview(lang.devCode, lang.channel);
+            }
+        };
+        */
+        
+        var strName = '<a onclick="showPreview(\'' + dr[0] + '\',' + 1 + ');">' + dr[1] + '</a>';
+        var cc = parseInt(dr[2], 10);
+        
+        var strChannel = '';
+        for(var j=0; j<cc; j++){
+            strChannel += '<a onclick="safety.preview.showPreview(\'' + dr[0] + '\',' + (j+1) + ');" style="width:36px;float:left;">' + '通道' + (j+1) + '</a> ';
+        }
+        
+        rowData[cellid++] = {html: (rid + 1), style:[['width','20px']]};
+        rowData[cellid++] = {html: strName, style:[['width','120px']]};
+        rowData[cellid++] = {html: strChannel, style:[['width','155px']]};
+        rowData[cellid++] = {html: '', style:[]};
+            
+        cms.util.fillTable(row, rowData);
+        rid++;
+    }
+}
+
+safety.preview.showPreview = function(devCode, channelNo){
+    var boxSize = {w:700, h:450};
+    var url = '';
+    if(devCode.instr('100003025,100003027')){
+        url = url = cmsPath + '/modules/preview/preview.aspx?devCode=' + devCode + '&autoPlay=1&' + new Date().getTime(); ;
+    } else {
+        url = 'http://www.3gvs.net:81/preview2.php?dev_code=' + devCode + '&channel_no=' + channelNo;
+    }
+    
+    //alert(url);
+    var config = {
+        id: 'pwPreview',
+        title: '视频预览',
+        html: url,
+        width: boxSize.w,
+        height: boxSize.h,
+        boxType: 'iframe',
+        requestType: 'iframe',
+        noBottom: true,
+		minAble: true,
+		maxAble: true,
+		showMinMax: true,
+        lock: false
+    };
+    cms.box.win(config);
+}
+</script>

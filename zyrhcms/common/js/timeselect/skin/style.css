@@ -1,0 +1,7 @@
+.timebox{width:100px;height:20px; border:solid 1px #c2c5d2;background:#fff url("bg.png") repeat-x; padding:0 0 0 3px; display:inline-block; overflow:hidden;}
+.timebox input{width:8px;margin:0;padding:0;text-align:center;line-height:18px;height:20px; border:none 0; background:#00f; font-size:12px;font-family:ËÎÌו,Arial,Verdana;float:none;}
+.timebox i{font-style:normal;margin:0; padding:0 3px; font-size:12px; font-family:Arial;float:none;}
+.timebox .t-up{width:15px; height:10px; background:transparent url("arr.gif") no-repeat 0 3px; display:block; line-height:8px; margin:0; padding:0;}
+.timebox .t-down{width:15px; height:10px; background:transparent url("arr.gif") no-repeat -15px 4px; display:block; line-height:8px; margin:0; padding:0;}
+.timebox a{background-color:transparent;}
+.timebox a:hover{background-color:#00f;}

@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="gprsConfig.aspx.cs" Inherits="gprsConfig" %>

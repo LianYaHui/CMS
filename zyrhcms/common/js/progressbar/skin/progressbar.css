@@ -1,0 +1,28 @@
+.progressbar-box{
+	position:relative; height:15px; display:block; overflow:hidden; cursor:default; border:dotted 1px #ccc;
+	-moz-user-select:none; -khtml-user-select:none; user-select:none;
+}
+.progressbar-box .bg{
+	height:15px; display:block; overflow:hidden; cursor:default; position:absolute; left:7px; z-index:1;
+	background:url("img/progressbar.gif") repeat-x;
+	-moz-user-select:none; -khtml-user-select:none; user-select:none;
+}
+.progressbar-box .progressbar{
+	height:15px; display:block; overflow:hidden; cursor:default; position:absolute; left:7px; z-index:2;
+	background:url("img/progressbar.gif") repeat-x 0 -15px; background-color:Transparent;
+	-moz-user-select:none; -khtml-user-select:none; user-select:none;
+}
+.progressbar-box .handle{
+	height:15px; width:14px; position:absolute; cursor:default; display:block; overflow:hidden; z-index:3; top:0px; left:0;
+	background:url("img/progressbar.gif") no-repeat 0 -30px;
+}
+.progressbar-box .handle:hover,.progressbar-box .move{
+	height:15px; width:14px; position:absolute; cursor:default; display:block; overflow:hidden; z-index:3; top:0px; left:0;
+	background:url("img/progressbar.gif") no-repeat 0 -45px;
+}
+.progressbar-left{
+	width:7px;height:15px;background:url("img/progressbar.gif") repeat-x 0 -15px; position:absolute; left:0;
+}
+.progressbar-right{
+	width:7px;height:15px;background:url("img/progressbar.gif") repeat-x; position:absolute; right:0;
+}

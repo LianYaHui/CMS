@@ -1,0 +1,46 @@
+﻿body{overflow:hidden; background:#cecfcf;}
+
+#pageTop{width:960px; margin:0 auto; height:90px;background:#124196;clear:both;display:block;overflow:hidden;position:relative;}
+#topBanner{width:960px; height:56px; margin:0 auto; overflow:hidden; background:#124196 /*url("../images/banner-index.png")*/ no-repeat center;}
+#pageTop #nav ul{width:960px; margin:0 auto;}
+
+#pageBody{width:960px; margin:0 auto; clear:both; background:#eaeced; overflow:hidden;}
+
+#homeBodyLeft{width:260px; float:left; display:block; border-right:solid 1px #99bbe8;}
+#homeBodyMain{width:438px; float:left; display:block; background:#eaeced; padding-top:0;}
+#homeBodyRight{width:260px; float:right; display:block; padding-top:0; border-left:solid 1px #99bbe8;}
+
+.menu-list{clear:both; display:block; overflow:hidden; padding:0 10px; }
+.menu-list ul{clear:both;}
+.menu-list ul li{float:left; font-size:12px; padding:0 3px 5px 0;}
+.menu-list a{width:80px; height:80px; cursor:pointer; float:left; background:no-repeat center 3px; text-align:center; padding:55px 0 0; height:25px; color:#000; text-decoration:none;}
+.menu-list a:hover,.menu-list a.hover{background:no-repeat center 0; color:#00f;}
+
+/* welcome-box */
+.welcome-box{width:260px; height:170px; position:relative; border-top:solid 1px #99bbe8; text-align:right; /*background:url("../images/home/welcome.png") no-repeat;*/}
+
+.username{position:absolute; right:10px; bottom:40px; color:#fff; font-family:宋体,Arial,Verdana;}
+
+.userinfo{height:29px; text-align:right; position:absolute; bottom:0; right:0; padding:0 5px 0 0;}
+.userinfo a{color:#000; text-decoration:none; margin:0 3px; padding:0; cursor:pointer; }
+.userinfo a:hover{color:#00f; text-decoration:underline;}
+
+.box{margin-bottom:0px; border-top:solid 1px #99bbe8; overflow:hidden;}
+.box .title{height:24px; background:url("../images/common/title/title_bg.png") repeat-x; border-bottom:solid 1px #99bbe8; padding-left:10px; line-height:24px; font-weight:bold;}
+.box .content{height:115px; overflow:hidden;}
+.box .content ul{margin:5px 10px;}
+.box .content ul li{}
+.box .bottom{height:24px; padding:0 8px; text-align:right; line-height:24px;}
+
+.box .line{background:#e9edf3; height:0; border-top:solid 1px #b7bfc3; border-bottom:solid 1px #e9edf3; clear:both;_font-size:1px; margin:0; padding:0; }
+.box .sub-title{border-bottom:solid 1px #b7bfc3; background:#dfe4e9; padding-left:10px; }
+
+#homeBodyLeft .box,#homeBodyRight .box{height:170px;}
+
+.tb-header{background:url("../images/common/title/title_bg.png") repeat-x 0 bottom; height:22px; font-weight:normal; border-collapse:collapse; border-bottom:solid 1px #ddd; text-align:center;}
+
+.tb-list{border-collapse:collapse; background:none; color:#555; text-align:center; width:100%;}
+.tb-header td,.tb-list td{height:21px; padding:0; line-height:21px;}
+
+
+#footer{clear:both; position:absolute; bottom:0; width:960px; text-align:center; height:50px; line-height:50px; background:#a9c7dc; font-family:Arial,宋体;}

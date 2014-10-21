@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<configuration label="Light Con">
+	<layers>
+		<ldLayer>2</ldLayer>
+		<jgLayer>3</jgLayer>
+		<dlLayer>4</dlLayer>
+	</layers>
+</configuration>
+    

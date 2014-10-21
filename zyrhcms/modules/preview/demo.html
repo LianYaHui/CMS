@@ -1,0 +1,479 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>视频预览 - 中研瑞华WVSActivexCtrl开发示例</title>
+<style type="text/css">
+	body{margin:0; padding:5px; font-size:12px; font-family:宋体,Arial,Verdana; line-height:24px;}
+	.txt{width:120px; border:solid 1px #ddd;font-size:12px;}
+	.w100{width:100px;}
+	.w30{width:30px;}
+	.w40{width:40px;}
+	.tb-sub{border-collapse:collapse;}
+	.tb-sub td{height:26px;padding:0 3px;}
+	.btn{width:40px;height:38px; text-align:center; padding:0; margin:0;font-size:12px; font-family:宋体,Arial,Verdana; float:left;}
+</style>
+</head>
+
+<body onload="initialData();" onUnload="unInitPreviewOcx();">
+<table cellpadding="0" cellspacing="0" style="width:100%;">
+	<tr>
+		<td style="width:600px;height:400px;">
+			<object classid="clsid:7B3F777D-9D04-46D3-9966-7F311470A7D4" id="WMPOCX" name="WMPOCX" width="100%" height="100%"></object>
+			<script language="javascript" type="text/javascript" for="WMPOCX" event="SelectWindows(iWindowId)">
+				curSelectWinNum = iWindowId;
+				$$('lblWinNum').innerHTML = '当前选中窗口：' + curSelectWinNum;
+			</script>
+			<script language="javascript" type="text/javascript" for="WMPOCX" event="StartRealPlayWnd(iWindowId)">
+				$$('lblPlayWinNum').innerHTML = '当前播放窗口：' + iWindowId;
+			</script>
+			<script language="javascript" type="text/javascript" for="WMPOCX" event="StopRealPlayWnd(iWindowId)">
+				$$('lblStopWinNum').innerHTML = '当前停止窗口：' + iWindowId;
+			</script>
+			
+			<div>
+				<span id="lblWinNum"></span>
+				<span id="lblPlayWinNum"></span>
+				<span id="lblStopWinNum"></span>
+			</div>
+			<textarea id="txtDebug" style="width:600px;height:150px;margin-top:5px;font-size:12px;" readonly="readonly" class="txt"></textarea>
+			<input type="button" value="清除内容" onclick="clearDebugInfo();"/>
+		</td>
+		<td style="padding-left:10px; vertical-align:top;">			
+			<div style="font-weight:bold;font-size:18px;">中研瑞华WVSActivexCtrl开发示例</div>
+			<div id="divIE" style="color:#f00;display:none;">提示：请使用IE浏览器，否则无法加载OCX控件!</div>
+			<div style="background:#ddd; line-height:20px;padding:2px 5px;">
+				<b>操作说明：</b><br />
+				一、1.初始化 -> 2.连接服务器 -> 3.设置窗口模式（分屏）<br />
+				二、1.开始预览<br />
+				三、图像预览成功，可以进行云台控制以及视频参数设置等相关操作
+				<br />
+				注意：本示例仅仅对OCX的基本功能作一个大致的演示，没有考虑一些其他的相关逻辑。<br />
+				最后更新时间：2013-08-10 14:00
+			</div>
+			<table cellpadding="0" cellspacing="0" class="tb-sub">
+				<tr>
+					<td style="width:80px;">ServerIp:</td>
+					<td style="width:150px;"><input type="text" id="txtServerIp" value="60.12.220.24" class="txt w100" /></td>
+					<td style="width:80px;">ServerPort:</td>
+					<td><input type="text" id="txtServerPort" value="6660" class="txt w100" /></td>
+				</tr>
+				<tr>
+					<td>UserName:</td>
+					<td><input type="text" id="txtUserName" value="zyrhtest" class="txt w100" /></td>
+					<td>UserPwd:</td>
+					<td><input type="text" id="txtUserPwd" value="12345" class="txt w100" /></td>
+				</tr>
+				<tr>
+					<td colspan="4" style="padding:5px 0;">
+						<input type="button" value="初始化" onclick="initialOcx();" />
+						<input type="button" value="连接服务器" onclick="connectServer();" />
+						<input type="button" value="1屏" onclick="setWinMode(1);" />
+						<input type="button" value="4屏" onclick="setWinMode(4);" />
+						<input type="button" value="9屏" onclick="setWinMode(9);" />
+						<input type="button" value="16屏" onclick="setWinMode(16);" />
+						<input type="button" value="全屏" onclick="setFullScreen();" />
+					</td>
+				</tr>
+				<tr>
+					<td>StreamType:</td>
+					<td><select id="ddlStreamType" style="width:104px;">
+							<option value="0">主码流</option>
+							<option value="1">子码流</option>
+						</select>
+					</td>
+					<td>ConnectType:</td>
+					<td><select id="ddlConnectType" style="width:104px;">
+							<option value="0">TCP</option>
+							<option value="1">UDP</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>DeviceId:</td>
+					<td><input type="text" id="txtDeviceId" value="100002004" class="txt w100" /></td>
+					<td>ChannelNo:</td>
+					<td><select id="ddlChannelNo" style="width:104px;">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="padding:5px 0;">
+						<input type="button" value="开始预览" onclick="startPlay();" />
+						<input type="button" value="停止预览" onclick="stopPlay();" />
+						<input type="button" value="全部停止预览" onclick="stopAllPlay();" />
+					</td>
+				</tr>
+			</table>
+			<table cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="vertical-align:top;">
+						<div style="background:#f1f1f1; padding:5px 10px 5px;overflow:hidden;">
+							<div>
+								<span style="float:right;">
+									云台转动速度：<select id="ddlPtzSpeed" style="width:40px;" onchange="changePtzSpeed(this.value);">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4" selected="selected">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+									</select>
+								</span>
+								<b>云台控制</b>
+							</div>
+							<div style="width:200px;">
+								<input type="button" value="&nbsp;" class="btn" />
+								<input type="button" value="∧" title="云台上转" class="btn" onmousedown="ptzControl(1,'云台上转');" onmouseup="ptzControl(17,'云台上转 停止');" />
+								<input type="button" value="&nbsp;" class="btn" />
+								<input type="button" value="拉远" class="btn" onmousedown="ptzControl(5,'镜头拉远');" onmouseup="ptzControl(17,'镜头拉远 停止');" />
+								<input type="button" value="拉近" class="btn" onmousedown="ptzControl(6,'镜头拉近');" onmouseup="ptzControl(17,'镜头拉近 停止');" /> 
+								<input type="button" value="&lt;" title="云台左转" class="btn" onmousedown="ptzControl(2,'云台左转');" onmouseup="ptzControl(17,'云台左转 停止');" />
+								<input type="button" value="&nbsp;" class="btn" />
+								<input type="button" value="&gt;" title="云台右转" class="btn" onmousedown="ptzControl(3,'云台右转');" onmouseup="ptzControl(17,'云台右转 停止');" />
+								<input type="button" value="聚焦" class="btn" onmousedown="ptzControl(7,'镜头聚焦');" onmouseup="ptzControl(17,'镜头聚焦 停止');" />
+								<input type="button" value="散焦" class="btn" onmousedown="ptzControl(8,'镜头散焦');" onmouseup="ptzControl(17,'镜头散焦 停止');" /> 
+								<input type="button" value="&nbsp;" class="btn" />
+								<input type="button" value="∨" title="云台下转" class="btn" onmousedown="ptzControl(4,'云台下转');" onmouseup="ptzControl(17,'云台下转 停止');" />
+								<input type="button" value="&nbsp;" class="btn" />
+								<input type="button" value="增大" class="btn" onmousedown="ptzControl(9,'光圈增大');" onmouseup="ptzControl(17,'光圈增大 停止');" />
+								<input type="button" value="减小" class="btn" onmousedown="ptzControl(10,'光圈减小');" onmouseup="ptzControl(17,'光圈减小 停止');" />
+								<input type="button" value="雨刷" class="btn" lang="release" onclick="this.lang == 'release' ? ptzControl(11,'打开雨刷',true, this) : ptzControl(12,'关闭雨刷',true, this);" />
+								<input type="button" value="灯光" class="btn" lang="release" onclick="this.lang == 'release' ? ptzControl(14,'打开灯光',true, this) : ptzControl(15,'关闭灯光',true, this);"  />
+								<input type="button" value="加热" class="btn" lang="release" onclick="this.lang == 'release' ? ptzControl(18,'打开加热',true, this) : ptzControl(19,'关闭加热',true, this);"  />
+								<input type="button" value="&nbsp;" class="btn" />
+								<input type="button" value="&nbsp;" class="btn" />
+							</div>
+						</div>
+					</td>
+					<td>&nbsp;</td>
+					<td style="vertical-align:top;">
+						<div style="background:#f1f1f1;padding:5px 10px 10px;">
+						<b>视频参数设置</b><br />
+						<table cellpadding="0" cellspacing="0">
+							<tr>
+								<td>亮度 brightness:</td>
+								<td><input type="text" id="txtbrightness" value="128" class="txt w30" /> 0-255</td>
+							</tr>
+							<tr>
+								<td>色调 hue:</td>
+								<td><input type="text" id="txthue" value="128" class="txt w30" /> 0-255</td>
+							</tr>
+							<tr>
+								<td>对比度 contrast:</td>
+								<td><input type="text" id="txtcontrast" value="128" class="txt w30" /> 0-255</td>
+							</tr>
+							<tr>
+								<td>饱和度 saturation:</td>
+								<td><input type="text" id="txtsaturation" value="128" class="txt w30" /> 0-255</td>
+							</tr>
+						</table>
+						<input type="button" value="读取"  onclick="getPictureParam();" />
+						<input type="button" value="设置" onclick="setPictureParam(false);" />
+						<input type="button" value="默认值"  onclick="setPictureParam(true);" />
+						</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
+<script type="text/javascript">
+	var $$ = function(i){ return document.getElementById(i); };
+	var isMSIE = navigator.userAgent.indexOf('MSIE') >= 0;
+	String.prototype.trim = function() {
+		return this.replace(/(^[\s]*)|([\s]*$)/g, '');
+	};
+
+	String.prototype.replaceAll = function(s1, s2) {
+		return this.replace(new RegExp(s1, 'gm'), s2);
+	};
+
+	String.prototype.padLeft = function(totalWidth, paddingChar) {
+		var s = this;
+		if (paddingChar == undefined) {
+			paddingChar = '0';
+		}
+		for (var i = 0, c = totalWidth - s.length; i < c; i++) {
+			s = paddingChar + s;
+		}
+		return s;
+	};
+
+	Date.prototype.toString = function(format) {
+		var strDate = [ '' + this.getFullYear(), 
+			('' + (this.getMonth() + 1)).padLeft(2, '0'), 
+			('' + this.getDate()).padLeft(2, '0'), 
+			('' + this.getHours()).padLeft(2, '0'), 
+			('' + this.getMinutes()).padLeft(2, '0'), 
+			('' + this.getSeconds()).padLeft(2, '0'),  
+			('' + this.getMilliseconds()).padLeft(3, '0')
+		];
+		switch (format) {
+			case 'yyyy-MM-dd HH:mm:ss fff':
+				return strDate[0] + '-' + strDate[1] + '-' + strDate[2] + ' ' + strDate[3] + ':' + strDate[4] + ':' + strDate[5] + ' ' + strDate[6];
+				break;
+			case 'yyyy-MM-dd HH:mm:ss':
+			default:
+				return strDate[0] + '-' + strDate[1] + '-' + strDate[2] + ' ' + strDate[3] + ':' + strDate[4] + ':' + strDate[5];
+				break;
+		}
+	};
+
+	String.prototype.toXML = String.prototype.toXml = function(){
+		try {
+			if (window.ActiveXObject) {
+				xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+				xmlDoc.async = false;
+				xmlDoc.loadXML(this);
+			} else if (document.implementation && document.implementation.createDocument) {
+				xmlDoc = document.implementation.createDocument('', '', null);
+				xmlDoc.loadXML(this);
+			} else {
+				xmlDoc = null;
+			}
+		} catch (e) {
+			alert("error "+ e);
+			var oParser = new DOMParser();
+			xmlDoc = oParser.parseFromString(this, "text/xml");
+		}
+		return xmlDoc;
+	};
+
+	String.prototype.toHtmlCode = function(){
+		return this.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+	};
+
+	var previewOcx = null;
+	var isInitial = false;		//是否已初始化控件
+	var curSelectWinNum = 0;	//当前选中窗口
+	var ptzSpeed = 0;
+
+	var userName = '';		//登录用户名
+	var userPwd = '';		//登录密码
+	var serverIp = '';		//服务器IP
+	var serverPort = 0;		//服务器端口
+	var streamType = 1;		//码流类型：0-主码流，1-子码流
+	var connectType = 0;	//连接类型：0-TCP，1-UDP
+	var deviceId = '';		//设备ID(设备索引编号)
+	var channelNo = 0;		//通道号，从1开始
+
+	var debugMessageBox = null;
+
+	//视频参数
+	var cfg = [
+		{type:'brightness', title:'亮度', min:0, max:255, ini:0, val: 128},
+		{type:'hue', title:'色调', min:0, max:255, ini:0, val: 128},
+		{type:'contrast', title:'对比度', min:0, max:255, ini:0, val: 128},
+		{type:'saturation', title:'饱和度', min:0, max:255, ini:0, val: 128}
+	];
+	
+	function initialData(){
+		previewOcx = $$('WMPOCX');
+		debugMessageBox = $$('txtDebug');
+		if(!isMSIE){
+			$$('divIE').style.display = '';
+		}
+		
+		setWinMode(4);
+		//实际应用中建议在页面加载之后初始化OCX控件
+		//initialOcx();
+	}
+
+	function getParam(){
+		userName = $$('txtUserName').value.trim();
+		userPwd = $$('txtUserPwd').value.trim();
+		serverIp = $$('txtServerIp').value.trim();
+		serverPort = $$('txtServerPort').value.trim();
+		streamType = $$('ddlStreamType').value.trim();
+		connectType = $$('ddlConnectType').value.trim();
+		deviceId = $$('txtDeviceId').value.trim();
+		channelNo = $$('ddlChannelNo').value.trim();
+		ptzSpeed = $$('ddlPtzSpeed').value.trim();
+	}
+	
+	function appendDebugInfo(str){
+		debugMessageBox.value += str + '\r\n';
+	}
+
+	function clearDebugInfo(){
+		debugMessageBox.value = '';
+	}
+
+	function getDebugTime(){
+		return '[' + new Date().toString('yyyy-MM-dd HH:mm:ss fff') + '] ';
+	}
+
+	//初始化OCX控件
+	function initialOcx(){
+		if(!isInitial){			
+			appendDebugInfo(getDebugTime() + '[WMPClientInit Request]');
+			var result = previewOcx.WMPClientInit();
+			appendDebugInfo(getDebugTime() + '[WMPClientInit Response] return: ' + result + '\r\n');
+
+			isInitial = result == 0;
+		}
+	}
+
+	//连接服务器
+	function connectServer(){
+		getParam();
+		
+		//用户名+时间戳
+		userName += new Date().getTime();
+
+		appendDebugInfo(getDebugTime() + '[WMPConnectServer Request]');
+		var result = previewOcx.WMPConnectServer(userName, userPwd, serverIp, serverPort);
+		appendDebugInfo(getDebugTime() + '[WMPConnectServer Response] return: ' + result + '\r\n');
+
+		return result;
+	}
+	
+	//设备窗口模式（1，4，9，16)
+	function setWinMode(mode){
+		appendDebugInfo(getDebugTime() + '[WMPSetChanMode Request]');
+		var result = previewOcx.WMPSetChanMode(mode);
+		appendDebugInfo(getDebugTime() + '[WMPSetChanMode Response] return: ' + result + '\r\n');
+
+		return result;
+	}
+
+	//全屏
+	function setFullScreen(){
+		appendDebugInfo(getDebugTime() + '[WMPSetFullScreen Request]');
+		var result = previewOcx.WMPSetFullScreen();
+		appendDebugInfo(getDebugTime() + '[WMPSetFullScreen Response] return: ' + result + '\r\n');
+
+		return result;
+	}
+
+	//开始预览
+	function startPlay(){
+		getParam();
+		appendDebugInfo(getDebugTime() + '[WMPStartStream Request]');
+		var result = previewOcx.WMPStartStream(serverIp, serverPort, deviceId, channelNo, streamType, connectType, 0, 0);
+		appendDebugInfo(getDebugTime() + '[WMPStartStream Response] return: ' + result + '\r\n');
+
+		return result;
+	}
+
+	//停止预览（当前选中窗口）
+	function stopPlay(){
+		appendDebugInfo(getDebugTime() + '[WMPStopStream Request]');
+		var result = previewOcx.WMPStopStream(serverIp, serverPort);
+		appendDebugInfo(getDebugTime() + '[WMPStopStream Response] return: ' + result + '\r\n');
+
+		return result;
+	}
+
+	//停止全部预览窗口
+	function stopAllPlay(){
+		appendDebugInfo(getDebugTime() + '[WMPStopAllChanPlay Request]');
+		var result =  previewOcx.WMPStopAllChanPlay();
+		appendDebugInfo(getDebugTime() + '[WMPStopAllChanPlay Response] return: ' + result + '\r\n');
+
+		return result;
+	}
+	
+	//释放OCX控件
+	function unInitPreviewOcx(){
+		if(previewOcx != null){
+			var result1 = previewOcx.WMPDisConnectServer();
+			var result = previewOcx.WMPClientUnInit();
+			return result;
+		}
+	}
+	//设置视频参数
+	function setPictureParam(isDefault){
+		getParam();
+		var picparam = '<PICTUREPARA>';
+		if(isDefault){
+			for(var i=0,c=cfg.length; i<c; i++){
+				$$('txt' + cfg[i].type).value = 128;
+				picparam += '<' + cfg[i].type + '>' + 128 + '</' + cfg[i].type + '>'
+			}
+		} else {			
+			for(var i=0,c=cfg.length; i<c; i++){
+				picparam += '<' + cfg[i].type + '>' + $$('txt' + cfg[i].type).value + '</' + cfg[i].type + '>'
+			}
+		}
+		picparam += '</PICTUREPARA>';
+
+		appendDebugInfo(getDebugTime() + '[WMPSetPicturePara Request] param: ' + picparam);
+		var result = previewOcx.WMPSetPicturePara(serverIp, serverPort, deviceId, channelNo, 0, picparam);
+		appendDebugInfo(getDebugTime() + '[WMPSetPicturePara Response] return: ' + result  + '\r\n');
+
+		return result;
+	}
+	//获取视频参数
+	function getPictureParam(){
+		getParam();
+
+		appendDebugInfo(getDebugTime() + '[WMPGetPicturePara Request]');
+		var picparam = previewOcx.WMPGetPicturePara(serverIp, serverPort, deviceId, channelNo, 0);
+		appendDebugInfo(getDebugTime() + '[WMPGetPicturePara Response] return: ' + picparam + '\r\n');
+
+		try{
+			var xmlInfo = picparam.toXml();			
+			var arrParam = xmlInfo.documentElement.childNodes;			
+			for(var i=0; i<arrParam.length; i++){
+				showVideoParam(arrParam[i].nodeName, parseInt(arrParam[i].text, 10));
+			}
+		}catch(e){
+
+		}	
+	}
+	//显示读取回来的视频参数
+	function showVideoParam(type, val){    
+		for(var i=0,c=cfg.length; i<c; i++){
+			if(type == cfg[i].type){
+				$$('txt' + cfg[i].type).value = val;
+				return true;
+			}
+		}
+		return -1;
+	}
+
+	//云台控制
+	function ptzControl(action, name, isSwitch, obj){
+		getParam();
+
+		appendDebugInfo(getDebugTime() + '[WMPPTZControl Request] action: ' + action + ' - ' + name + ', speed: ' + ptzSpeed);
+		//加热功能需要调用预置点
+		switch(action){
+			case 18:
+				alert('打开 加热 需要调用预置点128、预置点103');
+				break;
+			case 19:
+				alert('关闭 加热 需要调用预置点103');
+				break;
+		}
+		//云台控制
+		var result = previewOcx.WMPPTZControl(serverIp, serverPort, deviceId, channelNo, action, ptzSpeed);
+		
+		appendDebugInfo(getDebugTime() + '[WMPPTZControl Response] return: ' + result + '\r\n');
+
+		if(isSwitch){
+			//obj.lang = obj.lang == 'release' ? 'press' : 'release';
+			if(obj.lang == 'release'){
+				obj.lang = 'press';
+				obj.style.background = '#00f';
+			} else {
+				obj.lang = 'release';
+				obj.style.background = 'none';			
+			}
+		}	
+		return result;
+	}
+	//改变云台速度
+	function changePtzSpeed(speed){
+		ptzSpeed = speed;
+	}
+</script>

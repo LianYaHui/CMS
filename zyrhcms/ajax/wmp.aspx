@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="wmp.aspx.cs" Inherits="ajax_wmp" %>

@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<configuration>
+	<menu>
+		<item label="信息查询">
+			<item value='{"type":"widget","value":"roadInfo"}' label="道路信息" />
+			<item value='{"type":"widget","value":"BridgeInfo"}' label="桥梁信息" />
+			<item value='{"type":"widget","value":"guanxianInfo"}' label="管线信息" />
+			<item value='{"type":"widget","value":"draw"}' label="地图测量" />
+		</item>
+		<item label="信息管理">
+		    <item value='{"type":"widget","value":"roadLight"}' label="路灯状态" />
+			<item value='{"type":"widget","value":"BufferQuery"}' label="缓冲区分析" />
+			<item value='{"type":"widget","value":"infoToMapPoint"}' label="信息定位" />
+			<item value='{"type":"widget","value":"GPSLocation"}' label="GPS定位" />
+			<item value='{"type":"widget","value":"fangxundiaodu"}' label="车辆跟踪" />
+		</item>
+		<item label="市政资产">
+
+		</item>
+		<item label="生产管理">
+
+		</item>
+		<item label="统计分析">
+
+		</item>
+	</menu>
+</configuration>

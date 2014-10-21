@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>鏃犳爣棰樻枃妗?/title>
+<style type="text/css">
+	body{font-size:12px;}
+	/*
+	.dropdownlist-box{font-size:12px; border:solid 1px #ccc; overflow:auto;}
+	.dropdownlist-box a,dropdownlist-box .item{display:block; background:#fff; height:20px; line-height:20px; cursor:default; overflow:hidden; padding:0 3px;}
+	.dropdownlist-box a:hover,.dropdownlist-box .item:hover,.dropdownlist-box .cur{background:#316ac5;color:#fff;}
+	.dropdownlist-box a img,.dropdownlist-box .item img{display:inline-block; float:left;border:none;padding:0;margin:0;}
+	
+	.dropdownlist-box .r-icon{background-position:0 0;}
+	.dropdownlist-box .r-icon:hover{background-position:-15px 0;}
+	*/
+	
+</style>
+<script type="text/javascript" src="dropdownlist.js"></script>
+</head>
+
+<body>
+<div id="divTest" style="width:300px;margin-top:100px;display:block; ">
+<input id="txtPlanType" type="text" value="5" style="width:150px;line-height:18px;height:18px;border:solid 1px #ccc;" />
+</div>
+
+<div id="div11" style="margin-top:100px;margin-left:50px;">
+<input type="text" id="test1" style="width:150px;line-height:18px;height:18px;border:solid 1px #ccc;" /></div>
+
+</body>
+</html>
+<script type="text/javascript">
+
+
+var div1 = document.getElementById('div11');
+var obj1 = document.getElementById('test1');
+
+var divTest = document.getElementById('divTest');
+var obj = document.getElementById('txtPlanType');
+var val = obj.value;
+var parentId = 0;
+var jsonData = [];
+var jsonData = [
+	{val: 1, pid: 0, level: 0, text: '鑷劧鐏惧',color:'#f00',background:'#ddd'}, 
+	{id: 2, pid: 0, level: 0, name: '浜嬫晠鐏鹃毦',color:'#f50',background:'#f1f1f1'}, 
+	{id: 3, pid: 0, level: 0, name: '鍏叡鍗敓浜嬩欢',color:'#080',background:'#f90'}, 
+	{id: 4, pid: 0, level: 0, name: '绀句細瀹夊叏浜嬩欢'}, 
+	{id: 5, pid: 1, level: 1, name: '姘存棻鐏惧'}, 
+	{id: 6, pid: 1, level: 1, name: '姘旇薄鐏惧'}, 
+	{id: 7, pid: 1, level: 1, name: '鍦伴渿鐏惧'}, 
+	{id: 8, pid: 1, level: 1, name: '鍦拌川鐏惧'}, 
+	{id: 9, pid: 1, level: 1, name: '娴锋磱鐏惧'}, 
+	{id: 10, pid: 1, level: 1, name: '鐢熺墿鐏惧'}, 
+	{id: 11, pid: 1, level: 1, name: '妫灄鑽夊師鐏伨'}, 
+	{id: 12, pid: 2, level: 1, name: '浼佷笟瀹夊叏浜嬫晠'}, 
+	{id: 13, pid: 2, level: 1, name: '浜ら€氳繍杈撲簨鏁?}, 
+	{id: 14, pid: 2, level: 1, name: '鍏叡璁炬柦浜嬫晠'}, 
+	{id: 15, pid: 2, level: 1, name: '璁惧浜嬫晠'}, 
+	{id: 16, pid: 2, level: 1, name: '鐜姹℃煋浜嬩欢'}, 
+	{id: 17, pid: 2, level: 1, name: '鐢熸€佺牬鍧忎簨浠?}, 
+	{id: 18, pid: 3, level: 1, name: '浼犳煋鐥呯柅鎯?}, 
+	{id: 19, pid: 3, level: 1, name: '缇や綋鎬т笉鏄庡師鍥犵柧鐥?}, 
+	{id: 20, pid: 3, level: 1, name: '椋熷搧瀹夊叏鍜岃亴涓氬嵄瀹?}, 
+	{id: 21, pid: 3, level: 1, name: '鍔ㄧ墿鐤儏'}, 
+	{id: 22, pid: 3, level: 1, name: '鍏朵粬褰卞搷鍏紬鍋ュ悍鍜岀敓鍛藉畨鍏ㄤ簨浠?}, 
+	{id: 23, pid: 4, level: 1, name: '鎭愭€栬鍑讳簨浠?}, 
+	{id: 24, pid: 4, level: 1, name: '缁忔祹瀹夊叏浜嬩欢'}, 
+	{id: 25, pid: 4, level: 1, name: '娑夊绐佸彂浜嬩欢'}
+];
+
+var jsonData123 = [
+	{val: 1111111},	
+	{val: 2222222222},
+	{val: 33333}
+];
+
+var jsonData1 = [
+	1,3,5,6,7.5
+];
+
+var jsonData12 = {min:0,max:100,step:10};
+
+
+new DropDownList(obj1, 'test', {data:jsonData12, val:50, maxHeight:'300',event:'focus'});
+
+/*
+new DropDownList(obj, 'planType', {parentId:parentId, data:jsonData, val:val, text:'姘存棻鐏惧', maxHeight:'300',width:'222',box:{border:'solid 1px #00f',background:'#080',color:'#f00'},input:{border:'solid 1px #ccc',background:'#f90',color:'#080'},event:'focus', recursion:true},divTest);
+*/
+new DropDownList(obj, 'planType', {parentId:parentId, data:jsonData, val:val, text:'姘存棻鐏惧', maxHeight:'300',width:'222',event:'focus', recursion:true},divTest);
+
+
+//alert(obj.innerHTML);
+
+</script>

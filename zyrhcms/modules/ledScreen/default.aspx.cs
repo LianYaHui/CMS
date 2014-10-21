@@ -1,0 +1,23 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class modules_ledScreen_default : System.Web.UI.Page
+{
+    protected string MenuCode = string.Empty;
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        this.MenuCode = Public.RequestString("menuCode");
+
+        Master.ShowPageMenu(MenuType.WebMenu.GetHashCode(), this.MenuCode);
+        Master.ShowPageTop(Public.GetRequest("showHeader", 1) == 1);
+    }
+}

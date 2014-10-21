@@ -1,0 +1,15 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="mpPage.master.cs" Inherits="master_mpPage" %><!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />-->
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <title><%=strTitle%></title><%=strCode%>
+    <script type="text/javascript">var imgTopBanner = '<%=Config.GetTopBanner()%>';</script>
+    <asp:contentplaceholder id="cphHeader" runat="server"></asp:contentplaceholder>
+    <style type="text/css">body{behavior:url('/js/htc/csshover.htc');}</style>
+</head>
+<body oncontextmenu="<%=Config.SetContextMenu()%>">
+    <asp:contentplaceholder id="cphBody" runat="server"></asp:contentplaceholder></body>
+</html><asp:contentplaceholder id="cphFooter" runat="server"></asp:contentplaceholder>

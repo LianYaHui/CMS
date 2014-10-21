@@ -1,0 +1,464 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>录像回放 - 中研瑞华WVSActivexCtrl开发示例</title>
+	<meta name="description" content="" />
+    <meta name="keywords" content="" />
+	<style type="text/css">
+		body{margin:0; padding:0; font-size:12px;}
+		.txt{border:solid 1px #ccc; height:18px; line-height:18px;}
+		.tblist{border:solid 1px #ddd; border-collapse:collapse; font-size:12px;}
+		.tblist td{border:solid 1px #ddd; text-align:center; line-height:18px;}
+		.tblist .cur{background:#316ac5; color:#fff;}
+		.trheader{background:#316ac5; color:#fff; line-height:24px;}
+		
+		.tbform{}
+		.tbform td{height:26px; padding-right:5px;}
+		.bs{border:solid 1px #ddd; line-height:20px; padding:0 3px; display:inline-block; float:right;text-decoration:none;}
+	</style>
+</head>
+<body>
+	<div>
+	<table cellpadding="5" cellspacing="0">
+	    <tr>
+	        <td style="vertical-align:top;">	        
+	            <table cellpadding="0" cellspacing="0" class="tbform">
+		            <tr>
+			            <td>服务器IP：</td>
+			            <td><input type="text" class="txt" id="txtServerIp" value="221.12.3.132" style="width:100px;" />
+			            </td>
+			            <td>服务器Port：</td>
+			            <td><input type="text" class="txt" id="txtServerPort" value="5660" style="width:40px;" /></td>
+			            <td>用户名：</td>
+			            <td><input type="text" class="txt" id="txtUserName" value="zyrhtest" style="width:80px;" /></td>
+			            <td>密码：</td>
+			            <td><input type="text" class="txt" id="txtUserPwd" value="12345" style="width:70px;" /></td>
+		            </tr>
+		            <tr>
+			            <td>设备编号：</td>
+			            <td><input type="text" class="txt" id="txtDevCode" value="100141000" style="width:100px;" />
+			            </td>
+			            <td>通道号：</td>
+			            <td>
+			                <select id="ddlChannelNo" style="width:45px;">
+			                    <option value="1">1</option>
+			                    <option value="2">2</option>
+			                    <option value="3">3</option>
+			                    <option value="4">4</option>
+			                </select>			</td>
+			            <td>文件类型：</td>
+			            <td colspan="3">
+			                <select id="ddlFileType">
+			                    <option value="0xff">0xff 所有录像类型</option>
+                                <option value="0x0">0x0 定时录像</option>
+                                <option value="0x1">0x1 移动侦测录像</option>
+                                <option value="0x2">0x2 报警录像</option>
+                                <option value="0x3">0x3 报警或移动侦测录像</option>
+                                <option value="0x4">0x4 报警和移动侦测录像</option>
+                                <option value="0x5">0x5 命令触发</option>
+                                <option value="0x6">0x6 手动录像</option>
+                                <option value="0x7">0x7 震动报警录像</option>
+                                <option value="0x8">0x8 环境报警触发录像</option>
+			                </select></td>
+		            </tr>
+		            <tr>
+		                <td>开始时间：</td>
+		                <td><input type="text" class="txt" id="txtStartTime" value="2013-08-24 09:10:15" style="width:120px;" /></td>
+		                <td>结束时间：</td>
+		                <td colspan="5"><input type="text" class="txt" id="txtEndTime" value="2013-08-24 09:10:15" style="width:120px;" />
+		                <input type="button" value="搜索文件" onclick="searchFile();" /></td>
+		            </tr>
+	            </table>
+	        </td>
+			<td style="vertical-align:top;">
+	            <label id="lblResult"></label>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>	            
+	            <div style="width:600px;height:400px;">
+				<object classid="clsid:7B3F777D-9D04-46D3-9966-7F311470A7D4" id="WMPOCX" name="WMPOCX" width="100%" height="100%"></object>
+				</div>
+	        </td>
+	        <td>
+				<div id="divFile" style="width:620px;height:400px;overflow:auto;border:solid 1px #99bbe8;">
+				    <table cellpadding="0" cellspacing="0" class="tblist" style="width:700px">
+                        <tr class="trheader">
+                            <td style="width:30px;">序号</td>
+                            <td style="width:55px;">播放通道</td>
+                            <td style="width:55px;">文件大小</td>
+                            <td style="width:110px;">起始时间</td>
+                            <td style="width:110px;">结束时间</td>
+                            <td style="width:55px;">文件类型</td>
+                            <td style="width:250px;">文件名称</td>
+                        </tr>
+                    </table>
+				</div>
+			</td>
+	    </tr>
+	    <tr>
+	        <td>
+	            操作日志<br />
+				<textarea id="txtDebug" rows="" cols="" class="txt" style="width:596px;height:100px;" readonly="readonly"></textarea>
+	        </td>
+	        <td>	            
+				返回录像文件数据<br />
+				<textarea id="txtResult" rows="" cols="" class="txt" style="width:618px;height:100px;" readonly="readonly"></textarea>
+	        </td>
+	    </tr>
+	</table>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="../../common/js/jquery.js"></script>
+<script type="text/javascript" src="../../common/js/popwin/popwin.js"></script>
+<script type="text/javascript">
+    function showContent(type, obj){
+        switch(type){
+            case 'ip':
+                break;
+            case 'port':
+                break;
+            case 'user':
+                break;
+            case 'pwd':
+                break;
+            case 'device':
+                break;
+        }
+    }
+</script>
+
+	<script type="text/javascript">
+		var userName = 'zyrhtest';
+		var userPwd = '12345';
+		var serverIp = '221.12.3.132';
+		var serverPort = '5660';
+		var devCode = '100051001';
+		var fileType = 0x0;
+		var channelNo = 1;
+		var startTime = '';
+		var endTime = '';
+
+		var fileDir = 'C:\\zyrhwmp\\';
+
+		var fileList = [];
+		
+		var previewOcx = null;
+		
+		var isPlayBack = false;
+		var curPlay = [];
+		
+		var htServerConnect = new Hashtable();
+		
+	    var debugMessageBox = null;
+
+		function $$(i){
+			return document.getElementById(i);
+		}
+		
+        function Hashtable() {
+            this._hash = new Object();
+            this.add = function(key, value) {
+                if (typeof(key) != "undefined") {
+                    if (this.contains(key) == false) {
+                        this._hash[key] = typeof(value) == "undefined" ? null: value;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            };
+            this.remove = function(key) {
+                delete this._hash[key];
+            };
+            this.count = function() {
+                var i = 0;
+                for (var k in this._hash) {
+                    i++;
+                }
+                return i;
+            };
+            this.items = function(key) {
+                return this._hash[key];
+            };
+            this.contains = function(key) {
+                return typeof(this._hash[key]) != "undefined";
+            };
+            this.clear = function() {
+                for (var k in this._hash) {
+                    delete this._hash[k];
+                }
+            };
+            this.item = function(i) {
+                if (i < 0) {
+                    return null;
+                } else {
+                    var p = 0;
+                    for (var k in this._hash) {
+                        if (p++==i) return (k);
+                    }
+                }
+            };
+            this.show = function() {
+                var result = [];
+                for (var k in this._hash) {
+                    result.push(k);
+                }
+                return result;
+            };
+        };
+        
+		String.prototype.toXML = String.prototype.toXml = function(){
+			try {
+				if (window.ActiveXObject) {
+					xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+					xmlDoc.async = false;
+					xmlDoc.loadXML(this);
+				} else if (document.implementation && document.implementation.createDocument) {
+					xmlDoc = document.implementation.createDocument('', '', null);
+					xmlDoc.loadXML(this);
+				} else {
+					xmlDoc = null;
+				}
+			} catch (e) {
+				alert("error "+ e);
+				var oParser = new DOMParser();
+				xmlDoc = oParser.parseFromString(this, "text/xml");
+			}
+			return xmlDoc;
+		};
+
+		String.prototype.padLeft = function(totalWidth, paddingChar) {
+			var s = this;
+			if (paddingChar == undefined) {
+				paddingChar = '0';
+			}
+			for (var i = 0, c = totalWidth - s.length; i < c; i++) {
+				s = paddingChar + s;
+			}
+			return s;
+		};
+
+		String.prototype.toDate = function(){
+			return new Date(Date.parse(this.replace(/-/g,"/")));
+		};
+
+		Date.prototype.toString = function(format) {
+			var strDate = [ '' + this.getFullYear(), 
+				('' + (this.getMonth() + 1)).padLeft(2, '0'), 
+				('' + this.getDate()).padLeft(2, '0'), 
+				('' + this.getHours()).padLeft(2, '0'), 
+				('' + this.getMinutes()).padLeft(2, '0'), 
+				('' + this.getSeconds()).padLeft(2, '0'),  
+				('' + this.getMilliseconds()).padLeft(3, '0')
+			];
+			switch (format) {
+			case 'yyyy-MM-dd':
+				return strDate[0] + '-' + strDate[1] + '-' + strDate[2];
+				break;
+			case 'yyyy-MM-dd HH:mm:ss fff':
+				return strDate[0] + '-' + strDate[1] + '-' + strDate[2] + ' ' + strDate[3] + ':' + strDate[4] + ':' + strDate[5] + ' ' + strDate[6];
+				break;
+			case 'yyyy-MM-dd HH:mm:ss':
+			default:
+				return strDate[0] + '-' + strDate[1] + '-' + strDate[2] + ' ' + strDate[3] + ':' + strDate[4] + ':' + strDate[5];
+				break;
+			}
+		};
+
+		window.onload = function(){
+			previewOcx = $$('WMPOCX');
+		    debugMessageBox = $$('txtDebug');
+			getParam();
+			initialPreviewOcx(previewOcx);
+			//录像回放只允许一个通道
+			previewOcx.WMPSetChanMode(1);
+			
+			$$('txtStartTime').value = new Date().toString('yyyy-MM-dd') + ' 0:00:00';
+			$$('txtEndTime').value = new Date().toString('yyyy-MM-dd') + ' 23:59:59';
+		}
+
+		window.onunload = function(){
+			unInitPreviewOcx(previewOcx);
+		}
+
+        function appendDebugInfo(str){
+		    debugMessageBox.value += str + '\r\n';
+	    }
+
+	    function clearDebugInfo(){
+		    debugMessageBox.value = '';
+	    }
+
+	    function getDebugTime(){
+		    return '[' + new Date().toString('yyyy-MM-dd HH:mm:ss fff') + '] ';
+	    }
+	    
+		function initialPreviewOcx(previewOcx){
+		    appendDebugInfo(getDebugTime() + '[WMPClientInit Request]');
+			var result = previewOcx.WMPClientInit();
+			appendDebugInfo(getDebugTime() + '[WMPClientInit Response] return: ' + result + '\r\n');
+		}
+		
+		function connectServer(previewOcx, userName, userPwd, serverIp, serverPort){
+		    var strServer = serverIp + ':' + serverPort;
+		    if(!htServerConnect.contains(strServer)){
+		        if(serverIp != '' && serverPort != ''){
+		            appendDebugInfo(getDebugTime() + '[WMPConnectServer Request]');
+		            
+		            //用户名+时间戳
+		            userName += new Date().getTime();
+            		
+		            var result = previewOcx.WMPConnectServer(userName, userPwd, serverIp, serverPort);
+		            appendDebugInfo(getDebugTime() + '[WMPConnectServer Response] return: ' + result + '\r\n');
+			        if(result == 0){
+                        htServerConnect.add(strServer);
+                    }
+                    return result;
+                }
+			}
+		}
+
+		function unInitPreviewOcx(previewOcx){
+			previewOcx.WMPDisConnectServer();
+			previewOcx.WMPClientUnInit();
+		}
+
+		function getParam(){
+			userName = $$('txtUserName').value;
+			userPwd = $$('txtUserPwd').value;
+			serverIp = $$('txtServerIp').value;
+			serverPort = $$('txtServerPort').value;
+			devCode = $$('txtDevCode').value;
+			channelNo = $$('ddlChannelNo').value;
+			fileType = parseInt($$('ddlFileType').value, 16);
+
+			startTime = $$('txtStartTime').value;
+			endTime = $$('txtEndTime').value;
+		}
+		
+		function appendResult(str){
+			var obj = $$('txtResult');
+			obj.value += str + '\r\n';
+		}
+
+		function searchFile(){
+			getParam();
+			connectServer(previewOcx, userName, userPwd, serverIp, serverPort);
+			
+		    appendDebugInfo(getDebugTime() + '[WMPSearchFile Request]');
+			var fileXml = previewOcx.WMPSearchFile(serverIp, serverPort, devCode, fileType, channelNo, startTime, endTime);
+		    appendDebugInfo(getDebugTime() + '[WMPSearchFile Response] return: ' + fileXml + '\r\n');
+		    
+			appendResult(getDebugTime() + '\r\n' + fileXml);
+			try{
+				var xmlInfo = fileXml.toXml();
+				var arrFile = xmlInfo.documentElement.childNodes;
+				if(arrFile.length > 0){
+					$$('divFile').innerHTML = showFile(arrFile);
+					$$('lblResult').innerHTML = '搜索到' + arrFile.length + '个录像文件';
+				} else {
+					$$('divFile').innerHTML = '';
+					$$('lblResult').innerHTML = '没有录像文件';
+				}
+			}catch(e){}
+		}
+
+		function startPlayBack(serverIp, serverPort, devCode, strFileName, percent){
+		    appendDebugInfo(getDebugTime() + '[WMPStartPlayBack Request]');
+			var result = previewOcx.WMPStartPlayBack(serverIp, serverPort, devCode, strFileName, percent);
+		    appendDebugInfo(getDebugTime() + '[WMPStartPlayBack Response] return: ' + result + '\r\n');
+		}
+
+		function stopPlayBack(serverIp, serverPort, devCode){
+		    appendDebugInfo(getDebugTime() + '[WMPStopPlayBack Request]');
+			var result = previewOcx.WMPStopPlayBack(serverIp, serverPort, devCode);
+		    appendDebugInfo(getDebugTime() + '[WMPStopPlayBack Response] return: ' + result + '\r\n');
+		}
+
+		function playBack(serverIp, serverPort, devCode, strFileName, percent, tr){
+			$('#tbfile tr').removeClass();
+			tr.className = 'cur';
+			
+			connectServer(previewOcx, userName, userPwd, serverIp, serverPort);
+			
+			if(isPlayBack){
+				stopPlay(curPlay[0], curPlay[1], curPlay[2]);
+			}
+			startPlayBack(serverIp, serverPort, devCode, strFileName, percent);
+			curPlay = [serverIp, serverPort, devCode, strFileName, percent];
+			isPlayBack = true;
+			
+		}
+
+		function stopPlay(serverIp, serverPort, devCode){
+			isPlayBack = false;
+			curPlay = [];
+			stopPlayBack(serverIp, serverPort, devCode);
+		}
+
+		function downloadFile(){
+			var strFileName = '';
+		
+			previewOcx.WMPDownLoadFile(serverIp, serverPort, devCode, strFileName, fileDir);
+		}
+
+		function showFile(arrFile){
+			getParam();
+			var strHtml = '';
+			strHtml += '<table class="tblist" id="tbfile" style="width:700px">';
+			strHtml += '<tr class="trheader">';
+			strHtml += '<td style="width:30px;">序号</td>';
+			strHtml += '<td style="width:55px;">播放通道</td>';
+			strHtml += '<td style="width:55px;">文件大小</td>';
+			strHtml += '<td style="width:110px;">起始时间</td>';
+			strHtml += '<td style="width:110px;">结束时间</td>';
+			strHtml += '<td style="width:55px;">文件类型</td>';
+			strHtml += '<td style="width:250px;">文件名称</td>';
+			strHtml += '</tr>';
+			for(var i=0; i<arrFile.length; i++){
+				var strFileName = arrFile[i].text;
+				var fileInfo = parseFileName(strFileName);
+
+				strHtml += '<tr ondblclick="playBack(\'' + serverIp + '\',\'' + serverPort + '\',\'' + devCode + '\',\'' + strFileName + '\',' + 0 + ', this);">';
+				strHtml += '<td>' + (i+1) + '</td>';
+				strHtml += '<td>' + fileInfo[0] + '</td>';
+				strHtml += '<td>' + fileInfo[1] + ' MB</td>';
+				strHtml += '<td>' + fileInfo[2] + '</td>';
+				strHtml += '<td>' + fileInfo[3] + '</td>';
+				strHtml += '<td>' + fileInfo[4] + '</td>';
+				strHtml += '<td>' + strFileName + '</td>';
+				strHtml += '</tr>';
+			}
+			strHtml += '</table>';
+			return strHtml;
+		}
+
+		function parseFileName(strFileName){
+			var strChannel = strFileName.substr(0, 4);
+			var strFileType = strFileName.substr(4, 2);
+			var strStart = parseTime(strFileName.substr(6, 14));
+			var strEnd = parseTime(strFileName.substr(20, 14));
+			
+			var fileLength = parseInt(strFileName.substr(35), 10) /100;
+
+			return [strChannel, fileLength, strStart, strEnd, strFileType];
+		}
+
+		function parseTime(strTime){
+		    if(strTime.length == 14){
+		        var strResult = '';
+		        var arr = strTime.split('');
+		        for(var i=0,c=arr.length; i<c; i++){
+		            strResult += arr[i];
+		            strResult += (i == 3 || i == 5) ? '-' : (i == 9 || i == 11 ? ':' : (i == 7 ? ' ' : ''));
+		        }
+		        return strResult;
+		    }
+			return strTime;
+		}
+	</script>

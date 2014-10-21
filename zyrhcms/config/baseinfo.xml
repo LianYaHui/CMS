@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <workPlan desc="施工计划信息页面URL">
+    <![CDATA[/PlanInfo.aspx?planid=%s]]>
+  </workPlan>
+  <dutyPlan desc="值班跟班计划信息页面URL" remark="">
+    <![CDATA[http://10.103.203.109:85/IQuery/DutyArrangeInfo.aspx?code=%s]]>
+  </dutyPlan>
+  <tensionLength desc="锚段信息页面URL">
+    <![CDATA[/PoleInfo.aspx?num=%s]]>
+  </tensionLength>
+  <pillarInfo desc="支柱信息页面URL">
+    <![CDATA[/PoleInfo.aspx?name=%s&num=%s]]>
+  </pillarInfo>
+  <subStation desc="所亭信息页面URL">
+    <![CDATA[/SuoInfo.aspx?suoid=%s]]>
+  </subStation>
+  <questionLibrary desc="问题库URL">
+    <![CDATA[/webquery/IQuery/QuestionLibrary.aspx?type=%s&code=%s]]>
+  </questionLibrary>
+  <deptPreson desc="人员URL">
+    <![CDATA[/webquery/IQuery/PersonLibrary.aspx?type=%s&code=%s]]>
+  </deptPreson>
+</config>

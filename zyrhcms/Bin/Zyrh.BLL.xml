@@ -1,0 +1,454 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Zyrh.BLL</name>
+    </assembly>
+    <members>
+        <member name="F:Zyrh.BLL.UploadFileManage.fileDBAccess">
+            <summary>
+            上传文件数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.UploadFileManage.#ctor(System.String)">
+            <summary>
+            上传文件管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="F:Zyrh.BLL.DeviceTypeManage.devTypeDBAccess">
+            <summary>
+            设备数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.DeviceTypeManage.#ctor(System.String)">
+            <summary>
+            设备类型管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="T:Zyrh.BLL.WebProtocolSend">
+            <summary>
+            WEB协议发送
+            </summary>
+        </member>
+        <member name="F:Zyrh.BLL.WebProtocolSend.strXmlDeclare">
+            <summary>
+            XML文档声明
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.WebProtocolSend.ConnectServer">
+            <summary>
+            连接服务器
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- 对于成员“M:Zyrh.BLL.WebProtocolSend.XmlCharacterEscape(System.String)”忽略有格式错误的 XML 注释 -->
+        <member name="M:Zyrh.BLL.WebProtocolSend.BuildProtocol(Zyrh.Model.WebProtocol)">
+            <summary>
+            创建协议内容
+            </summary>
+            <param name="wp">WebProtocol 对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.WebProtocolSend.ParseProtocol(System.String)">
+            <summary>
+            解析协议内容
+            </summary>
+            <param name="strXmlData">XML文档数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.WebProtocolSend.ParseMultiProtocol(System.String)">
+            <summary>
+            解析多个协议内容
+            </summary>
+            <param name="strXmlData">XML文档数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.WebProtocolSend.SendProtocol(System.String)">
+            <summary>
+            发送协议内容
+            </summary>
+            <param name="strData">协议数据XML文档</param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.WebProtocolSend.SendProtocol(System.String,System.IO.BinaryReader,System.IO.BinaryWriter)">
+            <summary>
+            发送协议内容
+            </summary>
+            <param name="strData">协议数据XML文档</param>
+            <param name="breader"></param>
+            <param name="bwriter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.WebProtocolSend.SendProtocol(System.String,System.Text.Encoding)">
+            <summary>
+            发送协议内容
+            </summary>
+            <param name="strData">协议数据XML文档</param>
+            <param name="encoding">字符编码 GB2312 UTF-8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.WebProtocolSend.SendProtocol(System.String,System.Text.Encoding,System.IO.BinaryReader,System.IO.BinaryWriter)">
+            <summary>
+            发送协议内容
+            </summary>
+            <param name="strData">协议数据XML文档</param>
+            <param name="encoding">字符编码 GB2312 UTF-8</param>
+            <param name="breader"></param>
+            <param name="bwriter"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Zyrh.BLL.WebProtocolSend.ServerIp">
+            <summary>
+            服务器IP
+            </summary>
+        </member>
+        <member name="P:Zyrh.BLL.WebProtocolSend.ServerPort">
+            <summary>
+            服务器端口
+            </summary>
+        </member>
+        <member name="P:Zyrh.BLL.WebProtocolSend.Client">
+            <summary>
+            TcpClient
+            </summary>
+        </member>
+        <member name="P:Zyrh.BLL.WebProtocolSend.bReader">
+            <summary>
+            BinaryReader
+            </summary>
+        </member>
+        <member name="P:Zyrh.BLL.WebProtocolSend.bWriter">
+            <summary>
+            BinaryWriter
+            </summary>
+        </member>
+        <member name="P:Zyrh.BLL.WebProtocolSend.XmlDeclare">
+            <summary>
+            XML文档声明
+            </summary>
+        </member>
+        <member name="F:Zyrh.BLL.RoleManage.roleDBAccess">
+            <summary>
+            数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.RoleManage.#ctor(System.String)">
+            <summary>
+            用户权限管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="F:Zyrh.BLL.PresetConfigManage.presetConfigDBAccess">
+            <summary>
+            预置点配置访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.PresetConfigManage.#ctor(System.String)">
+            <summary>
+            预置点配置管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="M:Zyrh.BLL.PresetConfigManage.GetPresetAlarmInfo(System.String,System.Int32,System.Int32,System.String,System.Int32,System.Int32,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            获得预置点报警信息
+            </summary>
+            <param name="strDevCodeList"></param>
+            <param name="channelNo"></param>
+            <param name="presetNo"></param>
+            <param name="strAlarmTypeList"></param>
+            <param name="minAlarmLevel"></param>
+            <param name="maxAlarmLevel"></param>
+            <param name="strStartTime"></param>
+            <param name="strEndTime"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.PresetConfigManage.GetDevicePresetAlarmInfo(System.String,System.Int32,System.Int32,System.String,System.Int32,System.Int32,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            获得设备预置点报警详细信息(包含设备名称监控点名称等)
+            </summary>
+            <param name="strDevCodeList"></param>
+            <param name="channelNo"></param>
+            <param name="presetNo"></param>
+            <param name="strAlarmTypeList"></param>
+            <param name="minAlarmLevel"></param>
+            <param name="maxAlarmLevel"></param>
+            <param name="strStartTime"></param>
+            <param name="strEndTime"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Zyrh.BLL.DeviceConfigManage.devConfigDBAccess">
+            <summary>
+            设备数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.DeviceConfigManage.#ctor(System.String)">
+            <summary>
+            设备管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="T:Zyrh.BLL.DeviceConfigManage.DeviceConfigField">
+            <summary>
+            设备配置字段
+            </summary>
+        </member>
+        <member name="T:Zyrh.BLL.UserManage">
+            <summary>
+            用户管理 
+            </summary>
+        </member>
+        <member name="F:Zyrh.BLL.UserManage.userDBAccess">
+            <summary>
+            用户数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.UserManage.#ctor(System.String)">
+            <summary>
+            用户管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="M:Zyrh.BLL.UserManage.GetUserInfo(System.String)">
+            <summary>
+            获得用户信息
+            </summary>
+            <param name="strUserName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserManage.UpdateUserLoginInfo(Zyrh.Model.UserInfo)">
+            <summary>
+            更新用户登录信息
+            </summary>
+            <param name="userInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserManage.CheckUserNameIsExist(System.String,System.Int32)">
+            <summary>
+            检测是否存在同名且状态相同的用户
+            </summary>
+            <param name="strUserName"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Zyrh.BLL.DeviceSettingManage.devSettingDBAccess">
+            <summary>
+            设备数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.DeviceSettingManage.#ctor(System.String)">
+            <summary>
+            设备管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="F:Zyrh.BLL.ServerManage.serverDBAccess">
+            <summary>
+            设备数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.ServerManage.#ctor(System.String)">
+            <summary>
+            设备管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="F:Zyrh.BLL.DeviceGprsManage.devGprsDBAccess">
+            <summary>
+            设备GPRS数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.DeviceGprsManage.#ctor(System.String)">
+            <summary>
+            设备GPRS管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="M:Zyrh.BLL.DeviceGprsManage.#ctor(System.String,System.String)">
+            <summary>
+            设备GPRS管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="F:Zyrh.BLL.DeviceManage.devDBAccess">
+            <summary>
+            设备数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.DeviceManage.#ctor(System.String)">
+            <summary>
+            设备管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="F:Zyrh.BLL.ControlUnitManage.unitDBAccess">
+            <summary>
+            设备数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.ControlUnitManage.#ctor(System.String)">
+            <summary>
+            组织单元管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="T:Zyrh.BLL.ServerLineManage">
+            <summary>
+            ServerLineManage 的摘要说明
+            </summary>
+        </member>
+        <member name="F:Zyrh.BLL.DeviceFunctionManage.devFuncDBAccess">
+            <summary>
+            设备功能数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.DeviceFunctionManage.#ctor(System.String)">
+            <summary>
+            设备功能管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="T:Zyrh.BLL.CmsMenuManage">
+            <summary>
+            CmsMenuManage 的摘要说明
+            </summary>
+        </member>
+        <member name="F:Zyrh.BLL.CameraManage.cameraDBAccess">
+            <summary>
+            设备监控点数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.CameraManage.#ctor(System.String)">
+            <summary>
+            设备监控点管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="M:Zyrh.BLL.CameraManage.GetDeviceCameraInfo(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获得设备监控点信息
+            </summary>
+            <param name="strDevCodeList"></param>
+            <param name="channelNo"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Zyrh.BLL.ReferencePictureManage.refPicDBAccess">
+            <summary>
+            参考图片访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.ReferencePictureManage.#ctor(System.String)">
+            <summary>
+            参考图片管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="T:Zyrh.BLL.UserCenter">
+            <summary>
+            用户中心
+            </summary>
+        </member>
+        <member name="F:Zyrh.BLL.UserCenter.strUserSession">
+            <summary>
+            SESSION名称
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.UserCenter.UserLogin(Zyrh.Model.UserInfo,System.String)">
+            <summary>
+            用户登录 0-用户名不存在或密码错误，1-登录成功，2-用户被冻结，3-用户被注销,4-用户过期
+            </summary>
+            <param name="userInfo"></param>
+            <param name="strUserPwd"></param>
+            <returns>返回值 0-用户名不存在或密码错误，1-登录成功，2-用户被冻结，3-用户被注销,4-用户过期</returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserCenter.Logout">
+            <summary>
+            退出登录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserCenter.SetUserSession(System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            设置用户SESSION
+            </summary>
+            <param name="strUserName"></param>
+            <param name="userId"></param>
+            <param name="unitId"></param>
+            <param name="minutes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserCenter.CheckUserSessionIsExist">
+            <summary>
+            检测用户SESSION是否存在
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserCenter.CheckUserLogin">
+            <summary>
+            检测用户是否登录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserCenter.GetUserSession">
+            <summary>
+            获得用户SESSION值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserCenter.GetLoginUserName">
+            <summary>
+            获得当前登录用户名
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserCenter.GetLoginUserInfo">
+            <summary>
+            获得当前登录用户信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zyrh.BLL.UserCenter.GetSessionId">
+            <summary>
+            获得SessionId
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Zyrh.BLL.PictureAlarmManage.picAlarmDBAccess">
+            <summary>
+            图片报警访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.PictureAlarmManage.#ctor(System.String)">
+            <summary>
+            图片报警管理
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="F:Zyrh.BLL.DBConnection.dbAccess">
+            <summary>
+            数据访问
+            </summary>
+        </member>
+        <member name="M:Zyrh.BLL.DBConnection.#ctor(System.String)">
+            <summary>
+            数据访问
+            </summary>
+            <param name="strDBConnectionString"></param>
+        </member>
+        <member name="M:Zyrh.BLL.DBConnection.CheckTableIsExists(System.String,System.String)">
+            <summary>
+            检测数据表是否存在
+            </summary>
+            <param name="strDBConnectionString">连接字符串</param>
+            <param name="strTableName">表名</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

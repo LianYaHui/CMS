@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<configuration>  
+    <ncUrl>http://60.174.174.178:8888/rpc/Gateway.aspx</ncUrl>
+    <listTable>FluorineExample.Services_Oracle.GetOracleData.GetHXBGPSPerson</listTable>
+    <gpsTable>FluorineExample.Services_Oracle.GetOracleData.GetHXBGPSFromPerson</gpsTable>
+ 	<!-- 坐标偏移量 -->
+ 	<offset y="0.00005" x="-0.001107"></offset>
+</configuration> 

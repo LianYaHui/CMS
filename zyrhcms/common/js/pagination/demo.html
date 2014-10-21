@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css"></style>
+<script type="text/javascript" src="pagination.js"></script>
+</head>
+
+<body>
+<div id="pagination"></div>
+<br />
+<div id="pagination1"></div>
+</body>
+</html>
+<script type="text/javascript">
+var obj = document.getElementById('pagination');
+var pager = new Pagination();
+function ShowPage(pageIndex){
+	//alert(pageIndex);
+	var config = {
+		dataCount: 120,
+		pageSize: 10,
+		pageStart: 1,
+		pageIndex: pageIndex,
+		markType: 'Symbol',
+		showType: 'text',
+		callBack: 'ShowPage'
+	};
+	pager.Show(config, obj);
+	//new Pagination(obj, config);
+}
+ShowPage(1);
+
+var obj1 = document.getElementById('pagination1');
+var pager1 = new Pagination();
+function ShowPage1(pageIndex){
+	//alert(pageIndex);
+	var config = {
+		dataCount: 320,
+		pageSize: 10,
+		pageStart: 1,
+		pageIndex: pageIndex,
+		markType: 'Symbol',
+		callBack: 'ShowPage1'
+	};
+	pager1.Show(config, obj1);
+	//new Pagination(obj1, config);
+}
+ShowPage1(2);
+
+</script>

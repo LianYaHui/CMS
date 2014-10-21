@@ -1,0 +1,86 @@
+<html>
+
+<head>
+	<title>dtree</title>
+
+	<link rel="StyleSheet" href="dtree.css" type="text/css" />
+	<script type="text/javascript" src="dtree.js"></script>
+
+</head>
+
+<body>
+
+
+<div class="dtree">
+	<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>
+	<div id="tree" style="width:200px;height:400px;overflow:auto;"></div>
+	<input type='button' name='bTest' value='test' onclick='test();'>
+</div>
+<div>
+<textarea id="txtCode" style="width:800px;height:120px;"></textarea>
+</div>
+</body>
+	<script type="text/javascript">
+	function test1(){
+		alert('选择');
+	}
+		<!--
+		var d = new dTree('d', {skin:'img1',showCheckBox:false,dblclick:false,folderLinks:false},{node:'img1/device.gif'});
+		/*
+		d.add(0,-1,true,'菜单权限树');
+		d.add(1,0,false,'authority','25','一级菜单1 ');
+		d.add(2,1,false,'authority','26','二级菜单1 ');
+		d.add(3,2,false,'authority','27','三级菜单1 ');
+		d.add(4,2,false,'authority','28','三级菜单2 ');
+		
+		d.add(32,3,true,'authority','26','二级菜单1 ');
+		d.add(33,32,true,'authority','27','用户管理 ');
+		d.add(34,32,true,'authority','28','用户组管理 ');
+		
+		d.add(22,1,true,'authority','26','二级菜单1 ');
+		d.add(23,22,true,'authority','27','用户管理 ');
+		d.add(24,22,true,'authority','28','用户组管理 ',true,false,'http://www.g.cn/');
+				
+		d.add(26,1,true,'authority','26','二级菜单1 ',false,true,'http://www.g.cn/');
+
+		d.add(6,0,true,'authority','25','一级菜单2 ',false,true,'http://www.g.cn/');
+		d.add(7,6,true,'authority','26','二级菜单2 ',false,true,'http://www.g.cn/');
+		d.add(8,7,true,'authority','27','用户管理 ',false,true,'http://www.g.cn/');
+		d.add(9,7,true,'authority','28','用户组管理 ',false,true,'http://www.g.cn/');
+		
+		
+		d.add(11,0,true,'authority','25','一级菜单3 ');
+		d.add(12,11,true,'authority','26','二级菜单3 ');
+		d.add(13,12,true,'authority','27','用户管理 ');
+		d.add(14,12,true,'authority','27','用户组管理 ');	
+		*/
+		d.add(0,-1,'菜单权限树',null);
+		d.add(1,0,'一级菜单1 ',{show:true,name:'authority',value:'25',callback:'test1'},'alert(\'25\');');
+		d.add(2,1,'二级菜单1 ',{name:'authority',value:'26'},'alert(\'26\');','你好','','img1/area.gif','img1/area.gif',true);
+		d.add(3,2,'三级菜单1 ',{name:'authority',value:'27'},'alert(\'27\');','你好','','img1/device-stop.gif','',true);
+		d.add(4,2,'三级菜单2 ',{name:'authority',value:'28'},'alert(\'28\');');
+		d.add(24,4,'用户组管理 ',{name:'authority',value:'29'},'alert(\'29\');');
+
+		document.getElementById('txtCode').value = d;
+		document.getElementById('tree').innerHTML = d;
+
+		//document.write(d);
+		//d.openAll();
+		//-->
+	</script>
+<script type="text/javascript">
+<!--
+function test(){
+	var count = 0;
+	var obj = document.all.authority;	
+	
+	for(i=0;i<obj.length;i++){
+		if(obj[i].checked){					
+			alert(obj[i].value);
+			count ++;				
+		}
+	}	
+}
+//-->
+</script>
+</html>

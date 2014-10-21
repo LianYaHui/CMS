@@ -1,0 +1,49 @@
+﻿<div>
+    <label><input type="radio" name="rbDevInfo" onclick="changeDevType(1);" />接触网设备</label>
+    <label><input type="radio" name="rbDevInfo" onclick="changeDevType(2);" />变电设备</label>
+    <label><input type="radio" name="rbDevInfo" onclick="changeDevType(3);" />电力设备</label> 
+    <div id="divDevType"></div>
+</div>
+<script type="text/javascript">
+    var devTypeList = [
+        {
+            id:1, name:'接触网设备',childs:[
+                [1,'支柱'],
+                [2,'锚段关节'],
+                [3,'上网点'],
+                [4,'线岔'],
+                [5,'分段绝缘器']
+            ]
+        },
+        {
+            id:2, name:'变电设备',childs:[
+                [21,'变电所'],
+                [22,'分区所'],
+                [23,'AT所']
+            ]
+        },
+        {
+            id:3, name:'电力设备',childs:[
+                [31,'变压器'],
+                [32,'高低压柜'],
+                [33,'配电箱'],
+                [34,'环网柜'],
+                [35,'箱变'],
+                [36,'电缆分接箱']
+            ]
+        }
+    ];
+    
+    function changeDevType(pid){
+        var strHtml = '';
+        for(var i=0; i<devTypeList.length; i++){
+            if(devTypeList[i].id == pid){
+                var list = devTypeList[i].childs;
+                for(var j=0; j<list.length; j++){
+                    strHtml += '<a href="#" onclick="" style="margin:0 5px;">' + list[j][1] + '</a>';
+                }
+            }
+        }
+        $('#divDevType').html(strHtml);
+    }
+</script>

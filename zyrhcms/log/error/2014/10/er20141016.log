@@ -1,0 +1,42 @@
+2014-10-16 21:38:32 199 Message: Mixing of GROUP columns (MIN(),MAX(),COUNT(),...) with no GROUP columns is illegal if there is no GROUP BY clause
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Server.ServerLineManage.GetServerLineCode(Int32 lineId)
+   在 ajax_login.UserLogin(String strUserName, String strUserPwd, Int32 lineId, Boolean isRememberPwd)
+TargetSite: Int32 GetServerLineCode(Int32)
+RawUrl: /ajax/login.aspx
+
+2014-10-16 21:39:48 697 Message: Mixing of GROUP columns (MIN(),MAX(),COUNT(),...) with no GROUP columns is illegal if there is no GROUP BY clause
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Server.ServerLineManage.GetServerLineCode(Int32 lineId)
+   在 ajax_login.UserLogin(String strUserName, String strUserPwd, Int32 lineId, Boolean isRememberPwd)
+TargetSite: Int32 GetServerLineCode(Int32)
+RawUrl: /ajax/login.aspx
+
+2014-10-16 21:40:04 391 Message: Mixing of GROUP columns (MIN(),MAX(),COUNT(),...) with no GROUP columns is illegal if there is no GROUP BY clause
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Server.ServerLineManage.GetServerLineCode(Int32 lineId)
+   在 ajax_login.UserLogin(String strUserName, String strUserPwd, Int32 lineId, Boolean isRememberPwd)
+TargetSite: Int32 GetServerLineCode(Int32)
+RawUrl: /ajax/login.aspx
+
+2014-10-16 22:14:06 092 Message: Mixing of GROUP columns (MIN(),MAX(),COUNT(),...) with no GROUP columns is illegal if there is no GROUP BY clause
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Server.ServerLineManage.GetServerLineCode(Int32 lineId)
+   在 ajax_login.UserLogin(String strUserName, String strUserPwd, Int32 lineId, Boolean isRememberPwd) 位置 f:\Git\zyrhcms\ajax\login.aspx.cs:行号 185
+TargetSite: Int32 GetServerLineCode(Int32)
+RawUrl: /ajax/login.aspx
+
+2014-10-16 22:24:04 488 Message: Mixing of GROUP columns (MIN(),MAX(),COUNT(),...) with no GROUP columns is illegal if there is no GROUP BY clause
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Server.ServerLineManage.GetServerLineCode(Int32 lineId)
+   在 ajax_login.UserLogin(String strUserName, String strUserPwd, Int32 lineId, Boolean isRememberPwd) 位置 f:\Git\zyrhcms\ajax\login.aspx.cs:行号 185
+TargetSite: Int32 GetServerLineCode(Int32)
+RawUrl: /ajax/login.aspx
+
+2014-10-16 22:27:47 444 Message: Mixing of GROUP columns (MIN(),MAX(),COUNT(),...) with no GROUP columns is illegal if there is no GROUP BY clause
+Source: Zyrh.BLL
+StackTrace:    在 Zyrh.BLL.Server.ServerLineManage.GetServerLineCode(Int32 lineId)
+   在 ajax_login.UserLogin(String strUserName, String strUserPwd, Int32 lineId, Boolean isRememberPwd) 位置 f:\Git\zyrhcms\ajax\login.aspx.cs:行号 185
+TargetSite: Int32 GetServerLineCode(Int32)
+RawUrl: /ajax/login.aspx
+

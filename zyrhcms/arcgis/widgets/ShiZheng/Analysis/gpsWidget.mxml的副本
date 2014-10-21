@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<viewer:BaseWidget xmlns:fx="http://ns.adobe.com/mxml/2009"
+				   xmlns:s="library://ns.adobe.com/flex/spark"
+				   xmlns:mx="library://ns.adobe.com/flex/mx"
+				   xmlns:esri="http://www.esri.com/2008/ags"
+				   xmlns:viewer="com.amap.viewer.*"
+				   xmlns:layers="com.esri.ags.layers.*" 
+				   widgetDataChanged="basewidget1_widgetDataChangedHandler(event)"
+				   widgetConfigLoaded="widgetConfigLoadedHandler(event)" 
+				   xmlns:controls="com.adou.ui.controls.*" xmlns:symbols="com.esri.ags.symbols.*"> 
+	<fx:Script>
+		<![CDATA[
+			import com.adou.rpc.ServiceNetConnection;
+			import com.adou.utils.DateTimeUtil;
+			import com.esri.ags.Graphic;
+			import com.esri.ags.TimeExtent;
+			import com.esri.ags.events.TimeExtentEvent;
+			import com.esri.ags.geometry.MapPoint;
+			import com.esri.ags.layers.supportClasses.FeatureCollection;
+			import com.esri.ags.layers.supportClasses.LayerDetails;
+			import com.esri.ags.layers.supportClasses.TimeInfo;
+			import com.esri.ags.utils.DateUtil;
+			import com.esri.ags.utils.GraphicUtil;
+			import com.esri.ags.utils.JSON;
+			
+			import flash.globalization.DateTimeStyle;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.ArrayList;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.managers.CursorManager;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.utils.StringUtil;
+			
+			import spark.events.GridSelectionEvent;
+			import spark.events.IndexChangeEvent;
+			import spark.events.TextOperationEvent;
+			import spark.formatters.DateTimeFormatter;
+			protected var selectedItem:Object;
+			private var shbh:String="100002";//东苑社区网格号
+			private var ncUrl:String;
+			[Bindable]
+			protected var organData:ArrayCollection ;
+			[Bindable]
+			protected var taxiData:ArrayCollection;
+			[Bindable]
+			protected var gpsData:ArrayCollection;
+			
+			protected var dateTimeFormatter:DateTimeFormatter;
+			protected var offsetX:Number = 0;
+			protected var offsetY:Number = 0;
+			protected var lastFeatures:Array;
+			[Bindable]
+			protected var defaultStartDate:Date;
+			[Bindable]
+			protected var defaultDate:Date;
+			private var firstPostion:Graphic;
+			private var getlist:String;
+			private var getgps:String;
+			protected function widgetConfigLoadedHandler(event:Event):void
+			{
+				dateTimeFormatter = new DateTimeFormatter();
+				dateTimeFormatter.dateTimePattern = "yyyy-MM-dd HH:mm:ss";
+				
+				if(configXML)
+				{
+					getlist = configXML..listTable;
+					getgps = configXML..gpsTable;
+					ncUrl = String(configXML..ncUrl);
+					offsetX = Number(configXML..offset.@x);
+					offsetY = Number(configXML..offset.@y);
+					
+					try
+					{
+						if(String(configXML..defaultDate))
+						{
+							
+							defaultStartDate =DateField.stringToDate(String(configXML..defaultDate),"YYYY-MM-DD"); 
+						}
+						else
+						{
+							defaultDate = DateTimeUtil.getNowDate();  
+						}
+					}
+					catch(e:Error)
+					{
+						trace(e.message);
+						defaultDate = DateTimeUtil.getNowDate();
+						
+					}
+				}  
+				this.map.addLayer(this.featureLayer,99);  
+				//getTaxi("sqbh");
+				
+			} 
+			
+			protected function receivedData(event:FlexBridgeEvent):void
+			{
+				var postData:Object;
+				if(event.receiver == this.widgetId)//名称为HXBPerson
+				{
+					postData = event.data.realname;//传来的值（红袖标）人员姓名
+					shbh =	postData.value;
+					//getTaxi(shbh);
+				}  
+			}
+			
+			
+			
+			protected function httpService_faultHandler(event:FaultEvent):void
+			{
+				trace(event.fault.message);
+			}
+			
+			
+			protected function getTaxi(in_shbh:String):void
+			{
+				var nc:NetConnection = new NetConnection;
+				nc.connect(ncUrl);
+				var rs:Responder = new Responder(onResult,onFault);
+				nc.call(this.getlist,rs,in_shbh);
+				
+			}
+			
+			private function onResult(result:ArrayCollection):void
+			{
+				taxiData = result;
+			}
+			
+			private function onFault(fault:Object):void
+			{
+				trace(fault);
+			}
+			protected function onGetGPSResult(result:ArrayCollection):void
+			{
+				try
+				{
+					timeSlider.pause();
+					var timeExtent:TimeExtent = new TimeExtent(); 
+					var features:Array = [];
+					if(result.length>0)
+					{
+						CursorManager.removeBusyCursor();
+						for each(var gps:Object in result)
+						{ 							
+							var feature:Graphic = new Graphic(new MapPoint(gps.M_LONG,gps.M_LAT), null, {"time":gps.M_DATE});  
+						
+							features.push(feature);
+							
+							feature.toolTip ="当前位置时间："+gps.M_DATE_STR;
+							
+						} 
+						timeExtent.startTime = result[0].M_DATE;
+						timeExtent.endTime =result[result.length - 1].M_DATE;
+						timeSlider.createTimeStopsByCount(timeExtent, 20); 
+						map.timeSlider = this.timeSlider;
+						map.extent = GraphicUtil.getGraphicsExtent(features);
+						var mappoint:MapPoint=new MapPoint(result[0].M_LONG,result[0].M_LAT);
+						
+						featureLayer.applyEdits(features, null, lastFeatures);		
+						lastFeatures = features;
+						mx.controls.Alert.show("查到巡逻轨迹,点击播放按钮或者拖动滑杆移动查询","提示：")
+						map.centerAt(mappoint);
+					}
+					else
+					{
+						CursorManager.removeBusyCursor();
+						mx.controls.Alert.show("没有巡逻轨迹信息","提示：")
+					}
+				}
+				catch(e:Error)
+				{
+					trace(e.message)
+				}
+			}
+			protected function isEmpty(str:String):Boolean{
+				if(str == null)return true;
+				if(str == "")return true;
+				str = StringUtil.trim(str);
+				if(str == null || str.length<=0)return true;
+				return false;
+			}
+			
+			protected function parseDate(JSONDateString:String):Date
+			{
+				var date:Date = new Date(parseInt(JSONDateString.replace("/Date(", "").replace(")/", ""), 10));
+				return date;   
+			} 
+			
+			protected function filterGPS(item:Object):Boolean
+			{
+				return ((item.attributes.DateTime as Date) <= this.timeSlider.timeExtent.endTime);
+			}
+			
+			protected function closedHandler(event:Event):void
+			{
+				this.featureLayer.visible = false;
+			}
+			
+			protected function openHandler(event:Event):void
+			{
+				this.featureLayer.visible = true;
+			}
+			
+			protected function featureLayer_initializeHandler(event:FlexEvent):void
+			{
+				var timeInfo:TimeInfo = new TimeInfo();
+				timeInfo.startTimeField = "time";
+				var layerDetails:LayerDetails = new LayerDetails();
+				layerDetails.timeInfo = timeInfo; 
+				featureLayer.featureCollection = new FeatureCollection(null, layerDetails);
+			}
+			
+			/*protected function plateNo_changeHandler(event:TextOperationEvent):void
+			{
+				this.taxiData.filterFunction = filterTaxi;
+				taxiData.refresh();
+			}*/
+			
+			/*protected function filterTaxi(item:Object = null):Boolean
+			{
+				return (String(item.REALNAME).indexOf(plateNo.text) > -1)
+			}*/
+			
+			/*protected function taxiList_changeHandler(event:IndexChangeEvent):void
+			{ 
+				//getGps();
+				var item:Object = this.taxiList.selectedItem;
+				plateNo.text=item.REALNAME;
+				
+			}*/
+			
+			protected function queryBtn_clickHandler(event:MouseEvent):void
+			{
+				//CursorManager.setBusyCursor();
+				getGps();
+			}
+			
+			protected function getGps():void
+			{
+				
+				if(nameStr)
+				{
+					var item:Object = nameStr;
+					
+					var realName:String = item.REALNAME;
+					
+					var selectedDate:String = DateField.dateToString(queryDate.selectedDate,"YYYY-MM-DD");
+					var startDateTime:String = selectedDate +" "+formatNumber(this.bHour.value)+":"+formatNumber(this.bMinute.value)+":"+formatNumber(this.bSecond.value);
+					var endDateTime:String= selectedDate +" "+formatNumber(this.eHour.value)+":"+formatNumber(this.eMinute.value)+":"+formatNumber(this.eSecond.value);
+				
+					var nc:NetConnection = new NetConnection;
+					nc.connect(ncUrl);
+					var rs:Responder = new Responder(onGetGPSResult,onFault);
+					nc.call(this.getgps,rs,"D"+realName,"D"+startDateTime,"D"+endDateTime);
+				}
+				else
+				{
+					mx.controls.Alert.show("请选择列表中的单位.","提示信息：")
+				}
+			}
+			protected function formatNumber(n:Number):String
+			{
+				if(n<10)
+				{
+					return "0"+n;
+				}
+				else
+				{
+					return n.toString();
+				}
+			}
+			
+			/*protected function taxiList_doubleClickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(this.taxiList.selectedIndex!=-1)
+				{
+					this.plateNo.text=this.taxiList.selectedItem.REALNAME;
+					getGps();
+				}
+			}*/
+			private function getFullName(item:Object):String{
+				
+				var name:String="";
+				if(item.REALNAME=="")
+				{
+					name="["+item.NEWDWMC+"]"+item.M_CARID
+				}
+				else
+				{
+					name= "["+item.NEWDWMC+"]"+item.REALNAME;
+				}
+				return name;
+				
+			}
+			
+			private var nameStr:String;
+			protected function basewidget1_widgetDataChangedHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				nameStr = event[0];
+				mx.controls.Alert.show(nameStr);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:HTTPService id="httpService" fault="httpService_faultHandler(event)" />
+		<mx:DateFormatter id="myDateFormatter" formatString="MMMM D, YYYY"/>
+		<esri:FeatureLayer id="featureLayer"  initialize="featureLayer_initializeHandler(event)"  >
+			<esri:renderer>
+				<esri:TemporalRenderer>
+					<esri:trackRenderer>
+						<esri:SimpleRenderer>
+							<esri:SimpleLineSymbol color="0x0000FF" width="2"/>
+						</esri:SimpleRenderer>
+					</esri:trackRenderer>
+					<esri:latestObservationRenderer>
+						<esri:SimpleRenderer>
+							<esri:PictureMarkerSymbol source="assets\images\p0.png" width="35" height="35" />
+						</esri:SimpleRenderer>
+					</esri:latestObservationRenderer>
+					<esri:observationRenderer>
+						<esri:SimpleRenderer>
+							<esri:SimpleMarkerSymbol color="0x00FF00">
+								<esri:SimpleLineSymbol/>
+							</esri:SimpleMarkerSymbol>
+						</esri:SimpleRenderer>
+					</esri:observationRenderer>
+					<esri:observationAger>
+						<esri:TimeRampAger>
+							<esri:alphaRange>
+								<esri:AlphaRange fromAlpha="0.1" toAlpha="1.0"/>
+							</esri:alphaRange>
+							<esri:sizeRange>
+								<esri:SizeRange fromSize="3" toSize="8"/>
+							</esri:sizeRange>
+						</esri:TimeRampAger>
+					</esri:observationAger>
+				</esri:TemporalRenderer>
+			</esri:renderer>
+		</esri:FeatureLayer>
+		<esri:SimpleMarkerSymbol id="sms" color="0xff0000" size="8" />
+	</fx:Declarations>
+	<viewer:WidgetTemplate  widgetHeight="200" widgetWidth="600" closed="closedHandler(event)"
+							open="openHandler(event)">
+		<viewer:layout>
+			<s:HorizontalLayout />
+		</viewer:layout>
+		
+		<s:VGroup> 
+			<s:HGroup>
+				<!--<s:List id="taxiList" width="170" height="150" dataProvider="{taxiData}" labelField="carid" labelFunction="getFullName"  change="taxiList_changeHandler(event)" doubleClick="taxiList_doubleClickHandler(event)" doubleClickEnabled="true">
+				</s:List>-->
+				<s:VGroup>
+					<s:HGroup verticalAlign="middle">
+						<s:Label text="选择日期：" />
+						<mx:DateField id="queryDate" selectedDate="{defaultDate}"  formatString="YYYY-MM-DD" toolTip="日期选择" width="100" /> 
+						<s:Label text="注：数据从2012年6月1日开始" />
+					</s:HGroup> 
+					<s:HGroup  verticalAlign="middle">
+						<s:Label text="开始时间：" />
+						<s:NumericStepper id="bHour" minimum="0" maximum="23" /><s:Label text="时" />
+						<s:NumericStepper id="bMinute" minimum="0" maximum="59" /><s:Label text="分" />
+						<s:NumericStepper id="bSecond" minimum="0" maximum="59" /><s:Label text="秒" />
+					</s:HGroup>
+					<s:HGroup  verticalAlign="middle">
+						<s:Label text="结束时间：" />
+						<s:NumericStepper id="eHour"  minimum="0" maximum="23" value="23" /><s:Label text="时" />
+						<s:NumericStepper id="eMinute" minimum="0" maximum="59" /><s:Label text="分" />
+						<s:NumericStepper id="eSecond" minimum="0" maximum="59" /><s:Label text="秒" />
+					</s:HGroup>
+					<s:HGroup verticalAlign="middle">
+						<!--<s:Label text="姓    名："  /><s:TextInput id="plateNo"  change="plateNo_changeHandler(event)" width="160" /> -->
+						<s:Label width="200" />
+						<s:Button id="queryBtn" click="queryBtn_clickHandler(event)" label="查询" width="50" /> 
+					</s:HGroup>
+					<esri:TimeSlider width="400" id="timeSlider" thumbMovingRate="2000"   /><!--JM ADD 播放速度 默认1000毫秒-->
+					
+				</s:VGroup>
+			</s:HGroup>
+			
+			
+		</s:VGroup>
+		
+	</viewer:WidgetTemplate>
+</viewer:BaseWidget>

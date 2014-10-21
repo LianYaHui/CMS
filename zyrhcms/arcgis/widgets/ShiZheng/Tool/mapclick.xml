@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<configuration >
+    <query1>
+	http://jhzyd:8012/ArcGIS/rest/services/ghjmap/MapServer/65</query1>
+	<!-- <query2>http://jhzyd:8012/ArcGIS/rest/services/ghjmap/MapServer/68</query2> -->
+</configuration>

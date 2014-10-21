@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <desc>
+<![CDATA[
+说明：
+郑州佳蓝软件公司 提供的 武汉供电段安全生产指挥平台 基础数据调用 WebService 接口定义
+WebService URL: http://127.0.0.1:82/WebService/WebService1.asmx
+]]>
+  </desc>
+  <class name="WebService1"></class>
+  <method name="Process" desc="两个参数：1-方法参数编码；2-XML格式方法参数">
+<![CDATA[
+接口方法定义：
+Process(string transCode, string xml)
+
+接口参数示例：
+<?xml version="1.0" encoding="utf-8"?>
+<Request>
+<ID>0101</ID>  //部门编号
+</Request>
+]]>
+  </method>
+  <paramList>
+    <param code="001" name="查询部门信息">
+<![CDATA[
+输入参数示例：
+<?xml version="1.0" encoding="utf-8"?>
+<Request>
+<ID>0101</ID>  //部门编号
+</Request>
+    
+输出结果示例：
+<?xml version="1.0" encoding="utf-8"?>
+<ROWSET>
+<Result>1</Result>
+<Err>交易成功</Err>
+<ROW>
+<CODE>0101</CODE>   //部门编号
+<NAME>武汉供电段</NAME>   //部门名称
+<PARENTID>01</PARENTID>   //父ID
+<GRADE>2</GRADE>    //级次，从1开始
+<PINYINCODE></PINYINCODE>   //拼音码
+<LONGITUDE></LONGITUDE>   //部门对应GIS经度
+<LATITUDE></LATITUDE>   //部门对应GIS维度
+<CREATETIME>2013-08-23 10:28:15</CREATETIME>    //创建日期 2013-08-23 10:28:15
+</ROW>
+<ROW>
+...
+</ROW>
+</ROWSET>
+]]>
+    </param>
+    <param code="002" name="查询线别">
+<![CDATA[
+输入参数示例：
+<?xml version="1.0" encoding="utf-8"?>
+<Request>
+<ID>0001</ID>  //线别编号
+</Request>
+
+输出结果示例：
+<?xml version="1.0" encoding="utf-8"?>
+<ROWSET>
+<Result>1</Result>
+<Err>交易成功</Err>
+<ROW>
+<RAILLINEID>0001</RAILLINEID>                   //线别编号
+<RAILLINENAME>京广线</RAILLINENAME>             //线别名称
+<CREATETIME>2013-08-28 17:48:24</CREATETIME>    //更新时间
+</ROW>
+<ROW>
+...
+</ROW>
+</ROWSET>
+]]>
+    </param>
+    <param code="003" name="查询区间站场">
+<![CDATA[
+输入参数示例：
+<?xml version="1.0" encoding="utf-8"?>
+<Request>
+<LineIndexCode>0001</LineIndexCode>       //线别编号
+<DeptIndexCode>0101</DeptIndexCode>       //部门编号
+<RegionIndexCode>505</RegionIndexCode>    //区间编号
+<PageIndex>0</PageIndex>                  //分页码，从0开始
+<PageSize>30</PageSize>                   //每页显示条数
+</Request>
+
+输出结果示例：
+<?xml version="1.0" encoding="utf-8"?>
+<ROWSET>
+<Result>1</Result>
+<Err>交易成功</Err>
+<ROW>
+<STATIONNUMBER>501</STATIONNUMBER>                //区间编号
+<STATIONNAME>南湖至大花岭(武南)</STATIONNAME>     //区间名称
+<PINYINCODE></PINYINCODE>   //拼音码
+<RAILLINEID>0001</RAILLINEID>			        //线别ID
+<DEPARTMENTID>01010801</DEPARTMENTID>             //区间所在部门ID
+<CREATETIME>2013-08-28 15:15:22</CREATETIME>      //创建时间
+</ROW>
+<ROW>
+...
+</ROW>
+</ROWSET>
+]]>
+    </param>
+    <param code="004" name="查询行别">
+<![CDATA[
+输入参数示例：
+<?xml version="1.0" encoding="utf-8"?>
+<Request>
+<ID>1</ID>  //行别编号 
+</Request>
+    
+输出结果示例：
+<?xml version="1.0" encoding="utf-8"?>
+<ROWSET>
+<Result>1</Result>
+<Err>交易成功</Err>
+<ROW>
+<XBNUM>1</XBNUM>                   //行别编号
+<XBNAME>下行</XBNAME>              //行别名称
+</ROW>
+<ROW>
+...
+</ROW>
+</ROWSET>
+]]>
+    </param>
+    <param code="005" name="查询锚段信息">
+<![CDATA[
+    
+]]>
+    </param>
+    <param code="006" name="查询支柱信息">
+<![CDATA[
+输入参数示例：
+<?xml version="1.0" encoding="utf-8"?>
+<Request>
+<MDNUMBER>1817</MDNUMBER>		           //锚段编号
+<RAILLINEID>0001</RAILLINEID>		      //线别编号
+<XBNUMBER>1</XBNUMBER>		               //行别编号
+<POLEKILOMETER>9.240</POLEKILOMETER>	      //支柱公里标
+</Request>
+
+输出结果示例：
+<?xml version="1.0" encoding="utf-8"?>
+<ROWSET>
+<Result>1</Result>
+<Err>交易成功</Err>
+<ROW>
+<MDNUMBER>1817</MDNUMBER>             //锚段编号
+<POLENUMBER>201592</POLENUMBER>       //支柱编号
+<POLENAME>57</POLENAME>               //支柱名
+<LATITUDE>30.8093</LATITUDE>          //纬度
+<LONGITUDE>114.2925</LONGITUDE>       //经度
+</ROW>
+<ROW>
+...
+</ROW>
+</ROWSET>
+]]>
+    </param>
+    <param code="007" name="查询今日施工计划">
+<![CDATA[
+输入参数示例：
+<?xml version="1.0" encoding="utf-8"?>
+<Request>
+<TYPEID>JCW</TYPEID> //专业类型 JCW:接触网 BD:变电 DL:电力
+<BEGINDATE>2013-08-28 15:15:22</BEGINDATE> //不能为空
+<ENDDATE>2013-08-31 15:15:22</ENDDATE>     //不能为空
+<DEPARTMENTID></DEPARTMENTID>             //部门编号
+<WORKBUILDTYPE></WORKBUILDTYPE>           //施工作业类型 ZT:主体施工 LY:临近营业点施工TD:停电施工 DW:点外作业
+<WORKGRADE></WORKGRADE>                   //作业等级（重要程度）1:一级2：二级 3：三级
+</Request>
+
+输出结果示例：
+<?xml version="1.0" encoding="utf-8"?>
+<ROWSET>
+<Result>1</Result>
+<Err>交易成功</Err>
+<ROW>
+<PLANID>0001</PLANID>               //计划ID
+<TYPEID>JCW</TYPEID>                //专业类型
+<WROKTEAMID>01011108</WROKTEAMID>   //部门编号
+<WROKTEAMNAME>0101</WROKTEAMNAME>   //部门名称
+<WORKCONTENT>检修分段绝缘器，清扫分段绝缘子1/6</WORKCONTENT>  //作业内容
+<WORKPLACE>汉阳(含)-武昌</WORKPLACE>                          //作业地点
+<WORKBEGINDATE>2013-08-31 00:00:00</WORKBEGINDATE>	      //作业开始时间
+<WORKENDDATE>2013-08-31 03:30:00</WORKENDDATE>		      //作业结束时间
+<PLANSTATUS>1</PLANSTATUS>				      //作业状态
+<LONGITUDE></LONGITUDE>  //经度
+<LATITUDE></LATITUDE>    //纬度
+<WORKBUILDTYPE></WORKBUILDTYPE>           //作业施工类别
+<WORKGRADE></WORKGRADE>                   //作业等级
+<ONCADRES></ONCADRES>                     //跟班干部
+</ROW>
+<ROW>
+...
+</ROW>
+</ROWSET>
+]]>
+    </param>
+    <param code="010" name="查询指定部门的应急物资">
+      <![CDATA[
+输入参数示例：
+<?xml version="1.0" encoding="utf-8"?>
+<Request>
+<ID>01010501</ID>  //部门编号
+</Request>
+    
+输出结果示例：
+<ROWSET>
+<Result>1</Result>
+<Err>交易成功</Err>
+<ROW>
+	<DEPARTMENTID>01010501</DEPARTMENTID>   //部门编号
+	<DEPARTNAME>武汉北网工区</DEPARTNAME>   //部门名称
+  <TYPENAME>线索类</TYPENAME>             //材料类型
+	<MATERIALCODE>001</MATERIALCODE>        //材料编号	
+	<MATERIALNAME>银铜合金接触线</MATERIALNAME> //材料名称
+	<MODEL>CHTA-120</MODEL>  //型号
+	<UNIT>米</UNIT>  //单位
+	<STANDARDQUANTITY>150</STANDARDQUANTITY>  //定额数量
+  <REMARK></REMARK>     //备注
+</ROW>
+</ROWSET>
+]]>
+    </param>
+    <param code="013" name="查询检查计划信息">
+      <![CDATA[
+输入参数示例：
+<?xml version="1.0" encoding="utf-8"?>
+<Request>
+<BEGINDATE>2013-08-28 15:15:22</BEGINDATE> //开始时间
+<ENDDATE>2013-12-31 15:15:22</ENDDATE>     //结束时间
+</Request>
+    
+输出结果示例：
+<ROWSET>
+<Result>1</Result>
+<Err>交易成功</Err>
+<ROW>
+<DUTYID>237</DUTYID>     //检查计划编号
+<DUTYMODE>1</DUTYMODE>   //检查方式(1:日常检查,2:跟班作业)
+<DUTYDATE>2013-11-12 00:00:00</DUTYDATE>  //检查日期
+<DUTYPLACE>{0101, , , },{01010501,,, }</DUTYPLACE> //检查地点 
+检查地点以{部门编号,部门名称,纬度,经度,计划号}为标准传递
+</ROW>
+<ROW>
+<DUTYID>238</DUTYID>
+<DUTYMODE>1</DUTYMODE>
+<DUTYDATE>2013-11-05 00:00:00</DUTYDATE>
+<DUTYPLACE>{0101, , , }</DUTYPLACE>
+</ROW>
+</ROWSET>
+]]>
+    </param>
+  </paramList>
+</config>

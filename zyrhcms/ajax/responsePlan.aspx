@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="responsePlan.aspx.cs" Inherits="ajax_responsePlan" %>

@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="gprs.aspx.cs" Inherits="ajax_gprs" %>

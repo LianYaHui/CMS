@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ShortcutKey>
+  <key action="Shift + T" desc="隐藏/显示网页顶部"></key>
+  <key action="Shift + L" desc="隐藏/显示网页左边栏"></key>
+  <key action="Shift + R" desc="隐藏/显示网页右边栏"></key>
+  <key action="Shift + F" desc="网页主体内容全屏显示切换"></key>
+  <key action="Shift + Q" desc="视频预览、录像回放页面OCX控件全屏切换"></key>
+  
+</ShortcutKey>

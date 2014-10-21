@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+body{margin:0; padding:0; font-size:12px;}
+html,body{scrollbar-3dlight-color:#dbebfe; scrollbar-arrow-color:#458ce4; scrollbar-track-color:#fff; scrollbar-darkshadow-color:#dbebfe; 
+	scrollbar-face-color:#dbebfe; scrollbar-highlight-color:#fff; scrollbar-shadow-color:#fff;
+}
+</style>
+<script type="text/javascript" src="popwin.js"></script>
+</head>
+
+<body>
+这是弹出层调用的示例
+<br />
+
+<input type="button" value="弹出对话框" onclick="Alert();this.blur();" />
+<input type="button" value="右下角弹窗" onclick="Confirm();this.blur();" />
+<input type="button" value="弹出窗体" onclick="Form();this.blur();" />
+<input type="button" value="弹出窗体" onclick="ShowPanel(this);this.blur();" />
+<input type="button" value="弹出框架窗体" onclick="ShowIframe();this.blur();" />
+<input type="button" value="弹出编辑窗体" onclick="ShowEdit();this.blur();" />
+<input type="button" value="弹出编辑窗体1" onclick="ShowEdit1();this.blur();" />
+<input type="button" value="弹出谷歌地图" onclick="ShowMap();this.blur();" />
+<input type="button" value="自适应尺寸窗体" onclick="ShowPanelAutoSize(true);this.blur();" />
+<input type="button" value="全屏尺寸窗体" onclick="ShowPanelAutoSize(false);this.blur();" />
+
+<select id="s1">
+<option value="1">abc</option>
+</select>
+<div id="abc"></div>
+<div id="div1" style="width:200px;height:50px;border:solid 1px #ddd;" oncontextmenu="ContextMenu(this,event);" lang="{id:1001,name:\'右键菜单\'}">
+{id:1001,name:'右键菜单'}
+</div>
+<a style="display:block;height:800px;">&nbsp;</a>
+<script >
+//var demo1 = new PopWin({id:'pwdemo',width:'auto',height:'auto',boxType:'alert',html:'<div style="padding:0 ">用户名长度为2-25个字符，由中英文字母或数字组成，以中英文字母开头。</div>'});
+//alert('ok');
+
+var demo2 = popwin.GetObj('pwdemo');
+
+//alert('1:' + demo2.pwTitle.innerHTML);
+//alert(demo2);
+//demo1.Update('这是第一个示例哦');
+//alert('2:' + demo2.pwTitle.innerHTML);
+
+document.body.style.cssText = 'padding:10px;';
+document.getElementById("div1").style.cssText = 'width:400px;height:80px;border:solid 1px #ccc; padding:5px; margin:5px 0 0; background:#fafafa';
+var num = 0;
+function Test(pwobj, pwReturn){
+	//alert(pwReturn.dialogResult);
+	var strHtml = '您点击了';
+	if(pwReturn.dialogResult){
+		//alert(pwReturn.returnValue);
+		strHtml += '“确定”按钮';
+	}
+	else{
+		strHtml += '“取消”按钮';
+	}
+	var pwid2 = new PopWin({title:'提示',html:strHtml,
+		escClose:true,width:'auto',height:'auto',zindex:200,boxType:'alert'
+	});
+
+	pwobj.Close();
+}
+
+function showWin(){
+	for(var i=0; i<4; i++){
+		var config = {id:'id' + i,title:'测试' + i, lock:false,topMost:true};
+		new PopWin(config);
+	}	
+}
+//showWin();
+
+function Test1(pwobj, pwReturn){
+	//alert(pwReturn.dialogResult);
+	if(pwReturn.dialogResult){
+		///alert(pwReturn.returnValue);
+	}
+	pwobj.Close();
+	//pwobj.Close(pwobj.config.id, 'close', pwobj.config);
+	//alert(pwobj.config.closeType);
+	//popwin.CloseWin(pwobj.config.id, 'close', pwobj.config);
+	//alert("show");
+	//popwin.Show(pwobj.config.id);
+}
+
+function Form(){
+	var showBottom = false;
+	var strHtml = '<div id="div11" style="width:100%; height:' + (215-(showBottom?29:0)) + 'px; background:#ccc; display:block;">'
+		+ '<div style="padding:5px 10px;">'
+		+ 'http://www.baidu.com'
+		+ '<br />'
+		+ '<input type="text" />'
+		+ '<select id="s12"><option value="1">acc</option></select>'
+		+ '<input type="button" value="确定" onclick="FormWin();"/>'
+		+ '</div>'
+		+ '</div>';
+	var pwid1 = new PopWin({id:1001,html:strHtml,boxType:'form',lock:false,escClose:true,width:'360',height:'240',
+		autoClose:false,autoMin:false,timeout:3000,callBack:Test,target:'http://www.baidu.com',returnValue:'hello world',minAble:true,maxAble:true,showMinMax:true,fixed:true,position:1,x:100,y:100,noBottom:!showBottom,5:true,
+		callBackByResize:Resize,closeAble:true,timeout:2000,dragRange:'out',buttonText:['是','否'],shortcutKey:['Y','N']
+	});
+	pwid1.ShowBottom(false);
+	//alert(1);
+	pwid1.ShowBottom();
+
+	pwid1.Focus(2);
+	/*
+	alert(1);
+	pwid1.Hide();
+	alert(2);
+	pwid1.Show();
+	alert(3);
+	pwid1.Min();
+	alert(4);
+	pwid1.Max();
+	alert(5);
+	pwid1.Resize();
+	*/	
+}
+
+function Resize(pwmodel, pwsize){
+	//alert('resize:' + isMin);
+	var div11 = document.getElementById("div11");
+	switch(pwmodel){
+		case 'max':
+			div11.style.height = pwsize.h + 'px';
+			break;
+		case 'min':
+			if(pwsize.h > 0){
+				div11.style.height = pwsize.h + 'px';
+			}
+			break;
+		case 'normal':
+			div11.style.height = pwsize.h + 'px';
+			break;
+	}
+}
+
+function FormWin(){
+	var strHtml = '弹出层内容' + new Date();
+	var pwid12 = new PopWin({
+		id:12,title:'弹出层示例二',html:strHtml,boxType:'confirm',
+		width:300,height:200,skin:'default',dragAble:true,minAble:true,lock:false,buttonWidth:'auto',buttonHeight:26
+	});
+}
+
+function Alert(){
+	var strHtml = '弹出层内容' + new Date().getSeconds();
+	var pwid2 = new PopWin({id:2,title:'弹出层示例二',html:strHtml,boxType:'alert',iconType:'warning',lock:true,clickBgClose:true,clickBoxClose:true,
+		escClose:true,width:'auto',height:'auto',skin:'default',loadCss:false,position:7,dragAble:true,minAble:true,
+		build:'rebuild'
+	});
+}
+//alert('' + new Date().getSeconds());
+var i = 1;
+var obj = document.getElementById("abc");
+
+function Confirm(){
+	var strHtml = '<div style="padding:5px 15px 5px;">弹出层内容<br />弹出层内容<br />弹出层内容<br />';
+	strHtml += '</div>';
+	var strTitle = '<span style="color:#fff;">右下角弹出层示例' + i + '</span>';
+	new PopWin({id:3,title:strTitle,html:strHtml,lock:false,boxType:'window',noBottom:true,
+		escClose:false,position:9,width:'260',height:'204',autoClose:false,showMinMax:true,
+		appendType:'stack',minAble:false,callBack:Test1,returnValue:1,
+		boxColor:'#ddd',minWidth:260,autoMin:false,timeout:4000,borderStyle:'none',boxBgColor:'url(bg.gif) no-repeat',
+		titleBgColor:'none',titleBorderStyle:'none',titleHeight:26,titleColor:'#fff',noTitle:true
+	});
+	i++;
+}
+
+function ShowPanel(obj){
+	var strHtml = '<div style="padding:5px;">弹出层内容<br />Javascript弹出层效果，<br />兼容IE(6/7/8)/FF/Chrome/Opera等主流浏览器。<br />可自适应宽度高度<br />能适应大多数弹出层需求。<br />';
+	for(var i=0; i<1500; i++){
+		strHtml += 'abc';
+	}
+	strHtml += '</div>';
+	var strTitle = '弹出层示例三' + i;
+	var x = obj.offsetLeft;
+	var y = obj.offsetTop + obj.offsetHeight;
+	var pwPanel = new PopWin({id:12,title:strTitle,html:strHtml,lock:true,bgOpacity:0.5,bgColor:'#fff',boxType:'message',clickBoxClose:true,clickBgClose:'dblclick',
+		escClose:true,position:'custom',x:x,y:y,width:'auto',height:'auto',titleColor:'#fff',minHeight:100,build:'rebuild',
+		minAble:true,closeButtonType:'text',borderStyle:'solid 3px #ddd',titleBgColor:'#fff',titleBorderStyle:'none',fixed:false,noTitle:true
+	});
+	pwPanel.ShowBottom(false);
+	pwPanel.ShowBottom();
+	i++;
+}
+
+function ShowPanelAutoSize(auto){
+	var strHtml = '<div style="padding:5px;">弹出层内容<br />Javascript弹出层效果，<br />兼容IE(6/7/8)/FF/Chrome/Opera等主流浏览器。<br />可自适应宽度高度<br />能适应大多数弹出层需求。<br />';
+	for(var i=0; i<50; i++){
+		strHtml += '弹出层效果';
+	}
+	strHtml += '</div>';
+	var strTitle = '弹出层示例五' + i;
+	var pwPanel = new PopWin({
+		id:12,title:strTitle,html:strHtml,lock:true,bgOpacity:0.5,bgColor:'#fff',boxType:'message',clickBoxClose:true,clickBgClose:'dblclick',
+		escClose:true,width:(auto?'auto':'100%'),height:(auto?'auto':'100%'),titleColor:'#fff',minHeight:100,build:'rebuild',realFixed:true,
+		minAble:true,closeButtonType:'text',borderStyle:'solid 5px #f00',titleBgColor:'#fff',titleBorderStyle:'none',position:1
+	});
+}
+
+var strHtml = 'abc';
+//new PopWin({title:'我是标题',html:strHtml});
+function ContextMenu(obj, e){
+	var pos = mouseClick(e);	
+	var strHtml = '<ul class="menu">'
+		+ BuildMenuLi('MenuAction',{name:'新建',obj:obj},'新建新建','#316ac5','#fff','#fff','#000')
+		+ '<li class="separate"></li>'
+		+ BuildMenuLi('MenuAction',{name:'编辑',obj:obj},'编辑','#316ac5','#fff','#fff','#000')
+		+ BuildMenuLi('MenuAction',{name:'保存',obj:obj},'保存','#316ac5','#fff','#fff','#000')
+		+ BuildMenuLi('MenuAction',{name:'重新加载',obj:obj},'重新加载','#316ac5','#fff','#fff','#000')
+		+ '</ul>';
+	var strTitle = '弹出层示例三' + i;
+	
+	var pwcmenu = new PopWin({id:22,noTitle:true,html:strHtml,lock:false,boxType:'contextmenu',width:'120',height:'auto',position:'custom',x:pos.x,y:pos.y,
+		build:'show',closeType:'hidden',opacity:0.95,dragAble:false,borderStyle:'solid 2px #ddd',showClose:false
+	});
+	i++;
+	pwcmenu.StopBubble(e);
+}
+
+function SetColor(obj,bgColor,txtColor){
+	obj.style.background = bgColor;
+	obj.style.color = txtColor;
+}
+
+function BuildMenuLi(func,val,txt,bg,color,bg1,color1){
+	return '<li onclick="' + func + '(\'' + val.name + '\',\'' + val.obj.lang + '\');" onmouseover="SetColor(this,\'' + bg + '\',\'' + color + '\');" onmouseout="SetColor(this,\'' + bg1 + '\',\'' + color1 + '\');">' + txt + '</li>';
+}
+
+function MenuAction(val,obj){
+	var json = eval('(' + obj + ')');
+	var strHtml = '<div style="padding:5px 10px;">' + json.name + ': ' + val + '</div>';
+	new PopWin({id:32,title:'右键菜单功能',html:strHtml,boxType:'message',lock:false,width:'240',height:'150',zindex:300});
+}
+
+function ShowIframe(){
+	var url = 'http://www.baidu.com';
+	var pwobj = new PopWin({id:52,title:'IFRAME框架',html:url,lock:false,boxType:'window',requestType:'iframe',width:'720',height:'450',
+		position:5,opacity:1,minAble:true,maxAble:true,showMinMax:true,minHeight:260,minWidth:720,noBottom:true
+	});
+	//popwin.Min(pwobj.config.id,'min');
+	//popwin.Min(pwobj.config.id,'normal');
+}
+
+function ShowEdit(){
+	var url = 'test.html';
+	var pwobj = new PopWin({id:52,title:'编辑窗体',html:url,filter:false,boxType:'window',requestType:'iframe',width:'720',height:'500',
+		position:5,opacity:1,minAble:true,maxAble:true,showMinMax:true,minHeight:260,minWidth:720,noBottom:true
+	});
+	//popwin.Min(pwobj.config.id,'min');
+	//popwin.Min(pwobj.config.id,'normal');
+}
+
+function ShowEdit1(){
+	var strHtml = '<iframe src="test.html" style="width:650px;height:400px;"></iframe>';
+	var pwobj = new PopWin({id:52,title:'编辑窗体',html:strHtml,boxType:'window',requestType:'html',width:'720',height:'500',
+		position:5,opacity:1,minAble:true,maxAble:true,showMinMax:true,minHeight:260,minWidth:720,noBottom:true
+	});
+	//popwin.Min(pwobj.config.id,'min');
+	//popwin.Min(pwobj.config.id,'normal');
+}
+
+function ShowMap(){
+	var strHtml = 'map-simple.html';	
+	new PopWin({boxType:'window',requestType:'iframe',filter:false,minAble:true,maxAble:true,showMinMax:true,noBottom:true,html:strHtml,width:600,height:425});
+}
+
+document.onclick = function(e){
+	//alert('document');
+	popwin.Close(22);
+}
+
+
+function mouseClick(ev) {
+    ev = ev || window.event;
+    var mousePos = mouseCoords(ev);
+	return mousePos;
+}
+function mouseCoords(ev) {
+    if (ev.pageX || ev.pageY) {
+        return {
+            x: ev.pageX,
+            y: ev.pageY
+        };
+    }
+    return {
+        x: ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+        y: ev.clientY + document.body.scrollTop - document.body.clientTop
+    };
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>鏃犳爣棰樻枃妗?/title>
+<style type="text/css"></style>
+<script type="text/javascript"></script>
+</head>
+
+<body>
+<select id="ddlType">
+</select>
+</body>
+</html>
+<script type="text/javascript">
+
+var fillOption = function(obj, val, txt) {
+    obj.options.add(new Option(txt, val));
+}
+
+var getDataList = function(dataList, parentId){
+	var arr = [];
+	for(var i=0; i<dataList.length; i++){
+		if(parseInt(dataList[i].parentId, 10) == parentId){
+			arr.push(dataList[i]);
+		}
+	}
+	return arr;
+}
+
+var CreateDropDownList = function(parentId, jsonData, obj){
+	var arr = getDataList(jsonData, parentId);
+	var c = arr.length;
+	for(var i=0; i<c; i++){
+		var space = '';
+		for(var j=1; j<arr[i].level; j++){
+			space += '  鈹?  ';
+		}
+		space += (arr[i].level > 0 ? i < c-1 ? '  鈹溾攢' : '  鈹斺攢' : '');
+		fillOption(obj, arr[i].id, space + arr[i].name);
+		CreateDropDownList(parseInt(arr[i].id), jsonData, obj);  
+	}	
+}
+
+
+var obj = document.getElementById('ddlType');
+var parentId = 0;
+var jsonData = [];
+
+var jsonData = [
+	{id:1, parentId:0, level:0, name:'鑷劧鐏惧'},
+	{id:2, parentId:0, level:0, name:'浜嬫晠鐏鹃毦'},
+	{id:3, parentId:0, level:0, name:'鍏叡鍗敓浜嬩欢'},
+	{id:4, parentId:0, level:0, name:'绀句細瀹夊叏浜嬩欢'},
+	{id:5, parentId:1, level:1, name:'姘存棻鐏惧'},
+	{id:6, parentId:1, level:1, name:'姘旇薄鐏惧'},
+	{id:7, parentId:1, level:1, name:'鍦伴渿鐏惧'},
+	
+	{id:12, parentId:2, level:1, name:'浼佷笟瀹夊叏浜嬫晠'},
+	{id:13, parentId:2, level:1, name:'浜ら€氳繍杈撲簨鏁?},
+	{id:14, parentId:12, level:2, name:'鍏叡璁炬柦浜嬫晠'}
+
+];
+
+CreateDropDownList(parentId, jsonData, obj);
+
+</script>

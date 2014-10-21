@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<configuration label="Louisville Parcels and Police">
+    <layers>
+        <layer>
+            <name>用地拟报批</name>
+            <url>http://192.168.0.39:8006/ArcGIS/rest/services/dw/MapServer/2</url>
+            <expression>PD_NAME like '[value]'</expression>
+            <textsearchlabel>Search by Parcel ID  [ Example: 181001490000 or 1810%]</textsearchlabel>
+            <titlefield>PNAME</titlefield>
+            <linkfield></linkfield>
+            <fields all="false">
+                <field alias="项 目 名 称"   name="PNAME" />
+                <field alias="批 文 编 号"     name="DOCID"  />
+                <field alias="批 文 时 间"     name="DOCDATE"  />
+                <field alias="所 在 批 次"     name="INAPP"  />
+                <field alias="批 复 文 号"     name="APPDOCID"  />
+                <field alias="批 准 时 间"     name="APPDATE"  />
+                <field alias="用 地 单 位"     name="LANDUNIT"  />
+                <field alias="所在行政区"   name="ADMINZONE"  />
+                <field alias="批 地 单 位"     name="APPUNIT"  />
+                <field alias="农用土地面积" name="NYDAREA"  />
+                <field alias="建设用地面积" name="TAKECOLL"  />
+                <field alias="未利用地面积" name="TTILLLAND"  />
+                <field alias="备  注"        name="MEMO"  />
+            </fields>
+        </layer>
+        <layer>
+            <name>用地报批</name>
+            <url>http://192.168.0.39:8006/ArcGIS/rest/services/dw/MapServer/3</url>
+            <expression>PD_NAME like '[value]'</expression>
+            <textsearchlabel>Search Police Stations by name... [ Example: 2ND DIVISION or 2%]</textsearchlabel>
+            <titlefield>PNAME</titlefield>
+            <linkfield></linkfield>
+            <fields all="false">
+                <field alias="项 目 名 称"   name="PNAME" />
+                <field alias="批 文 编 号"   name="DOCID"  />
+                <field alias="批 文 时 间"     name="DOCDATE"  />
+                <field alias="所 在 批 次"     name="INAPP"  />
+                <field alias="批 复 文 号"     name="APPDOCID"  />
+                <field alias="批 准 时 间"     name="APPDATE"  />
+                <field alias="用 地 单 位"     name="LANDUNIT"  />
+                <field alias="所在行政区"   name="ADMINZONE"  />
+                <field alias="批 地 单 位"     name="APPUNIT"  />
+                <field alias="农用土地面积" name="NYDAREA"  />
+                <field alias="建设用地面积" name="TAKECOLL"  />
+                <field alias="未利用地面积" name="TTILLLAND"  />
+                <field alias="备  注"        name="MEMO"  />
+            </fields>
+        </layer>
+        <layer>
+            <name>供而未用土地</name>
+            <url>http://192.168.0.39:8006/ArcGIS/rest/services/dw/MapServer/4</url>
+            <expression>PD_NAME like '[value]'</expression>
+            <textsearchlabel>Search Police Stations by name... [ Example: 2ND DIVISION or 2%]</textsearchlabel>
+            <titlefield>PNAME</titlefield>
+            <linkfield></linkfield>
+            <fields all="false">
+                <field alias="项 目 名 称"   name="PNAME" />
+                <field alias="用 地 单 位"  name="LANDUNIT"  />
+                <field alias="批 文 编 号"  name="DOCID"  />
+                <field alias="批 复 文 号"  name="APPDOCID"  />
+                <field alias="用  途"       name="LANDUSE"  />
+                <field alias="所 在 批 次"   name="INAPP"  />
+                <field alias="所在行政区" name="ADMINZONE"  />
+                <field alias="申 请 面 积"   name="APPLYAREA"  />
+                <field alias="拟供总面积" name="RSAREA"  />
+                <field alias="本地块面积" name="LANDMAPS_1"  />
+                <field alias="批 准 时 间"   name="APPDATE"  />
+                <field alias="万元/亩" name="LANDTOTAL"  />
+                <field alias="土 地 证 书" name="TDZS"  />
+                <field alias="备  注"      name="MEMO_"  />
+                
+            </fields>
+        </layer>
+        <layer>
+            <name>已发证土地</name>
+            <url>http://192.168.0.39:8006/ArcGIS/rest/services/dw/MapServer/5</url>
+            <expression>PD_NAME like '[value]'</expression>
+            <textsearchlabel>Search Police Stations by name... [ Example: 2ND DIVISION or 2%]</textsearchlabel>
+            <titlefield>PNAME</titlefield>
+            <linkfield></linkfield>
+            <fields all="false">
+                <field alias="项 目 名 称"   name="PNAME" />
+                <field alias="用 地 单 位"  name="LANDUNIT"  />
+                <field alias="批 文 编 号"  name="DOCID"  />
+                <field alias="批 复 文 号"  name="APPDOCID"  />
+                <field alias="用  途"       name="LANDUSE"  />
+                <field alias="所 在 批 次"   name="INAPP"  />
+                <field alias="所在行政区" name="ADMINZONE"  />
+                <field alias="申 请 面 积"   name="APPLYAREA"  />
+                <field alias="拟供总面积" name="RSAREA"  />
+                <field alias="本地块面积" name="LANDMAPS_1"  />
+                <field alias="批 准 时 间"   name="APPDATE"  />
+                <field alias="万元/亩" name="LANDTOTAL"  />
+                <field alias="土 地 证 书" name="TDZS"  />
+                <field alias="备  注"      name="MEMO_"  />
+            </fields>
+        </layer>
+    </layers>
+    <zoomscale>10000</zoomscale>
+</configuration>
+
+<!--
+    See Search widget tag reference at
+    http://links.esri.com/searchwidget
+-->

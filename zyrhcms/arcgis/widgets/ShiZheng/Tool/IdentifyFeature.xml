@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--				<mx:dataProvider>-->
+<!--					<fx:Array>-->
+<!--						<fx:Object label="地  块" value="地块"  url="http://jhzyd:8012/ArcGIS/rest/services/ghjmap/MapServer/65"/>-->
+<!--						<fx:Object label="街  坊" value="街坊" url="http://jhzyd:8012/ArcGIS/rest/services/ghjmap/MapServer/66"/>-->
+<!--						<fx:Object label="单  元" value="单元" url="http://jhzyd:8012/ArcGIS/rest/services/ghjmap/MapServer/67"/>-->
+<!--					</fx:Array>-->
+<!--				</mx:dataProvider>-->
+<option>
+<subs label="地块信息查询" value="地块" icon="i_basemap"  url="http://jhzyd:8012/ArcGIS/rest/services/ghjmap/MapServer/5"/>
+<subs label="街坊信息查询" value="街坊" icon="EffectsTransparency16"  url="http://jhzyd:8012/ArcGIS/rest/services/ghjmap/MapServer/6"/>
+<subs label="单元信息查询" value="单元" icon="edit_polygontool"  url="http://jhzyd:8012/ArcGIS/rest/services/ghjmap/MapServer/7"/>
+<subs label="控规信息查询" value="控规范围线"  icon="edit_autocompletepolygontool" url="http://jhzyd:8012/ArcGIS/rest/services/ghjmap/MapServer/8"/>
+<subs label="用地红线查询" value="用地红线"  icon="edit_autocompletepolygontool" url="http://jhzyd:8012/ArcGIS/rest/services/ydhx/MapServer/8"/>
+<subs label="道路查询" value="道路查询"  icon="edit_autocompletepolygontool" url="http://jhzyd:8012/ArcGIS/rest/services/ydhx/MapServer/9"/>
+</option>

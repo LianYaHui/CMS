@@ -1,0 +1,65 @@
+.dtree {
+	font-family:ËÎÌו,Arial,Verdana, Geneva, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #666;
+	white-space: nowrap;
+	overflow:visible;
+	scrollbar-3dlight-color:#dbebfe; scrollbar-arrow-color:#458ce4; scrollbar-track-color:#fff; scrollbar-darkshadow-color:#dbebfe; 
+	scrollbar-face-color:#dbebfe; scrollbar-highlight-color:#fff; scrollbar-shadow-color:#fff;
+}
+.dtree img {
+	border: 0px;
+	margin:2px 0 0; 
+	padding:0;
+	height:16px;
+	display:inline-block;
+	vertical-align: middle;
+}
+.dtree a {
+	color: #333;
+	text-decoration: none;
+	height:16px;
+	line-height:16px;
+	margin:6px 0 0 4px;
+	*margin:2px 0 0 4px !important;
+	margin:6px 0 0 4px \9;
+	padding:1px 2px 0;
+	display:inline-block;
+	text-decoration:none;
+	cursor:pointer;
+}
+.dtree a:hover{
+	text-decoration:none;
+}
+.dtree span{
+	height:14px; display:inline-block; margin:0; padding:1px 0 0 !important; *padding:2px 0 0; padding:2px 0 0 \9; _padding:2px 0 0;
+}
+.dtree a input{
+	margin:1px 0 0; padding:0; width:14px; height:14px; float:left;
+	margin-right:4px !important; *margin-right:0; margin-right:0 \9;
+}
+.dtree a.node, .dtree a.nodeSel {
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px;
+}
+.dtree a.node:hover, .dtree a.nodeSel:hover {
+	background:#f1f1f1;
+}
+.dtree a.nodeSel {
+	background-color: #99bbe8; /*#d9e8fb;*/
+}
+.dtree .clip {
+	/*overflow: hidden;*/
+	display:block;
+	white-space: nowrap;
+}
+
+.dtree .dTreeNode{
+	clear:both;
+	display:block;
+}
+/*
+.dtree .dTreeNode:hover{
+	background:#f1f1f1;
+}
+*/

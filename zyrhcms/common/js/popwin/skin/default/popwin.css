@@ -1,0 +1,283 @@
+.pwLayer{
+	margin:0;
+	padding:0;
+	background:#ddd;
+	width:100%;
+	height:100%;
+	z-index:99998;
+	overflow:hidden;
+	position:absolute;
+}
+.pwBox{
+	margin:0;
+	padding:0;
+	background:#fff;
+	z-index:99999;
+	/*border:solid 1px #99bbe8;*/
+	color:#333;
+	font-size:12px;
+	line-height:24px;
+	text-align:left;
+	-webkit-box-shadow:5px 2px 6px #000;
+	-moz-box-shadow:3px 3px 6px #555;
+	overflow:hidden;
+}
+.pwBox .pwTitleBox{
+	background:#b8cfee url("img/title.png") repeat-x 0 0;
+	border-bottom:1px solid #99bbe8;
+}
+.pwBox .pwTitle{
+	font-weight:bold;
+	color:#15428b;
+	font-size:12px;
+	font-family:宋体,Arial,Verdana;
+	padding-left:22px;
+	line-height:24px;
+	background:url("img/win.png") no-repeat 5px 7px;
+	padding-top:0;
+	*padding-top:2px;
+	padding-top:2px \9;
+	_padding-top:2px;
+	margin-bottom:0;
+	*margin-bottom:-2px;
+	margin-bottom:-2px \9;
+	_margin-bottom:-2px;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	user-select:none;
+	_display:block;
+	_width:100%;
+}
+.pwBox .pwClose{
+	float:right;
+	cursor:pointer;
+	line-height:24px;
+	position:relative;
+	width:24px;
+}
+.pwBox .pwClose a.img,.pwBox .pwClose .abtn-img,.pwBox .pwClose a.img:hover,.pwBox .pwClose .acbtn-img{
+	width:24px;
+	height:24px;
+	display:block;
+	overflow:hidden;
+	background:url("img/close.png") no-repeat;
+	_background:url("img/close.gif") no-repeat;
+	text-indent:-9999px;
+	position:absolute;
+	right:1px;
+	cursor:pointer;
+}
+.pwBox .pwClose a.img:hover,.pwBox .pwClose .acbtn-img{
+	background:url("img/close.png") no-repeat -25px 0;
+	_background:url("img/close.gif") no-repeat -25px 0;
+}
+.pwBox .pwClose a.text,.pwBox .pwClose .abtn-text,.pwBox .pwClose a.text:hover,.pwBox .pwClose .acbtn-text{
+	text-decoration:none;
+	color:#333;
+	width:24px;
+	height:24px;
+	display:block;
+	overflow:hidden;
+	font-size:12px;
+	position:absolute;
+	right:1px;
+	padding:0 3px;
+}
+.pwBox .pwClose a.text:hover,.pwBox .pwClose .acbtn-text{
+	color:#f00;
+}
+.pwBox .pwMin,.pwBox .pwMax,.pwBox .pwNormal{
+	float:right;
+	cursor:pointer;
+	line-height:24px;
+	width:24px;
+	position:relative;
+}
+.pwBox .pwMin a,.pwBox .pwMax a,.pwBox .pwNormal a,.pwBox .pwMin .abtn,.pwBox .pwMax .abtn,.pwBox .pwNormal .abtn,.pwBox .pwMin .acbtn,.pwBox .pwMax .acbtn,.pwBox .pwNormal .acbtn{
+	width:24px;
+	height:24px;
+	display:block;
+	overflow:hidden;
+	text-indent:-9999px;
+	position:absolute;
+	right:1px;
+	cursor:pointer;
+}
+.pwBox .pwMin a,.pwBox .pwMin .abtn{
+	background:url("img/close.png") no-repeat 0 -25px;
+	_background:url("img/close.gif") no-repeat 0 -25px;
+}
+.pwBox .pwMin a:hover,.pwBox .pwMin .acbtn{
+	background:url("img/close.png") no-repeat -25px -25px;
+	_background:url("img/close.gif") no-repeat -25px -25px;
+}
+.pwBox .pwMax a,.pwBox .pwMax .abtn{
+	background:url("img/close.png") no-repeat 0 -50px;
+	_background:url("img/close.gif") no-repeat 0 -50px;
+}
+.pwBox .pwMax a:hover,.pwBox .pwMax .acbtn{
+	background:url("img/close.png") no-repeat -25px -50px;
+	_background:url("img/close.gif") no-repeat -25px -50px;
+}
+.pwBox .pwNormal a,.pwBox .pwNormal .abtn{
+	background:url("img/close.png") no-repeat 0 -75px;
+	_background:url("img/close.gif") no-repeat 0 -75px;
+}
+.pwBox .pwNormal a:hover,.pwBox .pwNormal .acbtn{
+	background:url("img/close.png") no-repeat -25px -75px;
+	_background:url("img/close.gif") no-repeat -25px -75px;
+}
+.pwBox .pwBodyBox{
+	display:block;
+	overflow:auto;
+	margin:0;
+	padding:0;
+}
+.pwBox .pwBody,.pwBodyTemp{
+	display:block;
+	_display:inline-block;
+	overflow:auto;
+	margin:0;
+	padding:0;
+	word-break:break-all;
+	line-height:20px;
+}
+.pwBox .pwBody ul.menu,.pwBodyTemp ul.menu{
+	padding:2px 2px;
+	overflow:hidden;
+}
+.pwBox .pwBody ul.menu li,.pwBodyTemp ul.menu li{
+	color:#000;
+	display:block;
+	cursor:default;
+	text-decoration:none;
+	padding:0 5px;
+	height:20px;
+	line-height:20px;
+}
+.pwBox .pwBody ul.menu li:hover{
+	color:#fff;
+	background:#316ac5;
+}
+.pwBox .pwBody ul.menu li.separate{
+	border-top:solid 1px #ddd;
+	height:0px;
+	margin:2px 0;
+	line-height:0px;
+	overflow:hidden;
+	font-size:1px;
+}
+.pwBox .pwBody ul.menu li.separate:hover{}
+/*图片或IFrame*/
+.pwBox .pwBodyPanel{}
+.pwBox .icon-info,.pwbody-icon-info{
+	background:url("img/icon-info.png") no-repeat 10px 10px;
+	_background:url("img/icon-info.gif") no-repeat 10px 10px;
+	padding:7px 10px 3px 60px;
+	min-height:45px;
+}
+.pwBox .icon-error,.pwbody-icon-error{
+	background:url("img/icon-error.png") no-repeat 10px 10px;
+	_background:url("img/icon-error.gif") no-repeat 10px 10px;
+	padding:7px 10px 3px 60px;
+	min-height:45px;
+}
+.pwBox .icon-question,.pwbody-icon-question{
+	background:url("img/icon-question.png") no-repeat 10px 10px;
+	_background:url("img/icon-question.gif") no-repeat 10px 10px;
+	padding:7px 10px 3px 60px;
+	min-height:45px;
+}
+.pwBox .icon-warning,.pwbody-icon-warning{
+	background:url("img/icon-warning.png") no-repeat 10px 10px;
+	_background:url("img/icon-warning.gif") no-repeat 10px 10px;
+	padding:7px 10px 3px 60px;
+	min-height:45px;
+}
+.pwBox .icon-success,.pwbody-icon-success,.pwBox .icon-succeed,.pwbody-icon-succeed{
+	background:url("img/icon-success.png") no-repeat 10px 10px;
+	_background:url("img/icon-success.gif") no-repeat 10px 10px;
+	padding:7px 10px 3px 60px;
+	min-height:45px;
+}
+.pwBox .pwBody p,.pwBox .pwBody ul,.pwBox .pwBody li,.pwBox .pwBody dl,.pwBox .pwBody dt,.pwBox .pwBody dd,.pwBox .pwBody form,.pwBox .pwBody iframe{
+	margin:0;
+	padding:0;
+}
+.pwBodyTemp p,.pwBodyTemp ul,.pwBodyTemp li,.pwBodyTemp dl,.pwBodyTemp dt,.pwBodyTemp dd,.pwBodyTemp form,.pwBodyTemp iframe{
+	margin:0;
+	padding:0;
+}
+.pwBox .pwBottom{
+	overflow:hidden;
+	background:#b8cfee url("img/title.png") repeat-x 0 -53px;
+	display:block;
+	border-top:solid 1px #99bbe8;
+}
+.pwBox .pwBottom a,.pwBox .pwBottom .abtn{
+	padding:0; padding-right:8px; font-size:12px; font-family:宋体,Arial,Verdana; border:none 0; text-align:center; color:#000; 
+	text-decoration:none; display:inline-block; cursor:pointer;
+	background:url("img/btn.png") no-repeat right -30px;
+	_background:url("img/btn.gif") no-repeat right -30px;
+	margin:3px 3px 0 3px;
+}
+.pwBox .pwBottom a span,.pwBox .pwBottom .abtn span{
+	margin:0; padding:0; padding-left:8px; font-size:12px; font-family:宋体,Arial,Verdana; border:none 0; color:#000; 
+	display:block;
+	background:url("img/btn.png") no-repeat 0 0;
+	_background:url("img/btn.gif") no-repeat 0 0;
+}
+.pwBox .pwBottom a:hover,.pwBox .pwBottom .acbtn{
+	background:url("img/btn.png") no-repeat right -90px;
+	_background:url("img/btn.gif") no-repeat right -90px;
+}
+.pwBox .pwBottom a:hover span,.pwBox .pwBottom .acbtn span{
+	background:url("img/btn.png") no-repeat 0 -60px; 
+	_background:url("img/btn.gif") no-repeat 0 -60px;
+}
+
+.pwBox .noSelect{
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	user-select:none;
+}
+.pwBox .pwBottom a.abtn22{height:22px; line-height:22px; background-position:right -30px;}
+.pwBox .pwBottom a.abtn22 span{height:22px; line-height:22px; background-position:0 0;}
+.pwBox .pwBottom a.acbtn22{height:22px; line-height:22px; background-position:right -90px;}
+.pwBox .pwBottom a.acbtn22 span{height:22px; line-height:22px; background-position:0 -60px;}
+
+.pwBox .pwBottom a.abtn24{height:24px; line-height:24px; background-position:right -150px;}
+.pwBox .pwBottom a.abtn24 span{height:24px; line-height:24px; background-position:0 -120px;}
+.pwBox .pwBottom a.acbtn24{height:24px; line-height:24px; background-position:right -210px;}
+.pwBox .pwBottom a.acbtn24 span{height:24px; line-height:24px; background-position:0 -180px;}
+
+.pwBox .pwBottom a.abtn26{height:26px; line-height:26px; background-position:right -270px; margin:4px 3px 0 3px;}
+.pwBox .pwBottom a.abtn26 span{height:26px; line-height:26px; background-position:0 -240px;}
+.pwBox .pwBottom a.acbtn26{height:26px; line-height:26px; background-position:right -330px; margin:4px 3px 0 3px;}
+.pwBox .pwBottom a.acbtn26 span{height:26px; line-height:26px; background-position:0 -300px;}
+
+.pwBox .pwBottom a.abtn30{height:30px; line-height:30px; background-position:right -390px; margin:5px 3px 0 3px;}
+.pwBox .pwBottom a.abtn30 span{height:30px; line-height:30px; background-position:0 -360px;}
+.pwBox .pwBottom a.acbtn30{height:30px; line-height:30px; background-position:right -450px; margin:5px 3px 0 3px;}
+.pwBox .pwBottom a.acbtn30 span{height:30px; line-height:30px; background-position:0 -420px;}
+
+.pwBox .pw-bottom-center{
+	text-align:center;
+}
+.pwBox .pw-bottom-right{
+	text-align:right;
+	padding:0 5px 0 0;
+}
+.pwBox .scrollbar{
+	overflow:auto;
+	scrollbar-3dlight-color:#dbebfe;
+	scrollbar-arrow-color:#458ce4;
+	scrollbar-track-color:#fff;
+	scrollbar-darkshadow-color:#dbebfe;
+	scrollbar-face-color:#dbebfe;
+	scrollbar-highlight-color:#fff;
+	scrollbar-shadow-color:#fff;
+}
+.pwBox .pwLoading{
+	padding:0 0 0 25px; line-height:32px; font-size:12px; position:absolute; top:25px; left:0; background:url("img/loading.gif") no-repeat 5px 8px;
+}

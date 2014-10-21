@@ -1,0 +1,175 @@
+package com.th.myUtils
+{
+	import events.TreeCheckedEvent;
+	
+	import flash.events.Event;
+	
+	import mx.controls.CheckBox;
+	import mx.controls.treeClasses.TreeItemRenderer;
+	import mx.controls.treeClasses.TreeListData;   
+	
+	public class TreeCheckBoxRenderer extends TreeItemRenderer   
+	{   
+		public function TreeCheckBoxRenderer()   
+		{   
+			super();   
+		}   
+		
+		/**  
+		 * 表示CheckBox控件从data中所取数据的字段  
+		 */        
+		private var _selectedField:String = "select";   
+		
+		protected var checkBox:CheckBox;   
+		
+		/**  
+		 * 构建CheckBox  
+		 */        
+		override protected function createChildren():void  
+		{   
+			super.createChildren();   
+			checkBox = new CheckBox();   
+			addChild( checkBox );   
+			checkBox.addEventListener(Event.CHANGE, changeHandler);   
+		}   
+		
+		/**  
+		 * 点击checkbox时,更新dataProvider  
+		 * @param event  
+		 */        
+		protected function changeHandler( event:Event ):void  
+		{   
+			
+			if( data && data.@select != undefined )   
+			{   
+				//data.@select = checkBox.selected.toString();
+				modefiyChildren(data as XML,checkBox.selected);
+				var e:TreeCheckedEvent = new TreeCheckedEvent();
+				e.code = data as XML;
+				this.dispatchEvent(e);
+			}   
+		}    
+		
+		/**
+		 * 
+		 * 这个函数用来循环修改子目录的选中情况
+		 */
+		private function modefiyChildren(xml:XML,flag:Boolean):void{
+			var xl:XMLList = xml.children();
+			if(xl.length() == 0) {
+				xml.@select = flag.toString();
+				return;
+			}else {
+				var i:int = 0;
+				for each(var obj:Object in xl){
+					modefiyChildren(obj as XML,flag);
+				}
+				(xml as XML).@select = flag.toString();
+			}
+		}
+		
+		private function getBoolean(str:String):Boolean{
+			if(str == "true") 
+				return true;
+			else 
+				return false;
+		}
+		/**  
+		 * 初始化控件时, 给checkbox赋值  
+		 */        
+		override protected function commitProperties():void  
+		{   
+			super.commitProperties();   
+			//  trace(data.@select)   
+			if( data && data.@select != undefined )   
+			{   
+				checkBox.selected = getBoolean(data.@select);   
+			}   
+			else  
+			{   
+				checkBox.selected = false;   
+			}   
+		}   
+		
+		/**  
+		 * 重置itemRenderer的宽度  
+		 */        
+		override protected function measure():void  
+		{   
+			super.measure();   
+			measuredWidth += checkBox.getExplicitOrMeasuredWidth();   
+		}   
+		
+		/**  
+		 * 重新排列位置, 将label后移  
+		 * @param unscaledWidth  
+		 * @param unscaledHeight  
+		 */        
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void  
+		{   
+			super.updateDisplayList(unscaledWidth, unscaledHeight);   
+			var startx:Number = data ? TreeListData( listData ).indent : 0;   
+			
+			if (disclosureIcon)   
+			{   
+				disclosureIcon.x = startx;   
+				
+				startx = disclosureIcon.x + disclosureIcon.width;   
+				
+				disclosureIcon.setActualSize(disclosureIcon.width,   
+					disclosureIcon.height);   
+				
+				disclosureIcon.visible = data ?   
+					TreeListData( listData ).hasChildren :   
+					false;   
+			}   
+			
+			if (icon)   
+			{   
+				icon.x = startx;   
+				startx = icon.x + icon.measuredWidth;   
+				icon.setActualSize(icon.measuredWidth, icon.measuredHeight);   
+			}   
+			
+			checkBox.move(startx, ( unscaledHeight - checkBox.height ) / 2 );   
+			
+			label.x = startx + checkBox.getExplicitOrMeasuredWidth();   
+		}   
+	}   
+}
+
+//处理选中/取消父节点、子节点联动操作代码
+	//控制节点勾选状态
+	private function modifyXmlList(event:TreeCheckedEvent):void{
+		var code:XML = event.code;
+		if(code.@select == "false")
+			setParentSelectValue(code);
+		else
+			checkBrother(code);
+	}
+	
+	//当子节点取消选择的时候，父节点也相应需要取消选择
+	private function setParentSelectValue(xml:XML):void{
+		xml.@select = "false";
+		if(xml.parent() != null){
+			setParentSelectValue(xml.parent());
+		}
+	}
+	
+	//当所有子节点都选择的时候，父节点也要相应的为选择状态
+	private function checkBrother(xml:XML):void{
+		if(xml.parent() == null) return;
+		var parent:XML = xml.parent();
+		var children:XMLList = parent.children();
+		var flag:Boolean = true;
+		for each(var obj:Object in children){
+			if((obj as XML) != xml && (obj as XML).@select == "false"){
+				flag = false;
+				break;
+			}
+		}
+		if(flag == true) {
+			parent.@select = flag.toString();
+			checkBrother(parent);
+		}
+	}

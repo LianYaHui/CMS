@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<configuration>
+    <distanceunits>
+       <!--  <distanceunit abbr="km" conversion=".001">千米</distanceunit>
+        <distanceunit abbr="mi" conversion="0.000621">英里</distanceunit>
+        
+        <distanceunit abbr="ft" conversion="3.2808">英尺</distanceunit>
+        <distanceunit abbr="yd" conversion="1.0936133">码</distanceunit>-->
+        <distanceunit abbr="米" conversion="1">米</distanceunit>
+    </distanceunits>
+    <areaunits>
+        <!-- <areaunit abbr="sq km" conversion="0.000001">平方公里</areaunit>
+        <areaunit abbr="sq mi" conversion="0.0000003861021">平方英里</areaunit>
+        <areaunit abbr="ac" conversion="0.00024710538147">英亩</areaunit>
+        <areaunit abbr="ha" conversion="0.0001">公顷</areaunit>
+        <areaunit abbr="sq m" conversion="1">平方米</areaunit>
+        <areaunit abbr="sq ft" conversion="10.763910417">平方英尺</areaunit>
+        <areaunit abbr="sq yd" conversion="1.19599005 ">平方码</areaunit> -->
+        
+        <areaunit abbr="亩" conversion="0.0015">亩</areaunit>
+    </areaunits>
+</configuration>
+
+<!--
+    See Draw widget tag reference at
+    http://links.esri.com/drawwidget
+-->

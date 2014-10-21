@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css"></style>
+<script type="text/javascript" src="timeselect.js"></script>
+</head>
+
+<body>
+ <input type="text" name="t"  />
+
+ <div id="timeselect001"></div>
+ <input type="text" id="txtStartTime"  />
+ <br />
+ <div id="timeselect002"></div>
+ <input type="text" id="txtEndTime"  />
+<br />
+ <div id="timeselect003"></div>
+ <input type="text" id="txtDays"  />
+ <input type="button" value="ok" onclick="Test();" />
+</body>
+</html>
+<script type="text/javascript">
+new TimeSelect('timeselect001', {id:'txtStartTime', type:'h:m', obj:'txtStartTime',value:'03:15',readonly:true});
+var ts = new TimeSelect('timeselect002', {id:'txtEndTime', type:'h:m:s', obj:'txtEndTime',value:'00:30:25',loop:true,disabled:true});
+
+//ts.disabled(true);
+var days = new TimeSelect('timeselect003', {id:'txtDays', type:'num', obj:'txtDays',value:'21',loop:true,min:1,max:365,allowDelete:true,deletedValue:'',timing:10});
+
+//days.disabled(true);
+days.setValue(123);
+
+var Test = function(){
+	alert('gval:' + ts.getValue());
+}
+</script>

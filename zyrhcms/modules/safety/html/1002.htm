@@ -1,0 +1,70 @@
+﻿<div>
+    <label><input type="radio" name="rbDevInfo" onclick="changeDevType(10000);" checked="checked" />接触网设备</label>
+    <label><input type="radio" name="rbDevInfo" onclick="changeDevType(20000);" />变电设备</label>
+    <label><input type="radio" name="rbDevInfo" onclick="changeDevType(30000);" />电力设备</label> 
+    <!--
+    <a onclick="safety.device.createMarker(30.91307,'114.4323500','12','112', '测试1');">11</a>
+    <a onclick="safety.device.createMarker(30.20019,'114.8878300','32','512', '测试2');">22</a>
+    -->
+    <div id="divDevType"></div>
+    <div id="divDevListBox" style="background:#fafafa;">
+        <div class="listheader"><table id="tbDevInfoHeader" class="tbheader"></table></div>
+        <div class="listbox" id="divDevList" style="overflow:auto;"><table id="tbDevInfoList" class="tblist"></table></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var devTypeList = [
+        {
+            id:10000, name:'接触网设备',childs:[
+                [10100,'支柱'],
+                [10200,'锚段关节'],
+                [10300,'上网点'],
+                [10400,'线岔'],
+                [10500,'分段绝缘器']
+            ]
+        },
+        {
+            id:20000, name:'变电设备',childs:[
+                [20100,'变电所'],
+                [20200,'分区所'],
+                [20300,'AT所'],
+                [20400,'开闭所']
+            ]
+        },
+        {
+            id:30000, name:'电力设备',childs:[
+                [30100,'变压器'],
+                [30200,'高低压柜'],
+                [30300,'配电箱'],
+                [30400,'环网柜'],
+                [30500,'箱变'],
+                [30600,'电缆分接箱']
+            ]
+        }
+    ];
+    
+    function changeDevType(pid){
+        var strHtml = '';
+        for(var i=0; i<devTypeList.length; i++){
+            if(devTypeList[i].id == pid){
+                var list = devTypeList[i].childs;
+                for(var j=0; j<list.length; j++){
+                    strHtml += '<a href="#" id="devType_' + list[j][0] + '" onclick="selectDevType(' + pid + ',\'' + list[j][0] + '\',this);" style="margin:0 5px;">' + list[j][1] + '</a>';
+                }
+            }
+        }
+        $('#divDevType').html(strHtml);
+        if(2000 == pid){
+            selectDevType(pid, '', null);
+        }
+    }
+    
+    function selectDevType(type, subtype, obj){
+        if(obj != null){
+            $('#divDevType a').removeClass();
+            obj.className = 'cur-dev-type';
+        }
+        safety.device.curDevType = type;
+        getDeviceList(type, subtype);
+    }
+</script>

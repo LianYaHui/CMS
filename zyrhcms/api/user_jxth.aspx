@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="user_jxth.aspx.cs" Inherits="api_user_jxth" %>

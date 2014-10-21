@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Zyrh.Model</name>
+    </assembly>
+    <members>
+        <member name="P:Zyrh.Model.DeviceGprsInfo.ProtocolContent">
+            <summary>
+            GPRS协议内容
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.DeviceGprsInfo.ReceiveTime">
+            <summary>
+            GPRS接收时间
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.ServerTypeEnum.GprsServer">
+            <summary>
+            GPRS服务器
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.ServerTypeEnum.ImageServer">
+            <summary>
+            图像比对服务器
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.UploadFileSource.Device">
+            <summary>
+            设备抓拍
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.UploadFileSource.Client">
+            <summary>
+            客户端上传
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.UploadFileType.Picture">
+            <summary>
+            图片
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.UploadFileType.Video">
+            <summary>
+            录像
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.PictureDomain.Device">
+            <summary>
+            设备抓图
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.PictureDomain.Client">
+            <summary>
+            客户端上传
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.PictureDomain.ThirdParty">
+            <summary>
+            第三方平台
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.ReferencePictureAddType.ServerAuto">
+            <summary>
+            服务器自动添加
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.ReferencePictureAddType.UserManual">
+            <summary>
+            用户手动添加
+            </summary>
+        </member>
+        <member name="T:Zyrh.Model.CmsMenuInfo">
+            <summary>
+            CmsMenu 的摘要说明
+            </summary>
+        </member>
+        <member name="T:Zyrh.Model.ServerLineInfo">
+            <summary>
+            ServerLineModel 的摘要说明
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.WebProtocol.Type">
+            <summary>
+            命令类型 1-单个设备下发单个命令，2-单个设备下发多个命令，3-多个设备下发单个命令，4-多个设备下发多个命令
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.WebProtocol.DevCode">
+            <summary>
+            设备索引编号，可以多个，每个之前以逗号“,”分隔
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.WebProtocol.Model">
+            <summary>
+            协议类型 0-表示旧版设备，无流水号；1-表示新版设备，有流水号
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.WebProtocol.ProtocolDataList">
+            <summary>
+            协议数据列表
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.WebProtocol.SendTime">
+            <summary>
+            发送时间 WEB发送操作时间
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.WebProtocol.Timeout">
+            <summary>
+            设备回复最大超时时间，单位：秒，默认为30秒
+            </summary>
+        </member>
+        <member name="T:Zyrh.Model.WebProtocol.TypeEnum">
+            <summary>
+            WEB下发协议类型
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.TypeEnum.SingleToSingle">
+            <summary>
+            单个设备下发单个指令
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.TypeEnum.SingleToMulti">
+            <summary>
+            单个设备下发多个指令
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.TypeEnum.MultiToSingle">
+            <summary>
+            多个设备下发单个指令
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.TypeEnum.MultiToMulti">
+            <summary>
+            多个设备下发多个指令
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.ModelEnum.NoSequence">
+            <summary>
+            无序号 老版本设备协议
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.ModelEnum.IncludeSequence">
+            <summary>
+            包含序号 新版本设备协议
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.SettingType.NormalSetting">
+            <summary>
+            常规设置
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.SettingType.BatchSetting">
+            <summary>
+            批量设置
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.SettingType.SystemSetting">
+            <summary>
+            系统维护设置
+            </summary>
+        </member>
+        <member name="F:Zyrh.Model.WebProtocol.SettingType.UserBatchSetting">
+            <summary>
+            用户一键批量操作
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.ProtocolData.SerialNumber">
+            <summary>
+            指令序列号 一个或多个
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.ProtocolData.Data">
+            <summary>
+            协议内容数据
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.UserInfo.CardId">
+            <summary>
+            身份证号码或其他卡号
+            </summary>
+        </member>
+        <member name="P:Zyrh.Model.UserInfo.TelphoneNum">
+            <summary>
+            分机号码
+            </summary>
+        </member>
+    </members>
+</doc>

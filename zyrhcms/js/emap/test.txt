@@ -1,0 +1,76 @@
+
+/*测试开始*/
+var show = function(){
+    var arrLatLng = [
+        [1, 29.885555, 121.59602, '/skin/default/images/common/emap/online.png'],
+        [2, 29.895065,121.624504, '/skin/default/images/common/emap/online.png'],
+        [3, 29.890561, 121.651246, '/skin/default/images/common/emap/user.png'],
+        [4, 29.865523, 121.669752, '/skin/default/images/common/emap/building.gif'],
+        [5, 29.844722, 121.646794, '/skin/default/images/common/emap/3.gif'],
+        [6, 29.841187,121.616275, '/skin/default/images/common/emap/3.gif'],
+        
+        [7, 29.854593, 121.591557, '/skin/default/images/common/emap/btn_bg.png']
+        
+    ];
+    
+    var arrPoints = [];
+    var arrPolygon = [];
+    for(var i=0; i<arrLatLng.length; i++){
+        var latLng = gmap.mc.offset(arrLatLng[i][1], arrLatLng[i][2]);
+        var options = {
+            map: gmap.map,
+            position: new google.maps.LatLng(latLng.lat, latLng.lng),
+            id: i,
+            title: '<nobr>多边形顶点' + (i+1) + '</nobr>',
+            icon: gmap.iconPath.marker,//'/skin/default/images/common/emap/building.gif',
+            draggable: true,
+            func: test,
+            param: {
+                id: arrLatLng[i][0]
+            }
+            
+        }; 
+        //gmap.createMarker(options);
+        
+        arrPoints.push(options);
+        
+        //arrPolygon.push(new google.maps.LatLng(latLng.lat, latLng.lng));
+        
+        window.setTimeout(TEMP, i*50, options);
+    }
+    
+    gmap.createPolygon(arrPolygon,{
+        title: '巡检区域范围'
+    });
+};
+
+var TEMP = function(options){
+    var label = gmap.createLabelMarker({
+        position: options.position,
+        map: gmap.map,
+        id: options.id,
+        func: 'tt',
+        param: options.id,
+        image: {
+            src: cmsPath + '/skin/default/images/common/emap/car/car_n_red.png', style: {
+                width: '32px',
+                height: '32px'
+            }
+        },
+        label: {
+            html: '<nobr>多边形顶点' + options.id + '</nobr>', style: {
+                color: '#f00'
+            }
+        }
+    });
+};
+
+var tt = function(id, param){
+    alert('结果:' + id + ',' + param);    
+};
+
+var test = function(ev, param){
+    alert(param);
+    alert(param.id);
+};
+/*测试结束*/
