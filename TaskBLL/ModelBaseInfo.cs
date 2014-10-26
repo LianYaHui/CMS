@@ -15,4 +15,6 @@ public class ModelBaseInfo
     public virtual DateTime CreateTime { set; get; }
 
     public virtual String CreateAccount { set; get; }
+
+
 }

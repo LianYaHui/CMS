@@ -13,6 +13,7 @@ using Zyrh.Model;
 using Zyrh.Model.Device;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using TaskBLL;
 using Model;
 
 /// <summary>
@@ -23,8 +24,11 @@ using Model;
 public class ZyrhMobileService : System.Web.Services.WebService
 {
     protected string strXmlHeader = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
+
     public ZyrhMobileService()
     {
+
+        FoxzyForMySql.MySqlManageUtil.ConncetionString = Public.CmsDBConnectionString;
         //
         // TODO: 在此处添加构造函数逻辑
         //
@@ -512,6 +516,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
     #endregion
 
 
+
     #region  任务下载
     [WebMethod(Description = "<div style=\"line-height:20px;\">任务下载（功能未完成）"
         + "<br />参数说明：UserName: 用户名，Token: 校验码"
@@ -573,7 +578,8 @@ public class ZyrhMobileService : System.Web.Services.WebService
                     TaskEndTime = new DateTime(2014, 12, 12),
                     TaskStartTime = new DateTime(2014, 10, 12),
                     TaskType = 2,
-                    TaskName = "测试的任务"
+                    TaskName = "测试的任务",
+                    RoadId = 100
                 });
             }
 
@@ -658,7 +664,11 @@ public class ZyrhMobileService : System.Web.Services.WebService
                     TaskEndTime = new DateTime(2014, 12, 12),
                     TaskStartTime = new DateTime(2014, 10, 12),
                     TaskType = 2,
-                    TaskName = "测试的任务"
+                    TaskName = "测试的任务",
+                    OperationStandard = "这是是操作规范，后台维护的",
+
+                    TaskFaultID = 10001,
+                    FaultText = "系统级别错误,测试"
                 };
             }
 
@@ -801,6 +811,59 @@ public class ZyrhMobileService : System.Web.Services.WebService
             timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
             return JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, timeFormat);
+        }
+        catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
+    }
+    #endregion
+
+    #region  获取代码映射值
+    [WebMethod(Description = "<div style=\"line-height:20px;\">获取代码映射值"
+    )]
+    public string GetCodeValue(string UserName, string Token, int CodeType)
+    {
+        String Status = String.Empty;
+        String Msg = String.Empty;
+        List<Dictionary<String, Object>> dict = new List<Dictionary<String, Object>>();
+
+        try
+        {
+            DeviceCenter dc = new DeviceCenter(Public.CmsDBConnectionString);
+            if (UserName.Equals(string.Empty))
+            {
+                Status = "Failed";
+                Msg = "用户名不得为空";
+            }
+            else if (!dc.CheckDeviceCodeFormat(UserName))
+            {
+                //用户名格式错误
+                Status = "Failed";
+                Msg = "用户名格式错误";
+            }
+            else if (!dc.CheckDeviceToken(UserName, Token))
+            {
+                //校验码错误
+                Status = "Failed";
+                Msg = "校验码错误";
+            }
+            else
+            {
+                var data = CodeReader.GetCodeTableByType(CodeType, UserName);
+                dict = data.ToDictionary();
+
+                //进行检验
+                Status = "Success";
+                //TODO
+
+            }
+
+
+            var obj = new
+            {
+                Status = Status,
+                Msg = Msg,
+                infos = dict
+            };
+            return JsonConvert.SerializeObject(obj);
         }
         catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
     }

@@ -28,5 +28,18 @@ namespace Model
         public virtual String TaskDescription { set; get; }
 
         public virtual String HelpURL { set; get; }
+
+        public virtual int RoadId { set; get; }
+
+
+        /// <summary>
+        /// 操作说明
+        /// </summary>
+        public String OperationStandard { set; get; }
+
+        public Int32 TaskFaultID { set; get; }
+
+        public String FaultText { set; get; }
+
     }
 }
