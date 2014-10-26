@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using TaskBLL;
 using Model;
+using System.Linq;
 
 /// <summary>
 /// ZyrhMobileService 的摘要说明
@@ -539,7 +540,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
     {
         String Status = String.Empty;
         String Msg = String.Empty;
-        List<InspectionTaskInfo> list = new List<InspectionTaskInfo>();
+        object list = null;
 
         try
         {
@@ -563,24 +564,11 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
-                Status = "Success";
-                //TODO
+                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+                var usertable = bll.GetTaskTableByUser(UserName);
 
-                list.Add(new InspectionTaskInfo()
-                {
-                    CreateTime = DateTime.Now,
-                    Enable = true,
-                    Grade = 10,
-                    ID = 1,
-                    TaskCategory = 1,
-                    TaskDegree = 1,
-                    TaskDescription = "这是测试的数据",
-                    TaskEndTime = new DateTime(2014, 12, 12),
-                    TaskStartTime = new DateTime(2014, 10, 12),
-                    TaskType = 2,
-                    TaskName = "测试的任务",
-                    RoadId = 100
-                });
+                list = usertable.ToDictionary();
+                Status = "Success";
             }
 
 
@@ -624,7 +612,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
     {
         String Status = String.Empty;
         String Msg = String.Empty;
-        InspectionTaskInfo info = null;
+        object info = null;
 
         try
         {
@@ -648,28 +636,12 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
+                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+                var usertable = bll.GetTaskTableByID(TaskId);
+
+                info = usertable.ToDictionary().FirstOrDefault();
                 Status = "Success";
-                //TODO
 
-                //GetTaskInfo TaskId
-                info = new InspectionTaskInfo()
-                {
-                    CreateTime = DateTime.Now,
-                    Enable = true,
-                    Grade = 10,
-                    ID = 1,
-                    TaskCategory = 1,
-                    TaskDegree = 1,
-                    TaskDescription = "这是测试的数据",
-                    TaskEndTime = new DateTime(2014, 12, 12),
-                    TaskStartTime = new DateTime(2014, 10, 12),
-                    TaskType = 2,
-                    TaskName = "测试的任务",
-                    OperationStandard = "这是是操作规范，后台维护的",
-
-                    TaskFaultID = 10001,
-                    FaultText = "系统级别错误,测试"
-                };
             }
 
 
@@ -677,13 +649,10 @@ public class ZyrhMobileService : System.Web.Services.WebService
             {
                 Status = Status,
                 Msg = Msg,
-                TaskInfos = info
+                TaskInfo = info
             };
 
-            IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
-            timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-
-            return JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, timeFormat);
+            return JsonConvert.SerializeObject(obj);
         }
         catch (Exception ex) { return this.ResponseErrorInfo(ex); }
     }

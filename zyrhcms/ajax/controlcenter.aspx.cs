@@ -14,7 +14,7 @@ using Zyrh.BLL;
 using Zyrh.BLL.BaseInfo;
 using Zyrh.Model;
 using Zyrh.Model.BaseInfo;
-using WuhanWS;
+//using WuhanWS;
 
 public enum WorkPlanType
 {
