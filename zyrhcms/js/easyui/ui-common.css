@@ -1,0 +1,217 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft Yahei";
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    width: 100%;
+    height: 100%;
+}
+
+::selection {
+    text-shadow: 3px 3px 2px #00ffb9;
+    color: #ffb400;
+    background-color: rgb(178, 227, 245);
+}
+
+article, aside, dialog, footer, header, section, footer, nav, figure, menu {
+    display: block;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.clear {
+    clear: both;
+}
+
+#nav-left-div div ul li {
+    list-style: none;
+    text-align: left;
+    cursor: pointer;
+    margin: 5px auto 3px auto;
+    padding: 4px;
+}
+
+    #nav-left-div div ul li:hover {
+        box-shadow: 0 0 7px #def0fe inset;
+        background-color: #d2aaff;
+        border-radius: 3px;
+        margin-left: 5px;
+        margin-right: 5px;
+        -moz-transition-duration: 0.3s,0.8s;
+        -o-transition-duration: 0.3s,0.8s;
+        -webkit-transition-duration: 0.3s,0.8s;
+        transition-duration: 0.3s,0.8s;
+        -moz-transition-property: box-shadow,background-color;
+        -o-transition-property: box-shadow,background-color;
+        -webkit-transition-property: box-shadow,background-color;
+        transition-property: box-shadow,background-color;
+        -moz-transition-timing-function: ease-out;
+        -o-transition-timing-function: ease-out;
+        -webkit-transition-timing-function: ease-out;
+        transition-timing-function: ease-out;
+    }
+
+.NotShow {
+    display: none !important;
+}
+
+.textbox-ui {
+    padding: 2px 4px 2px 4px;
+    border: 1px solid #a6ea82;
+    box-shadow: 0 0 10px #a9ff90;
+    border-radius: 5px;
+    -moz-transition-duration: 0.3s, 0.3s;
+    -o-transition-duration: 0.3s, 0.3s;
+    -webkit-transition-duration: 0.3s, 0.3s;
+    transition-duration: 0.3s, 0.3s;
+    -moz-transition-property: border-color, box-shadow;
+    -o-transition-property: border-color, box-shadow;
+    -webkit-transition-property: border-color, box-shadow;
+    transition-property: border-color, box-shadow;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+    font-size: 14px;
+}
+
+    .textbox-ui:focus {
+        border-color: #0f7fd3;
+        box-shadow: 0 0 10px #ae48e5;
+    }
+
+.textbox-ui2 {
+    padding: 2px 4px 2px 4px;
+    border: 1px solid #afdafb;
+    border-radius: 5px;
+    -moz-transition-duration: 0.3s, 0.3s;
+    -o-transition-duration: 0.3s, 0.3s;
+    -webkit-transition-duration: 0.3s, 0.3s;
+    transition-duration: 0.3s, 0.3s;
+    -moz-transition-property: border-color, box-shadow;
+    -o-transition-property: border-color, box-shadow;
+    -webkit-transition-property: border-color, box-shadow;
+    transition-property: border-color, box-shadow;
+    -moz-transition-timing-function: ease-in;
+    -o-transition-timing-function: ease-in;
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+    font-size: 14px;
+}
+
+.left {
+    float: left;
+}
+
+.textbox-ui2:focus {
+    border-color: #ffd800;
+    box-shadow: 0 0 10px #8f0488 inset;
+}
+
+.table-ui {
+    border: 1px solid #0094ff;
+    padding: 3px;
+    border-radius: 3px;
+    border-collapse: collapse;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+    .table-ui tr, .table-ui td {
+        border: 1px solid #0094ff;
+        padding: 2px;
+        height: 30px;
+    }
+
+    .table-ui td {
+        padding: 2px 4px 2px 4px;
+    }
+
+.table_title {
+    text-align: center;
+    font-size: 20px;
+    text-shadow: 2px 2px 3px #9ffb80;
+    color: #666487;
+    padding: 5px;
+    letter-spacing: 4px;
+}
+
+.table-ui .td-title {
+    width: 15%;
+    text-align: right;
+    padding-right: 6px;
+    background-color: rgb(178, 227, 245);
+}
+
+.autograph-box {
+    background-color: transparent;
+    margin-bottom: -2px !important;
+    font-size: 16px;
+    border: none;
+    border-bottom: 1px solid #7a7a7a;
+    -moz-transition-duration: 0.3s,0.5s;
+    -o-transition-duration: 0.3s,0.5s;
+    -webkit-transition-duration: 0.3s,0.5s;
+    transition-duration: 0.3s,0.5s;
+    -moz-transition-property: border-bottom-color box-shadow;
+    -o-transition-property: border-bottom-color box-shadow;
+    -webkit-transition-property: border-bottom-color box-shadow;
+    transition-property: border-bottom-color box-shadow;
+}
+
+    .autograph-box:focus {
+        border-bottom-color: #0053ff;
+        box-shadow: 0 0 5px #ee25e4;
+    }
+
+
+
+.mask_top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    background-color: black;
+    opacity: 0.8;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    filter: alpha(opacity=80);
+}
+
+.table-textbox {
+    width: 98%;
+}
+
+.padding5 {
+    padding: 5px;
+}
+
+.margin5 {
+    margin: 5px;
+}
+
+.text-ui {
+    text-shadow: 2px 2px 3px #0565fc;
+    color: #2aff00;
+}
+
+.warp {
+    background: url(images/_bg2.png) repeat;
+}
+
+.radia5 {
+    border-radius: 5px;
+}

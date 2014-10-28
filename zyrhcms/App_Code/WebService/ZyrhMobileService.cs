@@ -786,8 +786,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
     #endregion
 
     #region  获取代码映射值
-    [WebMethod(Description = "<div style=\"line-height:20px;\">获取代码映射值"
-    )]
+    [WebMethod]
     public string GetCodeValue(string UserName, string Token, int CodeType)
     {
         String Status = String.Empty;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using Newtonsoft.Json;
 
 namespace TaskBLL
 {
@@ -22,5 +23,9 @@ namespace TaskBLL
             return list;
         }
 
+        public static String ToJsonString(this DataTable table)
+        {
+            return JsonConvert.SerializeObject(table.ToDictionary());
+        }
     }
 }
