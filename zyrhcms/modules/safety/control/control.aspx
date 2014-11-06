@@ -1,1 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="control.aspx.cs" Inherits="modules_safety_control_control" %>

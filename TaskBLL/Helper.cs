@@ -27,5 +27,15 @@ namespace TaskBLL
         {
             return JsonConvert.SerializeObject(table.ToDictionary());
         }
+
+        public static String ObjectToJsonString(this object obj)
+        {
+            return JsonConvert.SerializeObject(obj);
+        }
+
+        public static T JsonStringToDictionary<T>(this String json)
+        {
+            return JsonConvert.DeserializeObject<T>(json);
+        }
     }
 }

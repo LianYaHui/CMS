@@ -837,4 +837,57 @@ public class ZyrhMobileService : System.Web.Services.WebService
     }
     #endregion
 
+
+    [WebMethod(Description = "<div style=\"line-height:20px;\">延迟的上报任务"
+       + "<br />参数说明：UserName: 用户名，Token: 校验码，TaskInfos: 任务信息"
+   )]
+    public String UploadTask(string UserName, string Token, string TaskInfos)
+    {
+        String Status = String.Empty;
+        String Msg = String.Empty;
+
+        try
+        {
+            DeviceCenter dc = new DeviceCenter(Public.CmsDBConnectionString);
+            if (UserName.Equals(string.Empty))
+            {
+                Status = "Failed";
+                Msg = "用户名不得为空";
+            }
+            else if (!dc.CheckDeviceCodeFormat(UserName))
+            {
+                //用户名格式错误
+                Status = "Failed";
+                Msg = "用户名格式错误";
+            }
+            else if (!dc.CheckDeviceToken(UserName, Token))
+            {
+                //校验码错误
+                Status = "Failed";
+                Msg = "校验码错误";
+            }
+            else
+            {
+                //
+                Status = "Success";
+                //TODO
+
+
+            }
+
+
+            var obj = new
+            {
+                Status = Status,
+                Msg = Msg
+            };
+
+            IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
+            timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+
+            return JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, timeFormat);
+        }
+        catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
+    }
+
 }
