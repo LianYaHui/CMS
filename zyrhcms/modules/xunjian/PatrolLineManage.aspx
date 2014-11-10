@@ -35,14 +35,14 @@
             </div>
         </div>
         <div id="div_line">
-
         </div>
     </form>
 
     <script>
         $(function () {
             var grid = $("#ptLine_grid").datagrid({
-                url: _path + "PatrolLineManage.aspx?action=get"
+                url: _path + "PatrolLineManage.aspx?action=get",
+                singleSelect: true
             });
 
             var $dialog = new EasyuiDialog(_path + "PatrolLineDetail.aspx", {
