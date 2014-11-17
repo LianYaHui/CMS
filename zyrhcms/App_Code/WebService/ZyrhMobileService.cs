@@ -536,7 +536,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
         + "</span>"
         + "</div>"
     )]
-    public string TaskDownload(string UserName, string Token)
+    public string TaskDownload(string UserName, string Token, int Tasksource)
     {
         String Status = String.Empty;
         String Msg = String.Empty;
@@ -880,6 +880,65 @@ public class ZyrhMobileService : System.Web.Services.WebService
             {
                 Status = Status,
                 Msg = Msg
+            };
+
+            IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
+            timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+
+            return JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, timeFormat);
+        }
+        catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
+    }
+
+    /// <summary>
+    /// 获取该人员的上级的描述和评价
+    /// </summary>
+    /// <param name="UserName"></param>
+    /// <param name="Token"></param>
+    /// <param name="BeginNum"></param>
+    /// <param name="EndNum"></param>
+    /// <returns></returns>
+    [WebMethod]
+    public String GetTaskDesc(string UserName, string Token, int BeginNum, int EndNum)
+    {
+        String Status = String.Empty;
+        String Msg = String.Empty;
+
+        try
+        {
+            DeviceCenter dc = new DeviceCenter(Public.CmsDBConnectionString);
+            if (UserName.Equals(string.Empty))
+            {
+                Status = "Failed";
+                Msg = "用户名不得为空";
+            }
+            else if (!dc.CheckDeviceCodeFormat(UserName))
+            {
+                //用户名格式错误
+                Status = "Failed";
+                Msg = "用户名格式错误";
+            }
+            else if (!dc.CheckDeviceToken(UserName, Token))
+            {
+                //校验码错误
+                Status = "Failed";
+                Msg = "校验码错误";
+            }
+            else
+            {
+                //
+                Status = "Success";
+                //TODO
+
+
+            }
+
+
+            var obj = new
+            {
+                Status = Status,
+                Msg = Msg,
+                Desc = new List<Dictionary<String, object>>()
             };
 
             IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();

@@ -9,12 +9,12 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <table id="ptPoint_grid" title="路线管理" style="height: 540px"
+        <table id="ptPoint_grid" title="巡检类型管理" style="height: 540px"
             data-options="
 				rownumbers: true,
 				collapsible: true,
 				fitColumns: true,
-                toolbar:'#tbLine',
+                toolbar:'#tbType',
                 pagination:true
 			">
             <thead>
@@ -28,10 +28,10 @@
             </thead>
         </table>
 
-        <div id="tbLine">
+        <div id="tbType">
             <div>
-                <a id="btn_addLine" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
-                <a id="btn_editLine" class="easyui-linkbutton" iconcls="icon-edit" plain="true">编辑</a>
+                <a id="btn_addType" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
+                <a id="btn_editType" class="easyui-linkbutton" iconcls="icon-edit" plain="true">编辑</a>
 
             </div>
         </div>
@@ -81,14 +81,14 @@
 
 
             //add
-            $("#btn_addLine").click(function () {
+            $("#btn_addType").click(function () {
                 $dialog.dialog({
                     href: _path + "PatrolPointDetail.aspx"
                 }).dialog("open");
             });
 
             //Edit
-            $("#btn_editLine").click(function () {
+            $("#btn_editType").click(function () {
                 var sltRow = grid.datagrid("getSelected");
                 if (sltRow == null) {
                     MessageBox.Alert("请选择一行数据");

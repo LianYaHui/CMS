@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="CodeInfo.cs" />
     <Compile Include="CodeReader.cs" />
+    <Compile Include="DataView.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="InspectionTaskInfo.cs" />
     <Compile Include="ModelBaseInfo.cs" />

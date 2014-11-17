@@ -99,5 +99,35 @@ where l.is_delete=0";
 
             return db.FillDataSet(sql, pars).Tables[0].Rows[0];
         }
+
+
+
+        public DataTable GetPatrolPoint(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
+        {
+            String baseSql = @"select p.*,pt.type_name,pl.line_name,u.name as uName from patrol_point p left JOIN patrol_point_type pt on p.type_id=pt.type_id
+                                left JOIN patrol_line pl on pl.line_id=p.line_id
+                                left Join control_unit u on u.control_unit_id=p.unit_id where p.is_delete=0";
+
+            String getCountSql = String.Format("select count(*) from ({0}) as t", baseSql);
+
+            String ReturnDataSql = String.Format("{0} limit {1},{2}",
+                baseSql, (currentPage - 1) * pageCount, currentPage * pageCount);
+
+            totalCount = Convert.ToInt32(db.ExecuteScalar(getCountSql));
+
+            return db.FillDataSet(ReturnDataSql).Tables[0];
+        }
+
+        public DataRow GetPatrolPointByID(int id)
+        {
+            String sql = @"select * from patrol_point where point_id=?id";
+
+            MySqlParameter[] pars = new MySqlParameter[]{
+                new MySqlParameter("?id",id)
+            };
+
+            return db.FillDataSet(sql, pars).Tables[0].Rows[0];
+        }
+
     }
 }
