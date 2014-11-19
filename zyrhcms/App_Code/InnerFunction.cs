@@ -110,4 +110,35 @@ public class InnerFunction : System.Web.Services.WebService
 
         return 1;
     }
+
+
+    [WebMethod]
+    public int SavePatrolPoint(String json)
+    {
+        var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
+        int id = Convert.ToInt32(info["point_id"]);
+
+
+
+        if (id > 0)
+        {
+            db.CreateUpdate("patrol_point")
+                .SetDictionary(info)
+                .Where("point_id=" + id)
+                .ExecuteNonQuery();
+        }
+        else
+        {
+            info.Add("is_delete", false);
+            info.Add("create_time", DateTime.Now);
+            info.Add("area_id", 0);
+
+            db.CreateInsert("patrol_point")
+                 .SetDictionary(info)
+                 .ExecuteNonQuery();
+        }
+
+        return 1;
+    }
+
 }

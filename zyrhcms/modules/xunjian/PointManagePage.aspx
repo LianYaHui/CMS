@@ -14,8 +14,8 @@
 				rownumbers: true,
 				collapsible: true,
 				fitColumns: true,
-                toolbar:'#tbPoint',
-                pagination:true
+				toolbar:'#tbPoint',
+				pagination:true
 			">
             <thead>
                 <tr>
@@ -59,26 +59,38 @@
                         iconCls: 'icon-ok',
                         handler: function () {
                             var _id = $("#PointForm").data("id");
-                            _id = parseInt(_id);
+                            _id = parseInt(_id || 0);
 
-                            Public.ajax(_path + "InnerFunction.asmx/SavePatrolType",
-                                JSON.stringify({
-                                    json: JSON.stringify({
-                                        type_id: _id,
-                                        type_name: $("#txt_PointName").val(),
-                                        patrol_radii: parseInt($("#txt_Ridio").val()),
-                                        type_desc: $("#txt_PointDesc").val()
-                                    })
-                                }),
-                                function (data) {
-                                    if (data.d == 1) {
-                                        $dialog.dialog("close");
-                                        grid.datagrid("reload");
-                                    }
-                                    else {
-                                        MessageBox.Alert("发生错误");
-                                    }
-                                });
+                            Public.ajax(_path + "InnerFunction.asmx/SavePatrolPoint",
+								JSON.stringify({
+								    json: JSON.stringify({
+								        point_id: _id,
+								        point_name: $("#txt_PointName_pd").val(),
+								        radii: parseFloat($("#txt_radio_pd").val()),
+								        longitude: parseFloat($("#txt_longitude_pd").val()),
+								        latitude: parseFloat($("#txt_latitude_pd").val()),
+								        type_id: parseInt($("#slt_type_pd").val()),
+								        line_id: parseInt($("#slt_line_pd").val())
+								    })
+								}),
+								function (data) {
+								    if (data.d == 1) {
+								        grid.datagrid("reload");
+								        alert($("#ck_continue_pd").is(':checked'));
+								        if ($("#ck_continue_pd").is(':checked') === true) {
+								            $dialog.dialog("refresh", _path + "PointDetail.aspx");
+								        }
+								        else {
+								            $dialog.dialog("close");
+								            alert($("#ck_continue_pd").is(':checked') === true);
+								        }
+
+								        MessageBox.Show("添加成功");
+								    }
+								    else {
+								        MessageBox.Alert("发生错误");
+								    }
+								});
                         }
                     }]
                 }, "#DivPoint");
@@ -100,7 +112,7 @@
                     }
 
                     $dialog.dialog({
-                        href: _path + "PointDetail.aspx?ID=" + sltRow.type_id
+                        href: _path + "PointDetail.aspx?ID=" + sltRow.point_id
                     }).dialog("open");
                 });
             });

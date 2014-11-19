@@ -129,5 +129,16 @@ where l.is_delete=0";
             return db.FillDataSet(sql, pars).Tables[0].Rows[0];
         }
 
+
+        public DataTable GetTaskDesc(string UserName, int BeginNum, int EndNum)
+        {
+            String sql = String.Format("select td.desc,td.Accout,td.DescDateTime from taskdesc td where td.DriveID=?d limit {0},{1}", BeginNum, EndNum);
+
+            MySqlParameter[] pars = new MySqlParameter[]{
+                new MySqlParameter("?d",UserName)
+            };
+
+            return db.FillDataSet(sql, pars).Tables[0];
+        }
     }
 }

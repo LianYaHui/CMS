@@ -903,9 +903,13 @@ public class ZyrhMobileService : System.Web.Services.WebService
     {
         String Status = String.Empty;
         String Msg = String.Empty;
+        List<Dictionary<String, object>> infos = null;
 
         try
         {
+            if (EndNum <= BeginNum)
+                throw new Exception("开始的索引不能大于结束的索引");
+
             DeviceCenter dc = new DeviceCenter(Public.CmsDBConnectionString);
             if (UserName.Equals(string.Empty))
             {
@@ -929,8 +933,11 @@ public class ZyrhMobileService : System.Web.Services.WebService
                 //
                 Status = "Success";
                 //TODO
+                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+                var usertable = bll.GetTaskDesc(UserName, BeginNum, EndNum);
 
-
+                infos = usertable.ToDictionary();
+                Status = "Success";
             }
 
 
@@ -938,7 +945,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
             {
                 Status = Status,
                 Msg = Msg,
-                Desc = new List<Dictionary<String, object>>()
+                Desc = infos
             };
 
             IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
@@ -948,5 +955,4 @@ public class ZyrhMobileService : System.Web.Services.WebService
         }
         catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
     }
-
 }

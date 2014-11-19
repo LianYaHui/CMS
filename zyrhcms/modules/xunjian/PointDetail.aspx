@@ -3,7 +3,7 @@
 
 <form id="PointForm" style="margin: 20px;" runat="server" class="form-horizontal" role="form">
     <div class="form-group form-group-sm">
-        <label for="inputEmail3" class="col-sm-3 control-label">巡检点名称</label>
+        <label for="txt_PointName_pd" class="col-sm-3 control-label">巡检点名称</label>
         <div class="col-sm-9">
             <input type="text" class="form-control" id="txt_PointName_pd" runat="server" placeholder="巡检点名称" />
         </div>

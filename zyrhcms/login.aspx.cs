@@ -16,6 +16,7 @@ using Zyrh.BLL.Server;
 using Zyrh.Model;
 using Zyrh.Model.Server;
 using Zyrh.Common;
+using System.Linq;
 
 public partial class login : System.Web.UI.Page
 {

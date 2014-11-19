@@ -16,7 +16,7 @@ public partial class modules_xunjian_PointDetail : System.Web.UI.Page
 
         slt_line_pd.DataSource = lineSource;
         slt_line_pd.DataTextField = "line_name";
-        slt_type_pd.DataValueField = "line_id";
+        slt_line_pd.DataValueField = "line_id";
         slt_line_pd.DataBind();
 
         var typeSource = bll.GetPatrolType(1, 100000, out temp, null, null);
@@ -37,6 +37,7 @@ public partial class modules_xunjian_PointDetail : System.Web.UI.Page
             txt_longitude_pd.Value = DataView.ToString(info["longitude"]);
             txt_latitude_pd.Value = DataView.ToString(info["latitude"]);
             txt_radio_pd.Value = DataView.ToString(info["radii"]);
+            PointForm.Attributes["data-id"] = _id;
         }
     }
 }
