@@ -31,9 +31,6 @@ public partial class xunjian_TaskDialog : System.Web.UI.Page
         slt_taskCategory.DataTextField = "Value";
         slt_taskCategory.DataBind();
 
-        int count = 0;
-
-
         if (String.IsNullOrEmpty(str_id))
             return;
 

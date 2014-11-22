@@ -21,6 +21,18 @@ namespace TaskBLL
                 .Tables[0];
         }
 
+        public DataTable GetDeviceInfoByIDs(String deviceIDs)
+        {
+            return db.CreateSelect()
+                .From("device_info")
+                .Select("device_id,index_code,device_name,create_time")
+                .Where(String.Format("device_id in ({0},-1)", deviceIDs))
+                .ToDataSet()
+                .Tables[0];
+        }
+
+
+
         public DataTable GetUnitInfo(String where = null)
         {
             return db.CreateSelect()

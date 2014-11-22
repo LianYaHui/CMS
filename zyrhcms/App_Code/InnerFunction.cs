@@ -182,4 +182,38 @@ public class InnerFunction : System.Web.Services.WebService
 
         return 1;
     }
+
+
+    [WebMethod]
+    public int SaveTaskDevice(String json)
+    {
+        var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
+        int id = Convert.ToInt32(info["tid"]);
+
+        if (id > 0)
+        {
+            db.CreateUpdate("TaskDeviceInfo")
+                .Set("isDelete=1,deleteTime=?time")
+                .SetParameter("?time",DateTime.Now)
+                .Where("TaskID=" + id)
+                .ExecuteNonQuery();
+        }
+
+        var rowInfo = Convert.ToString(info["row"]).JsonStringToDictionary<List<Dictionary<String, Object>>>();
+
+        foreach (var d in rowInfo)
+        {
+            d.Add("TaskID", id);
+            d.Add("isDelete", false);
+            d.Add("Create_time", DateTime.Now);
+
+            //TODO 
+            //add user
+
+            db.CreateInsert("TaskDeviceInfo")
+                .SetDictionary(d)
+                .ExecuteNonQuery();
+        }
+        return 1;
+    }
 }

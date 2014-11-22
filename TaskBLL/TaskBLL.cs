@@ -179,5 +179,17 @@ left join patrol_point p on t.pointID =p.point_id
                 .Tables[0]
                 .Rows[0];
         }
+
+        public DataTable GetTaskDeviceByTaskID(int taskID)
+        {
+            return db.CreateSelect()
+                .From("TaskDeviceInfo")
+                .Where(String.Format("isDelete=0 and TaskID={0}", taskID))
+                .ToDataSet()
+                .Tables[0];
+        }
+
+
+
     }
 }

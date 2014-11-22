@@ -21,7 +21,7 @@ public partial class modules_xunjian_PatrolPointManage : System.Web.UI.Page
 
                 if (!string.IsNullOrEmpty(Request["rows"]))
                     Size = Convert.ToInt32(Request["rows"]);
-
+                Index = Index > 0 ? Index : 1;
                 var infos = bll.GetPatrolType(Index, Size, out _count, null, null);
 
                 var _obj = new

@@ -26,7 +26,6 @@
     <script src="../../js/easyui/jquery.easyui.min.js"></script>
     <script src="../../js/easyui/easyui-lang-zh_CN.js"></script>
     <script src="../../js/easyui/common.js"></script>
-    <%--<script src="../../js/bootstrap/js/bootstrap.min.js"></script>--%>
 
     <script type="text/javascript" src="<%=Public.WebDir%>/common/js/cms.box.js"></script>
     <script type="text/javascript" src="<%=Public.WebDir%>/common/js/cms.jquery.js"></script>
@@ -42,11 +41,7 @@
     <div class="easyui-layout" data-options="fit:true">
         <div id="nav_div_left" data-options="region:'west',split:true" title="导航栏" style="width: 180px;">
             <div id="nav-left-div" class="easyui-accordion" data-options="fit:true,border:false">
-                <div title="用户权限管理">
-                    <ul>
-                        <li class="menu-li" data-url="UserPermissionManage.aspx">权限管理</li>
-                    </ul>
-                </div>
+
 
                 <div title="任务管理">
                     <ul>
@@ -57,6 +52,14 @@
                         <li class="menu-li" data-url="TaskManage.aspx">任务管理</li>
                     </ul>
                 </div>
+
+                <div title="任务上报">
+                    <ul>
+                        <li class="menu-li" data-url="UpLoadTask.aspx">上报结果</li>
+                    </ul>
+                </div>
+
+
 
                 <div title="系统代码管理">
                     <ul>
@@ -85,8 +88,8 @@
             var $acc = $("#nav-left-div").accordion();
 
             $acc.accordion("unselect", 0);
-            
-            
+
+
 
 
             //Tabs
