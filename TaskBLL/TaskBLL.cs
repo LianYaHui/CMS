@@ -168,5 +168,16 @@ left join patrol_point p on t.pointID =p.point_id
                 .Where(String.Format("id in ({0})", TaskIDs))
                 .ExecuteNonQuery();
         }
+
+        public DataRow GetTaskByID(int id)
+        {
+            return db.CreateSelect()
+                .From("inspectiontaskinfo")
+                .Where("ID=?id")
+                .SetParameter("?id", id)
+                .ToDataSet()
+                .Tables[0]
+                .Rows[0];
+        }
     }
 }

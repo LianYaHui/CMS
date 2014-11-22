@@ -85,6 +85,9 @@
             var $acc = $("#nav-left-div").accordion();
 
             $acc.accordion("unselect", 0);
+            
+            
+
 
             //Tabs
             $("#nav-left-div div ul li").click(function () {

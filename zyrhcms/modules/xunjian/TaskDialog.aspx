@@ -45,7 +45,7 @@
                 <span>任务巡检点</span>
             </td>
             <td colspan="3">
-                <input id="txt_Taskpoint" style="width: 300px" />
+                <input id="txt_Taskpoint" runat="server" style="width: 300px" />
             </td>
         </tr>
 

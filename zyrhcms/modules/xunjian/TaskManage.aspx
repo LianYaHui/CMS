@@ -21,11 +21,16 @@
             <a id="btn_addTask" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
             <a id="btn_editTask" class="easyui-linkbutton" iconcls="icon-edit" plain="true">编辑</a>
             <a id="btn_dltTask" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
+
+            <a id="btn_TaskCp" class="easyui-linkbutton" iconcls="icon-sum" plain="true">为任务分配设备</a>
         </div>
     </div>
 </form>
 
 <div id="task_dialog">
+</div>
+
+<div id="task_cp_dialog">
 </div>
 
 
@@ -87,6 +92,65 @@
         var $dg_task = $("#dg_task").datagrid({
             url: _path + "TaskManage.aspx?action=get"
         });
+
+        $("#btn_TaskCp").click(function () {
+            var $cpDialog = new EasyuiDialog(_path + "DevicePage.aspx", {
+                width: 900,
+                height: 400,
+                title: "分配任务",
+                buttons: [{
+                    text: '确认',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        var _id = $("#taskManageForm").data("id");
+                        _id = parseInt(_id || 0);
+
+                        var point_Id = $("#txt_Taskpoint").combogrid('getValue');
+
+                        if (!point_Id) {
+                            MessageBox.Alert("请选择巡检点");
+                            return;
+                        }
+
+
+                        var info = {
+                            ID: _id,
+                            TaskName: $("#txt_taskName").val(),
+                            taskType: parseInt($("#slt_taskType").val()),
+                            TaskCategory: parseInt($("#slt_taskCategory").val()),
+                            TaskDegree: parseInt($("#slt_taskDegree").val()),
+                            PointID: point_Id,
+                            OperationStandard: $("#txt_taskStandard").val(),
+                            HelpURL: $("#txt_taskUrl").val(),
+                            TaskDescription: $("#txt_taskDesc").val(),
+                            TaskStartTime: $("#txt_beginDate").datebox("getValue"),
+                            TaskEndTime: $("#txt_EndDate").datebox("getValue"),
+                        };
+
+                        Public.ajax(_path + "InnerFunction.asmx/SaveTask",
+                                JSON.stringify({
+                                    json: JSON.stringify(info)
+                                }),
+                                function (data) {
+                                    if (data.d == 1) {
+                                        $dialog.dialog("close");
+                                        $dg_task.datagrid("reload");
+
+                                        MessageBox.Show("保存成功");
+                                    }
+                                    else {
+                                        MessageBox.Alert("发生错误");
+                                    }
+                                });
+                    }
+                }]
+            }, "#task_cp_dialog");
+
+
+            $cpDialog.dialog("open");
+        });
+
+
 
         //新增
         $("#btn_addTask").click(function () {

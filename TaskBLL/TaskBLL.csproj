@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseBLL.cs" />
     <Compile Include="CodeInfo.cs" />
     <Compile Include="CodeReader.cs" />
     <Compile Include="DataView.cs" />

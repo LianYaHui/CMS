@@ -37,7 +37,19 @@ public partial class xunjian_TaskDialog : System.Web.UI.Page
         if (String.IsNullOrEmpty(str_id))
             return;
 
+        var info = bll.GetTaskByID(Convert.ToInt32(str_id));
 
+        txt_taskName.Text = DataView.ToString(info["TaskName"]);
+        txt_beginDate.Value = DataView.ToDateString(info["TaskStartTime"], "yyyy-MM-dd");
+        txt_EndDate.Value = DataView.ToDateString(info["TaskEndTime"], "yyyy-MM-dd");
+        txt_taskDesc.Value = DataView.ToString(info["TaskDescription"]);
+        txt_taskStandard.Value = DataView.ToString(info["OperationStandard"]);
+        txt_taskUrl.Value = DataView.ToString(info["HelpURL"]);
 
+        txt_Taskpoint.Value = DataView.ToString(info["PointID"]);
+
+        slt_taskCategory.Value = DataView.ToString(info["TaskCategory"]);
+        slt_taskDegree.Value = DataView.ToString(info["TaskDegree"]);
+        slt_taskType.Value = DataView.ToString(info["TaskType"]);
     }
 }
