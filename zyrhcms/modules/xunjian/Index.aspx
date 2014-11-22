@@ -26,7 +26,7 @@
     <script src="../../js/easyui/jquery.easyui.min.js"></script>
     <script src="../../js/easyui/easyui-lang-zh_CN.js"></script>
     <script src="../../js/easyui/common.js"></script>
-    <script src="../../js/bootstrap/js/bootstrap.min.js"></script>
+    <%--<script src="../../js/bootstrap/js/bootstrap.min.js"></script>--%>
 
     <script type="text/javascript" src="<%=Public.WebDir%>/common/js/cms.box.js"></script>
     <script type="text/javascript" src="<%=Public.WebDir%>/common/js/cms.jquery.js"></script>

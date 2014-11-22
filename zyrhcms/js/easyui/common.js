@@ -115,5 +115,16 @@ var Farmat = {
     DataTime: function (val, row) {
         if (!PubStringFun.IsNullOrempty(val))
             return val.ReplaceAll("T", " ");
+    },
+    Date: function (val, row) {
+        if (!PubStringFun.IsNullOrempty(val))
+            return val.substr(0, 10);
+    },
+    DateMonth: function (date) {
+        return date.format("yyyy-MM");
+    }
+    ,
+    DateYYYYMMDD: function (date) {
+        return date.format("yyyy-MM-dd");
     }
 };

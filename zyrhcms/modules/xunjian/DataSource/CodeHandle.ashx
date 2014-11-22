@@ -17,7 +17,7 @@ public class CodeHandle : IHttpHandler
         if (String.IsNullOrEmpty(q["id"]))
         {
 
-            String sql = "select *,'closed' as state from sys_code where TypeID=0";
+            String sql = "select *,'closed' as state from codeinfo where CodeType=0";
 
 
             var dtSet = db.FillDataSet(sql, null, System.Data.CommandType.Text);
@@ -26,7 +26,7 @@ public class CodeHandle : IHttpHandler
         }
         else
         {
-            String sql = "select *,'open' as state from sys_code where TypeID=" + q["id"];
+            String sql = "select *,'open' as state from codeinfo where CodeType=" + q["id"];
 
             var dtSet = db.FillDataSet(sql, null, System.Data.CommandType.Text);
 

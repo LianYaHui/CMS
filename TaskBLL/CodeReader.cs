@@ -13,7 +13,7 @@ namespace TaskBLL
 
         public static List<CodeInfo> GetCodeByType(int type)
         {
-            return null;
+            return new List<CodeInfo>();
         }
 
         public static DataTable GetCodeTableByType(int type, String user)

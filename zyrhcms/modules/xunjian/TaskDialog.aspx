@@ -1,48 +1,118 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TaskDialog.aspx.cs" Inherits="xunjian_TaskDialog" %>
 
-<!DOCTYPE html>
+<form id="taskManageForm" runat="server">
+    <table id="tb_im" class="table-ui margin5" style="width: 600px;">
+        <tr>
+            <td class="td-title">
+                <span>任务名称</span>
+            </td>
+            <td colspan="3">
+                <asp:textbox id="txt_taskName" runat="server" cssclass="form-control input-sm"></asp:textbox>
+            </td>
+        </tr>
+        <tr>
+            <td class="td-title">
+                <span>任务类型</span>
+            </td>
+            <td colspan="3">
+                <select id="slt_taskType" class="chosen" style="width: 300px" runat="server">
+                </select>
+            </td>
+        </tr>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
-</head>
-<body>
-    <form id="taskManageForm" runat="server">
-        <table id="tb_im" class="table-ui margin5" style="width: 400px;">
-            <tr>
-                <td class="td-title">
-                    <span>任务名称</span>
-                </td>
-                <td colspan="3">
-                    <asp:TextBox ID="txt_taskName" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="td-title">
-                    <span>是否禁用</span>
-                </td>
-                <td>
-                    <input type="checkbox" runat="server" id="ck_isEnable" class="textbox-ui" />
-                </td>
-                <td class="td-title">
-                    <span>任务类型</span>
-                </td>
-                <td>
-                    <select id="slt_taskType" class="chosen" runat="server">
-                        <option>多线程</option>
-                        <option>单线程</option>
-                        <option>多线多点线程</option>
-                    </select>
-                </td>
-            </tr>
-        </table>
+        <tr>
+            <td class="td-title">
+                <span>任务类别</span>
+            </td>
+            <td colspan="3">
+                <select id="slt_taskCategory" style="width: 300px" class="chosen" runat="server">
+                </select>
+            </td>
+        </tr>
 
-        <script type="text/javascript">
-            $(function () {
-                $(".chosen").chosen();
+        <tr>
+            <td class="td-title">
+                <span>任务紧急情况</span>
+            </td>
+            <td colspan="3">
+                <select id="slt_taskDegree" style="width: 300px" class="chosen" runat="server">
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td-title">
+                <span>任务巡检点</span>
+            </td>
+            <td colspan="3">
+                <input id="txt_Taskpoint" style="width: 300px" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td-title">
+                <span>开始时间</span>
+            </td>
+            <td>
+                <input class="easyui-datebox" id="txt_beginDate" runat="server" style="width: 150px;"
+                    data-options="formatter:Farmat.DateYYYYMMDD,required:true" />
+            </td>
+
+            <td class="td-title">
+                <span>结束时间</span>
+            </td>
+            <td>
+                <input class="easyui-datebox" id="txt_EndDate" runat="server" style="width: 150px;"
+                    data-options="formatter:Farmat.DateYYYYMMDD,required:true" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td-title">
+                <span>帮助链接网址</span>
+            </td>
+            <td colspan="3">
+                <input type="text" id="txt_taskUrl" runat="server" class="form-control input-sm" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td-title">
+                <span>任务描述</span>
+            </td>
+            <td colspan="3">
+                <textarea id="txt_taskDesc" runat="server" class="form-control input-sm"></textarea>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td-title">
+                <span>操作标准</span>
+            </td>
+            <td colspan="3">
+                <textarea id="txt_taskStandard" rows="5" runat="server" class="form-control input-sm"></textarea>
+            </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".chosen").chosen();
+            $("#txt_Taskpoint").combogrid({
+                idField: 'point_id',
+                textField: 'point_name',
+                url: _path + "PointManagePage.aspx?action=get",
+                columns: [[
+                  { field: 'point_name', width: 180, title: '巡检点名称' },
+                  { field: 'type_name', width: 150, title: "类型名称" },
+                  { field: 'radii', width: 80, title: "默认巡检半径(米)" },
+                  { field: 'create_time', width: 180, formatter: Farmat.DataTime, title: "创建时间" },
+                ]],
+                fitColumns: true,
+                rownumbers: true,
+                pagination: true,
+                panelWidth: 500
             });
-        </script>
-    </form>
-</body>
-</html>
+
+        });
+    </script>
+</form>

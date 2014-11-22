@@ -1,91 +1,140 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TaskManage.aspx.cs" Inherits="xunjian_TaskManage" %>
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <table id="dg_task" class="easyui-datagrid" title="数据表格" style="height: 550px"
-            data-options="rownumbers:true,singleSelect:true,toolbar:'#tb',pagination:true,method:'get'">
-            <thead>
-                <tr>
-                    <th data-options="field:'Name',width:180">名称</th>
-                    <th data-options="field:'isEnable',width:100">是否启用</th>
-                    <th data-options="field:'Type',width:80,align:'right'">类型</th>
-                </tr>
-            </thead>
-        </table>
-        <div id="tb">
-            <div>
-                <a id="btn_addTask" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
-                <a id="btn_editTask" class="easyui-linkbutton" iconcls="icon-edit" plain="true">编辑</a>
-                <a id="btn_dltTask" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
-            </div>
+<form id="form1" runat="server">
+    <table id="dg_task" title="巡检任务管理" style="height: 550px"
+        data-options="rownumbers:true,singleSelect:true,toolbar:'#tb',pagination:true">
+        <thead>
+            <tr>
+                <th data-options="field:'TaskName',width:180">名称</th>
+                <th data-options="field:'DegreeDesc',width:100">紧急程度</th>
+                <th data-options="field:'typeDesc',width:100">巡检类型</th>
+                <th data-options="field:'point_name',width:100">巡检点</th>
+                <th data-options="field:'TaskStartTime',width:100,formatter:Farmat.Date">任务开始时间</th>
+                <th data-options="field:'TaskEndTime',width:100,formatter:Farmat.Date">任务结束时间</th>
+                <th data-options="field:'CreateTime',width:100,align:'center',formatter:Farmat.DataTime">创建时间</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb">
+        <div>
+            <a id="btn_addTask" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
+            <a id="btn_editTask" class="easyui-linkbutton" iconcls="icon-edit" plain="true">编辑</a>
+            <a id="btn_dltTask" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
         </div>
-    </form>
-
-    <div id="task_dialog">
     </div>
+</form>
+
+<div id="task_dialog">
+</div>
 
 
-    <script>
-        $(function () {
+<script>
+    $(function () {
 
-            var $dialog = new EasyuiDialog(_path + "TaskDialog.aspx", {
-                width: 450,
-                height: 400,
-                title: "任务明细",
-                buttons: [{
-                    text: '确认',
-                    iconCls: 'icon-ok',
-                    handler: function () {
-                        var _id = $("#taskManageForm").data("id");
+        var $dialog = new EasyuiDialog(_path + "TaskDialog.aspx", {
+            width: 650,
+            height: 400,
+            title: "任务明细",
+            buttons: [{
+                text: '确认',
+                iconCls: 'icon-ok',
+                handler: function () {
+                    var _id = $("#taskManageForm").data("id");
+                    _id = parseInt(_id || 0);
 
-                        if (PubStringFun.IsNullOrempty(_id)) _id = 0;
-                        else _id = parseInt(_id);
-                    }
-                }]
-            }, "#task_dialog");
+                    var point_Id = $("#txt_Taskpoint").combogrid('getValue');
 
-            var $dg_task = $("#dg_task").datagrid({
-                url: _path + "data.js"
-            });
-
-            //新增
-            $("#btn_addTask").click(function () {
-                $dialog.dialog({
-                    href: _path + "TaskDialog.aspx"
-                }).dialog("open");
-            });
-
-            //编辑
-            $("#btn_editTask").click(function () {
-
-            });
-
-
-            //删除
-            $("#btn_dltTask").click(function () {
-                var row = $dg_task.datagrid("getSelected");
-
-                if (!row) {
-                    MessageBox.Alert("请选择要删除的数据");
-                    return;
-                }
-
-                MessageBox.Confirm("要删除所选择的任务吗？", "删除数据", function (f) {
-                    if (!f) {
+                    if (!point_Id) {
+                        MessageBox.Alert("请选择巡检点");
                         return;
                     }
 
-                    MessageBox.Show("data is delete");
-                });
+
+                    var info = {
+                        ID: _id,
+                        TaskName: $("#txt_taskName").val(),
+                        taskType: parseInt($("#slt_taskType").val()),
+                        TaskCategory: parseInt($("#slt_taskCategory").val()),
+                        TaskDegree: parseInt($("#slt_taskDegree").val()),
+                        PointID: point_Id,
+                        OperationStandard: $("#txt_taskStandard").val(),
+                        HelpURL: $("#txt_taskUrl").val(),
+                        TaskDescription: $("#txt_taskDesc").val(),
+                        TaskStartTime: $("#txt_beginDate").datebox("getValue"),
+                        TaskEndTime: $("#txt_EndDate").datebox("getValue"),
+                    };
+
+                    Public.ajax(_path + "InnerFunction.asmx/SaveTask",
+                            JSON.stringify({
+                                json: JSON.stringify(info)
+                            }),
+                            function (data) {
+                                if (data.d == 1) {
+                                    $dialog.dialog("close");
+                                    $dg_task.datagrid("reload");
+
+                                    MessageBox.Show("保存成功");
+                                }
+                                else {
+                                    MessageBox.Alert("发生错误");
+                                }
+                            });
+                }
+            }]
+        }, "#task_dialog");
+
+        var $dg_task = $("#dg_task").datagrid({
+            url: _path + "TaskManage.aspx?action=get"
+        });
+
+        //新增
+        $("#btn_addTask").click(function () {
+            $dialog.dialog({
+                href: _path + "TaskDialog.aspx"
+            }).dialog("open");
+        });
+
+        //编辑
+        $("#btn_editTask").click(function () {
+            var row = $dg_task.datagrid("getSelected");
+
+            if (!row) {
+                MessageBox.Alert("请选择要删除的数据");
+                return;
+            }
+
+
+            $dialog.dialog({
+                href: (_path + "TaskDialog.aspx?id=" + row.ID)
+            }).dialog("open");
+        });
+
+
+        //删除
+        $("#btn_dltTask").click(function () {
+            var row = $dg_task.datagrid("getSelected");
+
+            if (!row) {
+                MessageBox.Alert("请选择要删除的数据");
+                return;
+            }
+
+            MessageBox.Confirm("要删除所选择的任务吗？", "删除数据", function (f) {
+                if (f) {
+                    Public.ajax(_path + "InnerFunction.asmx/DeleteTask",
+                        JSON.stringify({ id: row.ID }),
+                        function (data) {
+                            if (data.d == "1") {
+                                $dg_task.datagrid("reload");
+                                MessageBox.Show("操作已完成");
+                            }
+                            else {
+                                MessageBox.Alert("操作失败");
+                            }
+                        });
+                }
             });
         });
-    </script>
-</body>
-</html>
+    });
+</script>

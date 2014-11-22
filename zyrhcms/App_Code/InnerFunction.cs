@@ -24,38 +24,39 @@ public class InnerFunction : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public int SaveTask(String json)
-    {
-        return 0;
-    }
-
-    [WebMethod]
-    public int SaveCode(String json)
+    public String SaveCode(String json)
     {
         var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
         int id = Convert.ToInt32(info["ID"]);
 
-        MySqlParameter[] pars = new MySqlParameter[] { 
-            new MySqlParameter("?id",id),
-            new MySqlParameter("?display",Convert.ToString(info["Display"])),
-            new MySqlParameter("?typeid",Convert.ToInt32(info["TypeID"])),
-            new MySqlParameter("?isenable",Convert.ToBoolean(info["isEnable"]))
-        };
+        var code_count = db.CreateSelect()
+            .From("CodeInfo")
+            .Select("count(*)")
+            .Where("Code= ?code and ID != ?id")
+            .SetParameter("?code", info["Code"])
+            .SetParameter("?id", id)
+            .ExecuteScalar();
+
+        if (Convert.ToInt32(code_count) > 0)
+            return "已经存在Code值,请重新输入";
+
 
         if (id > 0)
         {
-            String sql = "update sys_code set Display=?display,isEnable=?isenable,TypeID=?typeid where ID=?id";
-
-            db.ExecuteNonQuery(sql, pars, System.Data.CommandType.Text);
+            db.CreateUpdate("CodeInfo")
+                .SetDictionary(info)
+                .Where("ID =" + id)
+                .ExecuteNonQuery();
         }
         else
         {
-            String sql = "insert into sys_code(display,CREATETime,isenable,typeID) VALUES(?display,NOW(),?isenable,?typeid)";
-
-            db.ExecuteNonQuery(sql, pars, System.Data.CommandType.Text);
+            info.Add("createtime", DateTime.Now);
+            db.CreateInsert("CodeInfo")
+                 .SetDictionary(info)
+                 .ExecuteNonQuery();
         }
 
-        return 1;
+        return "1";
     }
 
     [WebMethod]
@@ -118,8 +119,6 @@ public class InnerFunction : System.Web.Services.WebService
         var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
         int id = Convert.ToInt32(info["point_id"]);
 
-
-
         if (id > 0)
         {
             db.CreateUpdate("patrol_point")
@@ -141,4 +140,46 @@ public class InnerFunction : System.Web.Services.WebService
         return 1;
     }
 
+    TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+    [WebMethod]
+    public int DeleteTask(int id)
+    {
+        int execResult = bll.DeleteTask(id.ToString());
+        return execResult;
+    }
+
+
+    [WebMethod]
+    public int SaveTask(String json)
+    {
+        var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
+        int id = Convert.ToInt32(info["ID"]);
+
+
+
+
+        if (id > 0)
+        {
+            db.CreateUpdate("inspectiontaskinfo")
+                .SetDictionary(info)
+                .Where("ID=" + id)
+                .ExecuteNonQuery();
+        }
+        else
+        {
+            info.Add("isEnable", true);
+            info.Add("CreateTime", DateTime.Now);
+            info.Add("Grade", 0);
+
+            info.Add("RoadId", 0);
+            info.Add("TaskFaultID", 0);
+            info.Add("taskLeave", 0);
+
+            db.CreateInsert("inspectiontaskinfo")
+                 .SetDictionary(info)
+                 .ExecuteNonQuery();
+        }
+
+        return 1;
+    }
 }

@@ -140,5 +140,33 @@ where l.is_delete=0";
 
             return db.FillDataSet(sql, pars).Tables[0];
         }
+
+        public DataTable GetTaskList(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
+        {
+            String baseSql = @"select t.*,ct.`Value` as typeDesc,cc.`Value` as Category,cd.`Value` as DegreeDesc, p.*from 
+inspectiontaskinfo t LEFT JOIN codeinfo ct on ct.`Code`=t.TaskType
+LEFT JOIN CodeInfo cc on cc.code=t.TaskCategory
+left join CodeInfo cd on cd.code=t.TaskDegree
+left join patrol_point p on t.pointID =p.point_id 
+ where t.`isEnable`=1";
+
+            String getCountSql = String.Format("select count(*) from ({0}) as t", baseSql);
+
+            String ReturnDataSql = String.Format("{0} limit {1},{2}",
+                baseSql, (currentPage - 1) * pageCount, currentPage * pageCount);
+
+            totalCount = Convert.ToInt32(db.ExecuteScalar(getCountSql));
+
+            return db.FillDataSet(ReturnDataSql).Tables[0];
+        }
+
+
+        public int DeleteTask(String TaskIDs)
+        {
+            return db.CreateUpdate("inspectiontaskinfo")
+                .Set("isEnable=0")
+                .Where(String.Format("id in ({0})", TaskIDs))
+                .ExecuteNonQuery();
+        }
     }
 }
