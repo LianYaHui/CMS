@@ -564,7 +564,12 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
+
                 TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+
+                bll.InsertLog(Tasksource.ToString());
+
+
                 var usertable = bll.GetTaskTableByUser(UserName);
 
                 list = usertable.ToDictionary();
@@ -698,6 +703,10 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
+                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+                bll.InsertLog(TaskInfo);
+
+
                 //
                 Status = "Success";
                 //TODO
@@ -762,6 +771,9 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
+                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+                bll.InsertLog(TaskInfo);
+
                 //进行检验
                 Status = "Success";
                 //TODO
@@ -815,6 +827,10 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
+                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+                bll.InsertLog("GetCodeValue" + CodeType.ToString());
+
+
                 var data = CodeReader.GetCodeTableByType(CodeType, UserName);
                 dict = data.ToDictionary();
 
@@ -868,6 +884,9 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
+                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+                bll.InsertLog("in UploadTask:" + TaskInfos);
+
                 //
                 Status = "Success";
                 //TODO

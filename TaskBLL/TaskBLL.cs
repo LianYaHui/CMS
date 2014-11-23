@@ -4,12 +4,32 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
+using System.Web;
 
 namespace TaskBLL
 {
     public class TaskBLL
     {
         FoxzyForMySql.MySqlManageUtil db = new FoxzyForMySql.MySqlManageUtil();
+
+        public int InsertLog(String LogStr)
+        {
+            return db.CreateInsert("sysManageLog")
+                .SetObject(new
+                {
+                    logtime = DateTime.Now,
+                    logText = LogStr,
+                    clientIP = HttpContext.Current.Request.UserHostAddress
+                })
+                .ExecuteNonQuery();
+        }
+
+
+
+
+
+
+
 
         /// <summary>
         /// 根据客户端的ID 获取该ID下的所有任务
@@ -18,8 +38,14 @@ namespace TaskBLL
         /// <returns></returns>
         public DataTable GetTaskTableByUser(String userID)
         {
-            String sql = @"select tt.Value as TaskTypeText,td.Value as TaskDegreeTest,tc.Value as taskCategoryTest,t.HelpUrl,t.Longitude,t.Latitude,u.ID,t.Grade,t.TaskCategory,t.TaskDegree,t.TaskDescription,t.TaskEndTime,t.TaskStartTime,t.TaskType,t.TaskName,t.RoadId,t.Leave
-from UserTaskInfo u left JOIN InspectionTaskInfo t on t.ID=u.TaskID and t.enable=1
+            //TODO
+            //不是最好的,需要TaskUser映射
+            String sql = @"select tt.Value as TaskTypeText,td.Value as TaskDegreeTest,tc.Value as taskCategoryTest,
+t.HelpUrl,p.Longitude,p.Latitude,u.ID,t.Grade,t.TaskCategory,
+t.TaskDegree,t.TaskDescription,t.TaskEndTime,t.TaskStartTime,t.TaskType,
+t.TaskName,t.RoadId,t.taskLeave as 'Leave'
+from UserTaskInfo u left JOIN InspectionTaskInfo t on t.ID=u.TaskID and t.isEnable=1
+left join patrol_point p on p.point_id= t.PointID
 left join codeinfo tc on tc.Code=t.taskCategory
 left join codeinfo td on td.Code=t.TaskDegree
 left join codeinfo tt on tt.Code=t.TaskType
@@ -35,7 +61,7 @@ where u.UserAccount=?user and u.Enable=1";
         public DataTable GetTaskTableByID(int userTaskID)
         {
             String sql = @"select t.OperationStandard as Specifications,u.FaultText,u.FaultType,c.Value as FaultTypeText
-from UserTaskInfo u left JOIN InspectionTaskInfo t on t.ID=u.TaskID and t.enable=1
+from UserTaskInfo u left JOIN InspectionTaskInfo t on t.ID=u.TaskID and t.isEnable=1
 left JOIN codeinfo c on c.Code=u.FaultType
 where u.enable=1 and u.ID=?id";
 
