@@ -1,6 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="UpLoadTask.aspx.cs" Inherits="modules_xunjian_UpLoadTask" %>
 
 
+
+
+
+
 <form id="form1" runat="server">
     <table id="dg_taskUpLaod" title="任务汇报管理" style="height: 550px">
         <thead>
@@ -22,6 +26,9 @@
         <div class="margin5">
             <textarea id="txt_utDesc" rows="5" runat="server" class="form-control input-sm"></textarea>
         </div>
+    </div>
+
+    <div id="ud_mes">
     </div>
 
     <script>
@@ -61,11 +68,23 @@
             }, "#ut_setDesc");
 
 
+            var $mesDialog = new EasyuiDialog(null, {
+                title: "上报信息数据",
+                fit: true
+            }, "#ud_mes");
+
+
+
             var $grid = $("#dg_taskUpLaod").datagrid(
                 $.extend({}, EasyuiSetting.DataGrid, {
                     singleSelect: false,
                     toolbar: '#ut_tb',
                     onDblClickRow: function (index, row) {
+                        $mesDialog
+                            .dialog({
+                                href: _path + "UpLoadTaskMes.aspx?id=" + row.ID
+                            })
+                            .dialog("open");
                     },
                     url: _path + "UpLoadTask.aspx?action=get"
                 }));
@@ -78,7 +97,7 @@
                     return;
                 }
                 //
-                $descDialog.data("UT_ID", sltRow.ID).dialog("open")
+                $descDialog.data("UT_ID", sltRow.ID).dialog("open");
             });
         });
     </script>

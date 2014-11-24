@@ -219,5 +219,27 @@ where ut.isEnable=1";
                 .Pagination(currentPage, pageCount, out totalCount, null).Tables[0];
         }
 
+
+        public DataRow GetDeviceTaskInfo(int p)
+        {
+            return db.CreateSelect()
+                .Select()
+                .From("UserTaskMappingInfo")
+                .Where("ID=" + p)
+                .ToDataSet()
+                .Tables[0]
+                .Rows[0];
+        }
+
+        public DataTable GetUploadTaskInfo(String mark)
+        {
+            return db.CreateSelect()
+                .Select()
+                .From("uploadtaskinfo")
+                .Where("isEnable=1 and MarkID=?mark")
+                .SetParameter("?mark", mark)
+                .ToDataSet()
+                .Tables[0];
+        }
     }
 }

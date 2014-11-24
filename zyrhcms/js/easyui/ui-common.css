@@ -1,15 +1,5 @@
 ﻿* {
-    margin: 0;
-    padding: 0;
     font-family: "Microsoft Yahei";
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    border-width: 0;
-    width: 100%;
-    height: 100%;
 }
 
 ::selection {
@@ -155,26 +145,6 @@ article, aside, dialog, footer, header, section, footer, nav, figure, menu {
     background-color: rgb(178, 227, 245);
 }
 
-.autograph-box {
-    background-color: transparent;
-    margin-bottom: -2px !important;
-    font-size: 16px;
-    border: none;
-    border-bottom: 1px solid #7a7a7a;
-    -moz-transition-duration: 0.3s,0.5s;
-    -o-transition-duration: 0.3s,0.5s;
-    -webkit-transition-duration: 0.3s,0.5s;
-    transition-duration: 0.3s,0.5s;
-    -moz-transition-property: border-bottom-color box-shadow;
-    -o-transition-property: border-bottom-color box-shadow;
-    -webkit-transition-property: border-bottom-color box-shadow;
-    transition-property: border-bottom-color box-shadow;
-}
-
-    .autograph-box:focus {
-        border-bottom-color: #0053ff;
-        box-shadow: 0 0 5px #ee25e4;
-    }
 
 
 
@@ -197,6 +167,10 @@ article, aside, dialog, footer, header, section, footer, nav, figure, menu {
 
 .padding5 {
     padding: 5px;
+}
+
+.padding10 {
+    padding: 10px;
 }
 
 .margin5 {
