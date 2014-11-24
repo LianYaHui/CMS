@@ -194,7 +194,7 @@ public class InnerFunction : System.Web.Services.WebService
         {
             db.CreateUpdate("TaskDeviceInfo")
                 .Set("isDelete=1,deleteTime=?time")
-                .SetParameter("?time",DateTime.Now)
+                .SetParameter("?time", DateTime.Now)
                 .Where("TaskID=" + id)
                 .ExecuteNonQuery();
         }
@@ -215,5 +215,20 @@ public class InnerFunction : System.Web.Services.WebService
                 .ExecuteNonQuery();
         }
         return 1;
+    }
+
+    [WebMethod]
+    public int SaveLeaderDesc(String json)
+    {
+        var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
+        int id = Convert.ToInt32(info["ID"]);
+
+        info.Add("descDate", DateTime.Now);
+        info.Add("leaderName", "");
+
+        return db.CreateUpdate("UserTaskMappingInfo")
+            .SetDictionary(info)
+            .Where("ID=" + id)
+            .ExecuteNonQuery();
     }
 }

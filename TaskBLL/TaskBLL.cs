@@ -24,13 +24,6 @@ namespace TaskBLL
                 .ExecuteNonQuery();
         }
 
-
-
-
-
-
-
-
         /// <summary>
         /// 根据客户端的ID 获取该ID下的所有任务
         /// </summary>
@@ -215,7 +208,16 @@ left join patrol_point p on t.pointID =p.point_id
                 .Tables[0];
         }
 
+        public DataTable GetUserTaskMapping(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
+        {
+            String sql = @"Select ut.*,t.TaskName from UserTaskMappingInfo ut
+left JOIN inspectiontaskinfo t on t.ID=ut.TaskID
+where ut.isEnable=1";
 
+            return db.CreatePagination()
+                .Set(sql, null)
+                .Pagination(currentPage, pageCount, out totalCount, null).Tables[0];
+        }
 
     }
 }
