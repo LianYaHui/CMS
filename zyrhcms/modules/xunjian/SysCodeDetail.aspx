@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <td class="td-title">
-                <span>是否禁用</span>
+                <span>是否启用</span>
             </td>
             <td>
                 <input type="checkbox" runat="server" id="ck_isEnable" class="textbox-ui" />

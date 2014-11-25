@@ -29,20 +29,25 @@ namespace TaskBLL
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public DataTable GetTaskTableByUser(String userID)
+        public DataTable GetTaskTableByUser(String userID, int TaskType)
         {
-            //TODO
-            //不是最好的,需要TaskUser映射
-            String sql = @"select tt.Value as TaskTypeText,td.Value as TaskDegreeTest,tc.Value as taskCategoryTest,
-t.HelpUrl,p.Longitude,p.Latitude,u.ID,t.Grade,t.TaskCategory,
+            String sql = @"select t.ID,tt.Value as TaskTypeText,td.Value as TaskDegreeTest,tc.Value as TaskCategoryTest,
+t.HelpUrl,p.Longitude,p.Latitude,t.Grade,t.TaskCategory,
 t.TaskDegree,t.TaskDescription,t.TaskEndTime,t.TaskStartTime,t.TaskType,
 t.TaskName,t.RoadId,t.taskLeave as 'Leave'
-from UserTaskInfo u left JOIN InspectionTaskInfo t on t.ID=u.TaskID and t.isEnable=1
+from taskdeviceinfo u join InspectionTaskInfo t
+left join device_info d on u.DeviceID=d.device_id
 left join patrol_point p on p.point_id= t.PointID
 left join codeinfo tc on tc.Code=t.taskCategory
 left join codeinfo td on td.Code=t.TaskDegree
 left join codeinfo tt on tt.Code=t.TaskType
-where u.UserAccount=?user and u.Enable=1";
+where d.index_code=?user and u.isDelete=0 and t.isEnable=1 and NOW() BETWEEN t.TaskStartTime and t.TaskEndTime $$where
+order by t.ID desc";
+
+            if (TaskType % 10000 == 0)
+                sql = sql.Replace("$$where", "");
+            else
+                sql = sql.Replace("$$where", " and t.TaskType=" + TaskType);
 
             MySqlParameter[] pars = new MySqlParameter[]{
                 new MySqlParameter("?user",userID)
@@ -53,10 +58,9 @@ where u.UserAccount=?user and u.Enable=1";
 
         public DataTable GetTaskTableByID(int userTaskID)
         {
-            String sql = @"select t.OperationStandard as Specifications,u.FaultText,u.FaultType,c.Value as FaultTypeText
-from UserTaskInfo u left JOIN InspectionTaskInfo t on t.ID=u.TaskID and t.isEnable=1
-left JOIN codeinfo c on c.Code=u.FaultType
-where u.enable=1 and u.ID=?id";
+            String sql = @"select t.OperationStandard as Specifications
+                            from InspectionTaskInfo t
+                            where t.ID=?id";
 
             MySqlParameter[] pars = new MySqlParameter[]{
                 new MySqlParameter("?id",userTaskID)

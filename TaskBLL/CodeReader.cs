@@ -11,9 +11,15 @@ namespace TaskBLL
     {
         public static FoxzyForMySql.MySqlManageUtil db = new FoxzyForMySql.MySqlManageUtil();
 
-        public static List<CodeInfo> GetCodeByType(int type)
+        public static DataTable GetCodeByType(int type)
         {
-            return new List<CodeInfo>();
+            String sql = "select Code,Value as text from codeinfo where Enable=1 AND CodeType=?type";
+
+            MySqlParameter[] pars = new MySqlParameter[] { 
+                new MySqlParameter("?type",type)
+            };
+
+            return db.FillDataSet(sql, pars).Tables[0];
         }
 
         public static DataTable GetCodeTableByType(int type, String user)
@@ -25,7 +31,7 @@ namespace TaskBLL
                 new MySqlParameter("?user",user)
             };
 
-           return  db.FillDataSet(sql, pars).Tables[0];
+            return db.FillDataSet(sql, pars).Tables[0];
         }
     }
 }

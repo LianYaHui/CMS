@@ -16,6 +16,7 @@ using Newtonsoft.Json.Converters;
 using TaskBLL;
 using Model;
 using System.Linq;
+using System.Data;
 
 /// <summary>
 /// ZyrhMobileService 的摘要说明
@@ -544,6 +545,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
 
         try
         {
+            TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
             DeviceCenter dc = new DeviceCenter(Public.CmsDBConnectionString);
             if (UserName.Equals(string.Empty))
             {
@@ -564,13 +566,9 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
-
-                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
-
                 bll.InsertLog(Tasksource.ToString());
 
-
-                var usertable = bll.GetTaskTableByUser(UserName);
+                var usertable = bll.GetTaskTableByUser(UserName, Tasksource);
 
                 list = usertable.ToDictionary();
                 Status = "Success";
@@ -588,8 +586,9 @@ public class ZyrhMobileService : System.Web.Services.WebService
             IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
             timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
-            return JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, timeFormat);
-
+            String result = JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, timeFormat);
+            bll.InsertLog("return JSON:" + result);
+            return result;
         }
         catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
     }
@@ -644,7 +643,25 @@ public class ZyrhMobileService : System.Web.Services.WebService
                 TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
                 var usertable = bll.GetTaskTableByID(TaskId);
 
-                info = usertable.ToDictionary().FirstOrDefault();
+                if (usertable.Rows.Count == 0)
+                {
+                    return ResonseErrorInfoJSON(new Exception("找不到该ID的值"));
+                }
+                String std = Convert.ToString(usertable.Rows[0][0]);
+
+                var FaultLeave = CodeReader.GetCodeByType(10000);//故障等级
+
+                var FaultText = CodeReader.GetCodeByType(20000);//故障描述
+
+                info = new
+                {
+                    Specifications = std,
+                    FaultLeave = FaultLeave.ToDictionary(),
+                    FaultText = FaultText.Rows.OfType<DataRow>()
+                    .Select(r => Convert.ToString(r["text"]))
+                };
+
+
                 Status = "Success";
 
             }
@@ -659,7 +676,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
 
             return JsonConvert.SerializeObject(obj);
         }
-        catch (Exception ex) { return this.ResponseErrorInfo(ex); }
+        catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
     }
     #endregion
 

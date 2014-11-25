@@ -18,8 +18,6 @@ public class CodeHandle : IHttpHandler
         {
 
             String sql = "select *,'closed' as state from codeinfo where CodeType=0";
-
-
             var dtSet = db.FillDataSet(sql, null, System.Data.CommandType.Text);
 
             context.Response.Write(dtSet.Tables[0].ToJsonString());

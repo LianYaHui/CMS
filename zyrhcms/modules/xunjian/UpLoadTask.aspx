@@ -10,9 +10,8 @@
         <thead>
             <tr>
                 <th data-options="field:'FirstUpLoadTime',width:140,formatter:Farmat.Date">上报时间</th>
-                <th data-options="field:'DegreeDesc',width:100">任务名称</th>
-                <th data-options="field:'typeDesc',width:100">设备标识</th>
-                <th data-options="field:'point_name',width:100">巡检点</th>
+                <th data-options="field:'TaskName',width:100">任务名称</th>
+                <th data-options="field:'Device_ID',width:100">设备标识</th>
                 <th data-options="field:'MarkID',width:150">上报标识</th>
             </tr>
         </thead>
