@@ -36,10 +36,9 @@
     </div>
 
     <div class="form-group form-group-sm">
-        <label for="txt_line_pd" class="col-sm-3 control-label">巡检路线</label>
+        <label for="txt_type_pd" class="col-sm-3 control-label">巡检路线区域</label>
         <div class="col-sm-9">
-            <select class="form-control" id="slt_line_pd" runat="server">
-            </select>
+            <input type="text" readonly class="form-control" id="txt_line_pd" runat="server" placeholder="巡检半径" style="cursor: pointer;" />
         </div>
     </div>
 
@@ -49,5 +48,39 @@
         </label>
     </div>
 
+    <div id="pd_div_line">
+    </div>
+
+    <script>
+        $(function () {
+            var $dialog = new EasyuiDialog(_path + "LineDialog.aspx", {
+                width: 450,
+                height: 400,
+                title: "选择路线",
+                buttons: [{
+                    text: '确认',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        var LineInfo = $("#ptLine_grid_diolog").treegrid("getSelected");
+                        if (!LineInfo) {
+                            MessageBox.Alert("请选择一条路线或者区域");
+                            return;
+                        }
+
+                        $("#txt_line_pd").val(LineInfo.line_name).data("line_id", LineInfo.line_id);
+
+                        $dialog.dialog("close");
+                        MessageBox.Show("操作已成功");
+                    }
+                }]
+            }, "#pd_div_line");
+
+
+
+            $("#txt_line_pd").click(function () {
+                $dialog.dialog("open");
+            });
+        });
+    </script>
 
 </form>

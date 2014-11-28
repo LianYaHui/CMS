@@ -69,7 +69,7 @@
             </div>
         </div>
         <div data-options="region:'center'">
-            <div id="tabs" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
+            <div id="tabs" class="easyui-tabs " data-options="fit:true,border:false,plain:true">
                 <div title="控制台" style="padding: 5px" data-option="closable:true">
                     <div class="warp padding5 radia5">
                         <span>
