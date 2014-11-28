@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace TaskBLL
 {
@@ -37,5 +38,20 @@ namespace TaskBLL
         {
             return JsonConvert.DeserializeObject<T>(json);
         }
+
+
+
+        public static String GetFileName(String path, bool isCheckFile = false)
+        {
+            if (isCheckFile)
+            {
+                if (File.Exists(path))
+                    throw new Exception(String.Format("文件{0}不存在", path));
+            }
+
+
+            return path.Substring(path.LastIndexOf("/") + 1);
+        }
+
     }
 }

@@ -86,6 +86,17 @@ where l.is_delete=0";
             return db.FillDataSet(ReturnDataSql).Tables[0];
         }
 
+
+        public DataTable GetTreeLine(int superID)
+        {
+            String sql = @"select l.line_id,l.create_time,l.line_name,line_count.c,u.name,(select count(*) from patrol_line cl where cl.super_id=l.line_id and cl.is_delete=0) as chilenCount
+from patrol_line l left join control_unit u on l.unit_id=u.control_unit_id
+left join (select line_id,count(*) as c from patrol_point group by line_id) as line_count on line_count.line_id=l.line_id
+where l.is_delete=0 and l.super_id=" + superID;
+
+            return db.FillDataSet(sql).Tables[0];
+        }
+
         public DataRow GetPatrolLineByID(int ID)
         {
             String sql = @"select * from patrol_line where line_id=?id";
@@ -244,6 +255,13 @@ where ut.isEnable=1";
                 .SetParameter("?mark", mark)
                 .ToDataSet()
                 .Tables[0];
+        }
+
+        public int Insert(String tableName, object info)
+        {
+            return db.CreateInsert(tableName)
+                .SetObject(info)
+                .ExecuteNonQuery();
         }
     }
 }

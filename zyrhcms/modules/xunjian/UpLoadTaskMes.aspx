@@ -54,16 +54,7 @@
             <div class="padding10">
             </div>
             <div class="row">
-                <asp:Repeater ID="rpt_Image" runat="server">
-                    <ItemTemplate>
-                        <div class="col-md-3">
-                            <a href="<%#Eval("#UpLoadURL") %>" target="_blank">
-                                <img class="img-thumbnail" src="<%#Eval("#UpLoadURL") %>" />
-                            </a>
-                        </div>
-
-                    </ItemTemplate>
-                </asp:Repeater>
+                <%=ImageHtml %>
             </div>
             <div class="margin5">
             </div>
@@ -208,14 +199,16 @@
 
 
 
-                var vidio_url = <%=VidioUrl%>;
+                var  vidio_url=[{
+                    title:"hello",
+                    m4a:"/mv1401056103181955.mp4"}];
 
                 new jPlayerPlaylist({
                     jPlayer: "#vidio_div_player",
                     cssSelectorAncestor: "#vidio_div"
-                }, [], {
+                }, vidio_url, {
                     swfPath: "../../dist/jplayer",
-                    supplied: "webmv, ogv, m4v",
+                    supplied: "m4v,m4a,webmv,ogv,mp3",
                     useStateClassSkin: true,
                     autoBlur: false,
                     smoothPlayBar: true,

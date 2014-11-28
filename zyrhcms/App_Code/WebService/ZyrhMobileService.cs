@@ -878,6 +878,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
     {
         String Status = String.Empty;
         String Msg = String.Empty;
+        Dictionary<String, Object> info = TaskInfos.JsonStringToDictionary<Dictionary<String, Object>>();
 
         try
         {
@@ -907,6 +908,29 @@ public class ZyrhMobileService : System.Web.Services.WebService
                 //
                 Status = "Success";
                 //TODO
+
+                String markID = Convert.ToString(info["mark"]);
+
+                //图片
+                IEnumerable<String> ImgUpinfo = Convert.ToString(info["pictureUrl"]).JsonStringToDictionary<IEnumerable<String>>();
+                foreach (String url in ImgUpinfo)
+                {
+                    var imgInfo = new
+                    {
+                        ID = 0,
+                        UpLoadType = Convert.ToInt32(TaskBLL.UpLoadFileType.Image),
+                        UpLoadURL = url,
+                        MarkID = markID,
+                        UploadDate = DateTime.Now,
+                        isEnable = true,
+                        FileName = Helper.GetFileName(url, false)
+                    };
+
+                    bll.Insert("uploadtaskinfo", imgInfo);
+                }
+
+
+
 
 
             }

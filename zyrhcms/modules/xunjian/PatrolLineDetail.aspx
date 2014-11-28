@@ -18,6 +18,62 @@
                     <asp:TextBox ID="txt_LineName" runat="server" CssClass="form-control input-sm"></asp:TextBox>
                 </td>
             </tr>
+
+            <tr>
+                <td class="td-title">
+                    <span>起始点</span>
+                </td>
+                <td colspan="3"></td>
+            </tr>
+
+            <tr>
+                <td class="td-title">
+                    <span>经度</span>
+                </td>
+                <td>
+                    <input id="txt_beginX" runat="server" class="form-control input-sm" />
+
+                </td>
+                <td class="td-title">
+                    <span>维度</span>
+                </td>
+                <td>
+                    <input id="txt_beginY" runat="server" class="form-control input-sm" />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="td-title">
+                    <span>终止点</span>
+                </td>
+                <td colspan="3"></td>
+            </tr>
+
+            <tr>
+                <td class="td-title">
+                    <span>经度</span>
+                </td>
+                <td>
+                    <input id="txt_endX" runat="server" class="form-control input-sm" />
+
+                </td>
+                <td class="td-title">
+                    <span>维度</span>
+                </td>
+                <td>
+                    <input id="txt_endY" runat="server" class="form-control input-sm" />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="td-title" colspan="4">
+                    <div class="checkbox">
+                        <label>
+                            <input id="ck_continue_pl" type="checkbox">添加完成后继续
+                        </label>
+                    </div>
+                </td>
+            </tr>
         </table>
 
         <script type="text/javascript">

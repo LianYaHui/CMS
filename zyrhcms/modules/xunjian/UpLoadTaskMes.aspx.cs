@@ -10,7 +10,9 @@ using TaskBLL;
 public partial class modules_xunjian_UpLoadTaskMes : System.Web.UI.Page
 {
     protected String AudioUrl = "[]",
-        VidioUrl = "[]";
+                     VidioUrl = "[]",
+                     ImageHtml = "";
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -39,8 +41,14 @@ public partial class modules_xunjian_UpLoadTaskMes : System.Web.UI.Page
 
         var lqInfos = upInfos.Rows.OfType<System.Data.DataRow>();
 
-        rpt_Image.DataSource = lqInfos.Where(r => Convert.ToInt32(r["UpLoadType"]) == Convert.ToInt32(UpLoadFileType.Image));
-        rpt_Image.DataBind();
+        var imgHtml = lqInfos.Where(r => Convert.ToInt32(r["UpLoadType"]) == Convert.ToInt32(UpLoadFileType.Image))
+                     .Select(r =>
+                         String.Format(@"<div class='col-md-3'>
+                                        <a href='{0}' target='_blank'>
+                                            <img class='img-thumbnail' src='{0}' />
+                                        </a>
+                                        </div>", r["UpLoadURL"]));
+        ImageHtml = String.Join(" ", imgHtml.ToArray());
 
         AudioUrl = (from row in lqInfos
                     where Convert.ToInt32(row["UpLoadType"]) == Convert.ToInt32(UpLoadFileType.Audio)

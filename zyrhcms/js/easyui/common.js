@@ -132,5 +132,10 @@ var Farmat = {
     ,
     DateYYYYMMDD: function (date) {
         return date.format("yyyy-MM-dd");
+    },
+    NullToZero: function (val, row) {
+        if (!val) return 0;
+
+        return val;
     }
 };

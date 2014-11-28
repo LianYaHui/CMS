@@ -13,7 +13,7 @@ public class UnitTree : IHttpHandler
         context.Response.ContentType = "text/javascript";
 
         String _UnitID = context.Request["id"];
-        String where;
+        String where; 
 
         if (String.IsNullOrEmpty(_UnitID))
         {
