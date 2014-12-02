@@ -12,21 +12,17 @@ public partial class modules_xunjian_PointDetail : System.Web.UI.Page
     {
         int temp = 0;
         TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
-        var lineSource = bll.GetPatrolLine(1, 10000, out temp, null, null);
-
-        //slt_line_pd.DataSource = lineSource;
-        //slt_line_pd.DataTextField = "line_name";
-        //slt_line_pd.DataValueField = "line_id";
-        //slt_line_pd.DataBind();
 
         var typeSource = bll.GetPatrolType(1, 100000, out temp, null, null);
-        //slt_type_pd.DataSource = typeSource;
-        //slt_type_pd.DataTextField = "type_name";
-        //slt_type_pd.DataValueField = "type_id";
-        //slt_type_pd.DataBind();
+        slt_type_pd.DataSource = typeSource;
+        slt_type_pd.DataTextField = "type_name";
+        slt_type_pd.DataValueField = "type_id";
+        slt_type_pd.DataBind();
 
 
         String _id = Request["id"];
+        int LineID = Convert.ToInt32(Request["line_id"] ?? "0");
+
         if (!String.IsNullOrEmpty(_id))
         {
             var info = bll.GetPatrolPointByID(Convert.ToInt32(_id));
@@ -38,6 +34,9 @@ public partial class modules_xunjian_PointDetail : System.Web.UI.Page
             txt_latitude_pd.Value = DataView.ToString(info["latitude"]);
             txt_radio_pd.Value = DataView.ToString(info["radii"]);
             PointForm.Attributes["data-id"] = _id;
+            LineID = Convert.ToInt32(info["line_id"]);
         }
+
+
     }
 }
