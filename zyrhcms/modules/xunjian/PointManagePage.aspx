@@ -1,27 +1,42 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="PointManagePage.aspx.cs" Inherits="modules_xunjian_PointManagePage" %>
 
 <form id="form1" runat="server">
-    <table id="Point_grid" title="巡检点管理" style="height: 540px"
-        data-options="
+    <div class="pull-left" style="width: 20%;">
+
+        <table id="lineTree_point" title="巡检路段" style="height: 540px">
+            <thead>
+                <tr>
+                    <th data-options="field:'line_name',width:180">巡检线路名称</th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+
+    <div class="pull-left" style="width: 80%;">
+        <table id="Point_grid" title="巡检点管理" style="height: 540px"
+            data-options="
 				rownumbers: true,
 				collapsible: true,
 				fitColumns: true,
 				toolbar:'#tbPoint',
 				pagination:true
 			">
-        <thead>
-            <tr>
-                <th data-options="field:'point_name',width:180">巡检点名称</th>
-                <th data-options="field:'latitude',width:80">纬度</th>
-                <th data-options="field:'longitude',width:80">经度</th>
-                <th data-options="field:'radii',width:180">巡检半径</th>
-                <th data-options="field:'type_name',width:180">巡检点类型</th>
-                <th data-options="field:'line_name',width:180">所属路线</th>
-                <th data-options="field:'uName',width:180">组织机构</th>
-                <th data-options="field:'create_time',width:180,formatter:Farmat.DataTime">创建时间</th>
-            </tr>
-        </thead>
-    </table>
+            <thead>
+                <tr>
+                    <th data-options="field:'point_name',width:180">巡检点名称</th>
+                    <th data-options="field:'latitude',width:80">纬度</th>
+                    <th data-options="field:'longitude',width:80">经度</th>
+                    <th data-options="field:'radii',width:180">巡检半径</th>
+                    <th data-options="field:'type_name',width:180">巡检点类型</th>
+                    <th data-options="field:'line_name',width:180">所属路线</th>
+                    <th data-options="field:'uName',width:180">组织机构</th>
+                    <th data-options="field:'create_time',width:180,formatter:Farmat.DataTime">创建时间</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
 
     <div id="tbPoint">
         <div>
@@ -37,6 +52,22 @@
 
     <script>
         $(function () {
+            var $treeLine = $("#lineTree_point").treegrid({
+                url: _path + "DataSource/PatrolLine.ashx",
+                singleSelect: true,
+                idField: 'line_id',
+                animate: true,
+                treeField: 'line_name',
+                rownumbers: true,
+                collapsible: true,
+                fitColumns: true,
+                onDblClickRow: function (row) {
+                    grid.datagrid({
+                        url: _path + "PointManagePage.aspx?action=get&line_id=" + row.line_id
+                    });
+                }
+            });
+
             var grid = $("#Point_grid").datagrid({
                 url: _path + "PointManagePage.aspx?action=get",
                 singleSelect: true

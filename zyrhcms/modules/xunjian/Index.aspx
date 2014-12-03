@@ -24,7 +24,7 @@
     <script src="../../js/easyui/jquery.min.js"></script>
     <script src="../../js/easyui/Jquery.MS.min.js"></script>
     <script src="../../js/easyui/jquery.easyui.min.js"></script>
-    <script src="../../js/easyui/common.js"></script>
+    <script src="<%=Public.WebDir%>/modules/xunjian/common.js"></script>
 
     <script type="text/javascript" src="<%=Public.WebDir%>/common/js/cms.box.js"></script>
     <script type="text/javascript" src="<%=Public.WebDir%>/common/js/cms.jquery.js"></script>

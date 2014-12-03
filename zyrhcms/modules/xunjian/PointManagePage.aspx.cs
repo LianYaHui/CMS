@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -23,7 +24,16 @@ public partial class modules_xunjian_PointManagePage : System.Web.UI.Page
                     Size = Convert.ToInt32(Request["rows"]);
 
                 Index = Index > 0 ? Index : 1;
-                var infos = bll.GetPatrolPoint(Index, Size, out _count, null, null);
+
+                StringBuilder where = new StringBuilder();
+                String line_id = Request["line_id"];
+
+                if (!String.IsNullOrEmpty(line_id))
+                {
+                    where.AppendFormat(" and FIND_IN_SET(p.line_id, GetAllPortolLine({0}))", line_id);
+                }
+
+                var infos = bll.GetPatrolPoint(Index, Size, out _count, where.ToString(), null);
 
                 var _obj = new
                 {

@@ -139,3 +139,15 @@ var Farmat = {
         return val;
     }
 };
+
+
+
+var $LineDialog = null;
+
+$(function () {
+    $LineDialog = new EasyuiDialog(_path + "LineDialog.aspx", {
+        width: 450,
+        height: 400,
+        title: "选择路线"
+    });
+});

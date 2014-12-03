@@ -47,16 +47,9 @@
             <input type="checkbox" id="ck_continue_pd" />添加完成后继续
         </label>
     </div>
-
-    <div id="pd_div_line">
-    </div>
-
     <script>
         $(function () {
-            var $dialog = new EasyuiDialog(_path + "LineDialog.aspx", {
-                width: 450,
-                height: 400,
-                title: "选择路线",
+            $LineDialog.dialog({
                 buttons: [{
                     text: '确认',
                     iconCls: 'icon-ok',
@@ -69,16 +62,14 @@
 
                         $("#txt_line_pd").val(LineInfo.line_name).data("line_id", LineInfo.line_id);
 
-                        $dialog.dialog("close");
+                        $LineDialog.dialog("close");
                         MessageBox.Show("操作已成功");
                     }
                 }]
-            }, "#pd_div_line");
-
-
+            });
 
             $("#txt_line_pd").click(function () {
-                $dialog.dialog("open");
+                $LineDialog.dialog("open");
             });
         });
     </script>
