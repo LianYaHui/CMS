@@ -137,6 +137,12 @@ var Farmat = {
         if (!val) return 0;
 
         return val;
+    },
+    Url: function (val, row) {
+        if (!val)
+            return "";
+
+        return "<a target='_blank' href='" + val + "'>" + val + "</a>";
     }
 };
 

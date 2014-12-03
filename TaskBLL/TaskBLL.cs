@@ -190,6 +190,13 @@ left join CodeInfo cd on cd.code=t.TaskDegree
 left join patrol_point p on t.pointID =p.point_id 
  where t.`isEnable`=1";
 
+
+            if (!String.IsNullOrEmpty(where))
+            {
+                baseSql += where;
+            }
+
+
             String getCountSql = String.Format("select count(*) from ({0}) as t", baseSql);
 
             String ReturnDataSql = String.Format("{0} limit {1},{2}",
@@ -268,6 +275,27 @@ where ut.isEnable=1";
             return db.CreateInsert(tableName)
                 .SetObject(info)
                 .ExecuteNonQuery();
+        }
+
+        public DataTable SelectTaskSpecies(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
+        {
+            String sql = @"select Species_Name,Species_ID,HelpWebUrl,TaskDesc,create_time from taskspecies
+                            where isEnable=1";
+
+            return db.CreatePagination()
+                .Set(sql, null)
+                .Pagination(currentPage, pageCount, out totalCount, null).Tables[0];
+        }
+
+        public DataRow GetTaskSpecies(int id)
+        {
+            return db.CreateSelect()
+                .From("taskspecies")
+                .Select()
+                .Where("Species_ID=" + id)
+                .ToDataSet()
+                .Tables[0]
+                .Rows[0];
         }
     }
 }

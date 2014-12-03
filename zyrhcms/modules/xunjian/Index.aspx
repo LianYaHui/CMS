@@ -48,6 +48,8 @@
                         <li class="menu-li" data-url="PatrolLineManage.aspx">线路管理</li>
                         <li class="menu-li" data-url="PatrolPointManage.aspx">巡检点类型管理</li>
                         <li class="menu-li" data-url="PointManagePage.aspx">巡检点管理</li>
+
+                        <li class="menu-li" data-url="TaskSpecies.aspx">任务种类管理</li>
                         <li class="menu-li" data-url="TaskManage.aspx">任务管理</li>
                     </ul>
                 </div>

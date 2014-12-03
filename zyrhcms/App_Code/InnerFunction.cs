@@ -231,4 +231,31 @@ public class InnerFunction : System.Web.Services.WebService
             .Where("ID=" + id)
             .ExecuteNonQuery();
     }
+
+    [WebMethod]
+    public int SaveTaskSpecies(String json)
+    {
+        var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
+        int id = Convert.ToInt32(info["Species_ID"]);
+
+        if (id > 0)
+        {
+            db.CreateUpdate("taskspecies")
+                .SetDictionary(info)
+                .Where("Species_ID=" + id)
+                .ExecuteNonQuery();
+        }
+        else
+        {
+            info.Add("isEnable", true);
+            info.Add("create_time", DateTime.Now);
+
+            db.CreateInsert("taskspecies")
+               .SetDictionary(info)
+               .ExecuteNonQuery();
+        }
+
+        return 1;
+    }
+
 }

@@ -2,20 +2,33 @@
 
 
 <form id="form1" runat="server">
-    <table id="dg_task" title="巡检任务管理" style="height: 550px"
-        data-options="rownumbers:true,singleSelect:true,toolbar:'#tb',pagination:true">
-        <thead>
-            <tr>
-                <th data-options="field:'TaskName',width:180">名称</th>
-                <th data-options="field:'DegreeDesc',width:100">紧急程度</th>
-                <th data-options="field:'typeDesc',width:100">巡检类型</th>
-                <th data-options="field:'point_name',width:100">巡检点</th>
-                <th data-options="field:'TaskStartTime',width:100,formatter:Farmat.Date">任务开始时间</th>
-                <th data-options="field:'TaskEndTime',width:100,formatter:Farmat.Date">任务结束时间</th>
-                <th data-options="field:'CreateTime',width:100,align:'center',formatter:Farmat.DataTime">创建时间</th>
-            </tr>
-        </thead>
-    </table>
+    <div class="pull-left" style="width: 20%;">
+        <table id="lineTree_task" title="巡检路段" style="height: 540px">
+            <thead>
+                <tr>
+                    <th data-options="field:'line_name',width:180">巡检路段</th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+    <div class="pull-left" style="width: 80%;">
+        <table id="dg_task" title="巡检任务管理" style="height: 550px"
+            data-options="rownumbers:true,singleSelect:true,toolbar:'#tb',pagination:true">
+            <thead>
+                <tr>
+                    <th data-options="field:'TaskName',width:180">名称</th>
+                    <th data-options="field:'DegreeDesc',width:100">紧急程度</th>
+                    <th data-options="field:'typeDesc',width:100">巡检类型</th>
+                    <th data-options="field:'point_name',width:100">巡检点</th>
+                    <th data-options="field:'TaskStartTime',width:100,formatter:Farmat.Date">任务开始时间</th>
+                    <th data-options="field:'TaskEndTime',width:100,formatter:Farmat.Date">任务结束时间</th>
+                    <th data-options="field:'CreateTime',width:100,align:'center',formatter:Farmat.DataTime">创建时间</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
     <div id="tb">
         <div>
             <a id="btn_addTask" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
@@ -36,6 +49,24 @@
 
 <script>
     $(function () {
+        var $treeLine = $("#lineTree_task").treegrid({
+            url: _path + "DataSource/PatrolLine.ashx",
+            singleSelect: true,
+            idField: 'line_id',
+            animate: true,
+            treeField: 'line_name',
+            rownumbers: true,
+            collapsible: true,
+            fitColumns: true,
+            onDblClickRow: function (row) {
+                $dg_task.datagrid({
+                    url: _path + "TaskManage.aspx?action=get&line_id=" + row.line_id
+                });
+            }
+        });
+
+
+
 
         var $dialog = new EasyuiDialog(_path + "TaskDialog.aspx", {
             width: 650,
