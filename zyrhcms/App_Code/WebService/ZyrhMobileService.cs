@@ -149,7 +149,17 @@ public class ZyrhMobileService : System.Web.Services.WebService
                         strItem.Append(this.BuildXmlItem("FileUploadUrl", this.GetFileUploadUrl(), true));
                         strItem.Append(this.BuildXmlItem("Upgrade", this.CheckIsNeedUpgrade(Version).ToString(), false));
                         strItem.Append(this.BuildXmlItem("UpgradeUrl", this.GetUpgradeUrl(Version), true));
-                        strItem.Append(this.BuildXmlItem("Group", "1|2|3", false));
+
+                        //Update
+                        DataTable tbGroup = bll.GetGroupByDeviceCode(UserName);
+                        String strGroup = String.Join("|", tbGroup.Rows.OfType<DataRow>().Select(r => Convert.ToString(r["GroupID"])).ToArray());
+
+
+
+                        strItem.Append(this.BuildXmlItem("Group", strGroup, false));
+
+                        //End Update
+
                         strItem.Append("</Config>");
 
                         if (!Version.Equals(string.Empty))
@@ -1034,17 +1044,13 @@ public class ZyrhMobileService : System.Web.Services.WebService
         try
         {
 
-            TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+            TaskBLL.DeviceGroupBLL bll = new TaskBLL.DeviceGroupBLL();
             //
-            Status = "Success";
-
-            String UserName = "";
 
 
-            Deviceinfos = bll.GetGroupDevice(UserName).ToDictionary();
+            Deviceinfos = bll.GetGroupDevice(GroupID).ToDictionary();
             //TODO
-
-
+            Status = "Success";
 
             var obj = new
             {

@@ -133,5 +133,30 @@ namespace TaskBLL
 
             return db.FillDataSet(sql, null, CommandType.Text).Tables[0];
         }
+
+        public DataTable GetGroupByDeviceCode(String Code)
+        {
+            return db.CreateSelect()
+                .From("Group_Device_Join")
+                .Select()
+                .Where("DeviceCode=?code and  isEnable=1")
+                .SetParameter("?code", Code)
+                .ToDataSet()
+                .Tables[0];
+        }
+
+        public DataTable GetGroupDevice(int groupID)
+        {
+            String sql = @"select d.device_name,de.*,'' as DeptName,'' as WorkTypeID from Group_Device_Join g
+left JOIN device_info d on d.index_code=g.DeviceCode
+left JOIN Device_emp_info de on de.DeviceCode=d.index_code
+where g.GroupID=?gid and g.isEnable=1";
+
+            IEnumerable<IDataParameter> pars = new IDataParameter[]{
+                                               new MySqlParameter("?gid",groupID)
+                                               };
+
+            return db.FillDataSet(sql, pars, CommandType.Text).Tables[0];
+        }
     }
 }

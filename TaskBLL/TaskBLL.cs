@@ -298,22 +298,6 @@ where ut.isEnable=1";
                 .Rows[0];
         }
 
-        public DataTable GetGroupDevice(string deviceCode)
-        {
-            String sql = @"select device_name,de.*,'' as DeptName,'' as WorkTypeID from device_info d  
-                        left JOIN Device_emp_info de on de.DeviceCode=d.index_code
-                         where type_code=50785
-                        and d.control_unit_id 
-                        = (select dw.control_unit_id from device_info dw where dw.index_code=?code)";
-
-            IEnumerable<IDataParameter> pars = new IDataParameter[]{
-                                               new MySqlParameter("?code",deviceCode)
-                                               };
-
-            return db.FillDataSet(sql, pars, CommandType.Text).Tables[0];
-
-        }
-
         public DataTable GetDeviceInfo(int unitID)
         {
             String sql = @"select * from device_info d
@@ -321,5 +305,7 @@ where ut.isEnable=1";
 
             return db.FillDataSet(sql, null, CommandType.Text).Tables[0];
         }
+
+
     }
 }
