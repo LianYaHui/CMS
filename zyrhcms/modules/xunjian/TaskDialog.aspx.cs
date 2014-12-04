@@ -31,22 +31,31 @@ public partial class xunjian_TaskDialog : System.Web.UI.Page
         slt_taskCategory.DataTextField = "Value";
         slt_taskCategory.DataBind();
 
+        int __count = 0;
+        slt_taskSpecies.DataSource = bll.SelectTaskSpecies(1, 10000, out __count, null, null);
+        slt_taskSpecies.DataValueField = "Species_ID";
+        slt_taskSpecies.DataTextField = "Species_Name";
+        slt_taskSpecies.DataBind();
+
+
         if (String.IsNullOrEmpty(str_id))
             return;
 
         var info = bll.GetTaskByID(Convert.ToInt32(str_id));
 
+        if (info == null)
+            return;
+
         txt_taskName.Text = DataView.ToString(info["TaskName"]);
         txt_beginDate.Value = DataView.ToDateString(info["TaskStartTime"], "yyyy-MM-dd");
         txt_EndDate.Value = DataView.ToDateString(info["TaskEndTime"], "yyyy-MM-dd");
-        txt_taskDesc.Value = DataView.ToString(info["TaskDescription"]);
-        txt_taskStandard.Value = DataView.ToString(info["OperationStandard"]);
-        txt_taskUrl.Value = DataView.ToString(info["HelpURL"]);
-
         txt_Taskpoint.Value = DataView.ToString(info["PointID"]);
 
         slt_taskCategory.Value = DataView.ToString(info["TaskCategory"]);
         slt_taskDegree.Value = DataView.ToString(info["TaskDegree"]);
         slt_taskType.Value = DataView.ToString(info["TaskType"]);
+
+
+        slt_taskSpecies.Value = DataView.ToString(info["SpeciesID"]);
     }
 }

@@ -42,6 +42,16 @@
 
         <tr>
             <td class="td-title">
+                <span>任务种类</span>
+            </td>
+            <td colspan="3">
+                <select id="slt_taskSpecies" style="width: 300px" class="chosen" runat="server">
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td-title">
                 <span>任务巡检点</span>
             </td>
             <td colspan="3">
@@ -64,32 +74,6 @@
             <td>
                 <input class="easyui-datebox" id="txt_EndDate" runat="server" style="width: 150px;"
                     data-options="formatter:Farmat.DateYYYYMMDD,required:true" />
-            </td>
-        </tr>
-
-        <tr>
-            <td class="td-title">
-                <span>帮助链接网址</span>
-            </td>
-            <td colspan="3">
-                <input type="text" id="txt_taskUrl" runat="server" class="form-control input-sm" />
-            </td>
-        </tr>
-        <tr>
-            <td class="td-title">
-                <span>任务描述</span>
-            </td>
-            <td colspan="3">
-                <textarea id="txt_taskDesc" runat="server" class="form-control input-sm"></textarea>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="td-title">
-                <span>操作标准</span>
-            </td>
-            <td colspan="3">
-                <textarea id="txt_taskStandard" rows="5" runat="server" class="form-control input-sm"></textarea>
             </td>
         </tr>
     </table>

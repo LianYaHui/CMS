@@ -94,11 +94,9 @@
                         TaskCategory: parseInt($("#slt_taskCategory").val()),
                         TaskDegree: parseInt($("#slt_taskDegree").val()),
                         PointID: point_Id,
-                        OperationStandard: $("#txt_taskStandard").val(),
-                        HelpURL: $("#txt_taskUrl").val(),
-                        TaskDescription: $("#txt_taskDesc").val(),
                         TaskStartTime: $("#txt_beginDate").datebox("getValue"),
                         TaskEndTime: $("#txt_EndDate").datebox("getValue"),
+                        SpeciesID: $("#slt_taskSpecies").val()
                     };
 
                     Public.ajax(_path + "InnerFunction.asmx/SaveTask",

@@ -1015,4 +1015,60 @@ public class ZyrhMobileService : System.Web.Services.WebService
         }
         catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
     }
+
+    [WebMethod]
+    public String DownGroupDevice(string UserName, string Token)
+    {
+        String Status = String.Empty;
+        String Msg = String.Empty;
+        List<Dictionary<String, Object>> Deviceinfos = new List<Dictionary<string, object>>();
+
+        try
+        {
+            DeviceCenter dc = new DeviceCenter(Public.CmsDBConnectionString);
+            if (UserName.Equals(string.Empty))
+            {
+                Status = "Failed";
+                Msg = "用户名不得为空";
+            }
+            else if (!dc.CheckDeviceCodeFormat(UserName))
+            {
+                //用户名格式错误
+                Status = "Failed";
+                Msg = "用户名格式错误";
+            }
+            else if (!dc.CheckDeviceToken(UserName, Token))
+            {
+                //校验码错误
+                Status = "Failed";
+                Msg = "校验码错误";
+            }
+            else
+            {
+                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+                //
+                Status = "Success";
+
+                Deviceinfos = bll.GetGroupDevice(UserName).ToDictionary();
+                //TODO
+
+            }
+
+
+            var obj = new
+            {
+                Status = Status,
+                Msg = Msg,
+                Deviceinfos = Deviceinfos
+            };
+
+            IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
+            timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+
+            return JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, timeFormat);
+        }
+        catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
+    }
+
+
 }
