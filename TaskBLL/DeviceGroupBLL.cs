@@ -90,7 +90,7 @@ namespace TaskBLL
             return db.CreateSelect()
                 .Select()
                 .From("Group_Device_Join")
-                .Where("GroupID = " + groupID)
+                .Where("isEnable=1 and GroupID = " + groupID )
                 .ToDataSet()
                 .Tables[0];
         }
@@ -157,6 +157,17 @@ where g.GroupID=?gid and g.isEnable=1";
                                                };
 
             return db.FillDataSet(sql, pars, CommandType.Text).Tables[0];
+        }
+
+        public DataTable SelectGroup(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
+        {
+            String baseSql = @"select g.*,c.Value as groupBuildTypeText from  Device_Group_Info g 
+                            left join  Codeinfo c on g.groupBuildType=c.Code
+                            where g.isEnable=1 ORDER BY GROUPID desc";
+
+            return db.CreatePagination()
+                .Set(baseSql, null)
+                .Pagination(currentPage, pageCount, out totalCount, null).Tables[0];
         }
     }
 }

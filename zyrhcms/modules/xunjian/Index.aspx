@@ -40,6 +40,14 @@
     <div class="easyui-layout" data-options="fit:true">
         <div id="nav_div_left" data-options="region:'west',split:true" title="导航栏" style="width: 180px;">
             <div id="nav-left-div" class="easyui-accordion" data-options="fit:true,border:false">
+                <div title="设备管理">
+                    <ul>
+                        <li class="menu-li" data-url="DeviceGroupManage.aspx">群组管理</li>
+                    </ul>
+                </div>
+
+
+
 
 
                 <div title="任务管理">

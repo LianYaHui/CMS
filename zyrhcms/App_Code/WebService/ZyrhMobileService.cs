@@ -1066,6 +1066,4 @@ public class ZyrhMobileService : System.Web.Services.WebService
         }
         catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
     }
-
-
 }
