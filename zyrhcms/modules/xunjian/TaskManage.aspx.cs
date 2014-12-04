@@ -19,7 +19,7 @@ public partial class xunjian_TaskManage : System.Web.UI.Page
             case "get":
                 GetData();
                 break;
-
+                
         }
     }
 

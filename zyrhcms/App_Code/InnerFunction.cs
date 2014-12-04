@@ -278,4 +278,23 @@ public class InnerFunction : System.Web.Services.WebService
         }
         return 1;
     }
+
+    [WebMethod]
+    public int UpdateTask(String json)
+    {
+        var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
+        int id = Convert.ToInt32(info["ID"]);
+
+        if (id > 0)
+        {
+            db.CreateUpdate("inspectiontaskinfo")
+                .SetDictionary(info)
+                .Where("ID=" + id)
+                .ExecuteNonQuery();
+        }
+
+
+
+        return 1;
+    }
 }

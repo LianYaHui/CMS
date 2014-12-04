@@ -79,6 +79,7 @@
                     var _id = $("#taskManageForm").data("id");
                     _id = parseInt(_id || 0);
 
+                    var ajaxPars = null, ajaxUrl = "";
                     var info = {
                         TaskName: $("#txt_taskName").val(),
                         taskType: parseInt($("#slt_taskType").val()),
@@ -88,13 +89,29 @@
                         TaskEndTime: $("#txt_EndDate").datebox("getValue"),
                         SpeciesID: $("#slt_taskSpecies").val()
                     };
-                    var point_ids = Q($("#dg_task_slt").datagrid("getRows")).Select("$.point_id").ToArray();
 
-                    Public.ajax(_path + "InnerFunction.asmx/AddTask",
-                            JSON.stringify({
-                                json: JSON.stringify(info),
-                                pointIDs: point_ids
-                            }),
+                    if (_id > 0) {//update
+                        info.ID = _id;
+                        info.PointID = Q($("#dg_task_slt").datagrid("getRows")).Select("$.point_id").First();
+
+                        ajaxPars = JSON.stringify({
+                            json: JSON.stringify(info)
+                        });
+                        ajaxUrl = _path + "InnerFunction.asmx/UpdateTask";
+                    }
+                    else {
+                        ajaxUrl = _path + "InnerFunction.asmx/AddTask";
+
+                        var point_ids = Q($("#dg_task_slt").datagrid("getRows")).Select("$.point_id").ToArray();
+
+                        ajaxPars = JSON.stringify({
+                            json: JSON.stringify(info),
+                            pointIDs: point_ids
+                        });
+                    }
+
+
+                    Public.ajax(ajaxUrl, ajaxPars,
                             function (data) {
                                 if (data.d == 1) {
                                     $dialog.dialog("close");

@@ -26,5 +26,20 @@ namespace TaskBLL
                 return "";
             }
         }
+
+        public static int ToInt32(object obj, int nullVal = 0)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return nullVal;
+
+            try
+            {
+                return Convert.ToInt32(obj);
+            }
+            catch
+            {
+                return nullVal;
+            }
+        }
     }
 }

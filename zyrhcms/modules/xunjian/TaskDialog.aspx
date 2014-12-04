@@ -97,7 +97,16 @@
         $(function () {
             $(".chosen").chosen();
 
-            var $slt_grid = $("#dg_task_slt").datagrid();
+            var jsonData=<%=JsonPoint%>;
+
+            var $slt_grid = $("#dg_task_slt").datagrid()
+                            .datagrid("loadData",jsonData);
+
+            if(jsonData.length > 0 ){
+                $slt_grid.datagrid({
+                    toolbar:''
+                });
+            }
 
             $linePointDialog.dialog({
                 buttons: [{

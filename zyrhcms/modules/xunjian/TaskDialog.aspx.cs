@@ -8,6 +8,9 @@ using TaskBLL;
 
 public partial class xunjian_TaskDialog : System.Web.UI.Page
 {
+    protected String JsonPoint = "[]";
+
+
     protected void Page_Load(object sender, EventArgs e)
     {
         TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
@@ -56,5 +59,10 @@ public partial class xunjian_TaskDialog : System.Web.UI.Page
 
 
         slt_taskSpecies.Value = DataView.ToString(info["SpeciesID"]);
+
+        String where = " and p.point_id=" + DataView.ToInt32(info["PointID"], 0);
+        var pointInfo = bll.GetPatrolPoint(1, 1000, out __count, where, null);
+
+        JsonPoint = pointInfo.ToJsonString();
     }
 }
