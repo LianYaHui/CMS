@@ -127,6 +127,14 @@ public class ZyrhMobileService : System.Web.Services.WebService
                 bool isSuccess = dc.DeviceLogin(UserName, UserPwd);
                 if (isSuccess)
                 {
+                    //Insert
+                    //生成默认群组
+
+                    DeviceInfo info = dc.GetDeviceInfo(UserName);
+                    TaskBLL.DeviceGroupBLL bll = new DeviceGroupBLL();
+                    bll.BuilderGroup(info.UnitId);
+
+                    //=============
                     string strLoginTime = Public.GetDateTime();
                     string strToken = dc.BuildDeviceLoginToken(UserName, strLoginTime);
                     string strLoginIp = new DomainIp().GetIpAddress();
@@ -1017,7 +1025,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public String DownGroupDevice(string UserName, string Token)
+    public String DownGroupDevice(int GroupID)
     {
         String Status = String.Empty;
         String Msg = String.Empty;
@@ -1025,34 +1033,17 @@ public class ZyrhMobileService : System.Web.Services.WebService
 
         try
         {
-            DeviceCenter dc = new DeviceCenter(Public.CmsDBConnectionString);
-            if (UserName.Equals(string.Empty))
-            {
-                Status = "Failed";
-                Msg = "用户名不得为空";
-            }
-            else if (!dc.CheckDeviceCodeFormat(UserName))
-            {
-                //用户名格式错误
-                Status = "Failed";
-                Msg = "用户名格式错误";
-            }
-            else if (!dc.CheckDeviceToken(UserName, Token))
-            {
-                //校验码错误
-                Status = "Failed";
-                Msg = "校验码错误";
-            }
-            else
-            {
-                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
-                //
-                Status = "Success";
 
-                Deviceinfos = bll.GetGroupDevice(UserName).ToDictionary();
-                //TODO
+            TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+            //
+            Status = "Success";
 
-            }
+            String UserName = "";
+
+
+            Deviceinfos = bll.GetGroupDevice(UserName).ToDictionary();
+            //TODO
+
 
 
             var obj = new

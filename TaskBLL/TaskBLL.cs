@@ -313,5 +313,13 @@ where ut.isEnable=1";
             return db.FillDataSet(sql, pars, CommandType.Text).Tables[0];
 
         }
+
+        public DataTable GetDeviceInfo(int unitID)
+        {
+            String sql = @"select * from device_info d
+                        where d.type_code=50785 and d.control_unit_id=" + unitID;
+
+            return db.FillDataSet(sql, null, CommandType.Text).Tables[0];
+        }
     }
 }
