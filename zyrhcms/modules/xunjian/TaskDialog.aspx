@@ -52,15 +52,6 @@
 
         <tr>
             <td class="td-title">
-                <span>任务巡检点</span>
-            </td>
-            <td colspan="3">
-                <input id="txt_Taskpoint" runat="server" style="width: 300px" />
-            </td>
-        </tr>
-
-        <tr>
-            <td class="td-title">
                 <span>开始时间</span>
             </td>
             <td>
@@ -76,25 +67,70 @@
                     data-options="formatter:Farmat.DateYYYYMMDD,required:true" />
             </td>
         </tr>
+
+
+        <tr>
+            <td class="td-title">
+                <span>巡检点</span>
+            </td>
+
+            <td colspan="3">
+                <table id="dg_task_slt" title="对应的巡检点" style="height: 200px; width: 450px;"
+                    data-options="rownumbers:true,singleSelect:false,toolbar:'#slt_grid_tb'">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'point_name',width:180">巡检点</th>
+                            <th data-options="field:'line_name',width:200">所属区域路段</th>
+                        </tr>
+                    </thead>
+                </table>
+            </td>
+        </tr>
     </table>
+
+    <div id="slt_grid_tb">
+        <a id="btn_addPoint_slt" class="easyui-linkbutton" iconcls="icon-add" plain="true">添加</a>
+        <a id="btn_dltPoint_slt" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
+    </div>
 
     <script type="text/javascript">
         $(function () {
             $(".chosen").chosen();
-            $("#txt_Taskpoint").combogrid({
-                idField: 'point_id',
-                textField: 'point_name',
-                url: _path + "PointManagePage.aspx?action=get",
-                columns: [[
-                  { field: 'point_name', width: 180, title: '巡检点名称' },
-                  { field: 'type_name', width: 150, title: "类型名称" },
-                  { field: 'radii', width: 80, title: "默认巡检半径(米)" },
-                  { field: 'create_time', width: 180, formatter: Farmat.DataTime, title: "创建时间" },
-                ]],
-                fitColumns: true,
-                rownumbers: true,
-                pagination: true,
-                panelWidth: 500
+
+            var $slt_grid = $("#dg_task_slt").datagrid();
+
+            $linePointDialog.dialog({
+                buttons: [{
+                    text: '确认',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        var g = $("#Point_grid_dialog");
+                        var slt_point = g.datagrid("getSelections");
+
+                        var sltPointID = Q($slt_grid.datagrid("getRows")).Select("$.point_id");
+
+                        Q(slt_point).ForEach(function (r) {
+                            if (!sltPointID.Contains(r.point_id)) {
+                                $slt_grid.datagrid("appendRow", r);
+                            }
+                        });
+
+
+                        //$linePointDialog.dialog("close");
+                        MessageBox.Show("添加成功");
+                    }
+                }]
+            });
+
+            $("#btn_addPoint_slt").click(function () {
+                $linePointDialog.dialog("open");
+            });
+
+            $("#btn_dltPoint_slt").click(function () {
+                var sltedRows = Q($slt_grid.datagrid("getSelections"));
+                Q(sltedRows).ForEach(function (r) {
+                    $slt_grid.datagrid("deleteRow", $slt_grid.datagrid("getRowIndex", r));
+                });
             });
 
         });

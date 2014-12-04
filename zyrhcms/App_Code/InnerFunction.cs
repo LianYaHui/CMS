@@ -155,9 +155,6 @@ public class InnerFunction : System.Web.Services.WebService
         var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
         int id = Convert.ToInt32(info["ID"]);
 
-
-
-
         if (id > 0)
         {
             db.CreateUpdate("inspectiontaskinfo")
@@ -258,4 +255,27 @@ public class InnerFunction : System.Web.Services.WebService
         return 1;
     }
 
+
+    [WebMethod]
+    public int AddTask(String json, int[] pointIDs)
+    {
+        foreach (int id in pointIDs)
+        {
+            var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
+
+            info.Add("PointID", id);
+            info.Add("isEnable", true);
+            info.Add("CreateTime", DateTime.Now);
+            info.Add("Grade", 0);
+
+            info.Add("RoadId", 0);
+            info.Add("TaskFaultID", 0);
+            info.Add("taskLeave", 0);
+
+            db.CreateInsert("inspectiontaskinfo")
+                 .SetDictionary(info)
+                 .ExecuteNonQuery();
+        }
+        return 1;
+    }
 }

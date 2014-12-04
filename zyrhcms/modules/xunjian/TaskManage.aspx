@@ -79,29 +79,21 @@
                     var _id = $("#taskManageForm").data("id");
                     _id = parseInt(_id || 0);
 
-                    var point_Id = $("#txt_Taskpoint").combogrid('getValue');
-
-                    if (!point_Id) {
-                        MessageBox.Alert("请选择巡检点");
-                        return;
-                    }
-
-
                     var info = {
-                        ID: _id,
                         TaskName: $("#txt_taskName").val(),
                         taskType: parseInt($("#slt_taskType").val()),
                         TaskCategory: parseInt($("#slt_taskCategory").val()),
                         TaskDegree: parseInt($("#slt_taskDegree").val()),
-                        PointID: point_Id,
                         TaskStartTime: $("#txt_beginDate").datebox("getValue"),
                         TaskEndTime: $("#txt_EndDate").datebox("getValue"),
                         SpeciesID: $("#slt_taskSpecies").val()
                     };
+                    var point_ids = Q($("#dg_task_slt").datagrid("getRows")).Select("$.point_id").ToArray();
 
-                    Public.ajax(_path + "InnerFunction.asmx/SaveTask",
+                    Public.ajax(_path + "InnerFunction.asmx/AddTask",
                             JSON.stringify({
-                                json: JSON.stringify(info)
+                                json: JSON.stringify(info),
+                                pointIDs: point_ids
                             }),
                             function (data) {
                                 if (data.d == 1) {
@@ -177,8 +169,6 @@
 
             $cpDialog.dialog("open");
         });
-
-
 
         //新增
         $("#btn_addTask").click(function () {

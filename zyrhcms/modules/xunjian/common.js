@@ -148,12 +148,19 @@ var Farmat = {
 
 
 
-var $LineDialog = null;
+var $LineDialog = null,
+    $linePointDialog = null;
 
 $(function () {
     $LineDialog = new EasyuiDialog(_path + "LineDialog.aspx", {
         width: 450,
         height: 400,
         title: "选择路线"
+    });
+
+    $linePointDialog = new EasyuiDialog(_path + "LinePointDialog.aspx", {
+        width: 650,
+        height: 400,
+        title: "选择巡检点"
     });
 });

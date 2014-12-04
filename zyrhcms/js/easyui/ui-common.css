@@ -100,14 +100,10 @@ article, aside, dialog, footer, header, section, footer, nav, figure, menu {
     font-size: 14px;
 }
 
-.left {
-    float: left;
-}
-
-.textbox-ui2:focus {
-    border-color: #ffd800;
-    box-shadow: 0 0 10px #8f0488 inset;
-}
+    .textbox-ui2:focus {
+        border-color: #ffd800;
+        box-shadow: 0 0 10px #8f0488 inset;
+    }
 
 .table-ui {
     border: 1px solid #0094ff;
@@ -119,15 +115,27 @@ article, aside, dialog, footer, header, section, footer, nav, figure, menu {
     box-sizing: border-box;
 }
 
-    .table-ui tr, .table-ui td {
+    .table-ui > tr, .table-ui > tr > td {
         border: 1px solid #0094ff;
         padding: 2px;
         height: 30px;
     }
 
-    .table-ui td {
-        padding: 2px 4px 2px 4px;
+        .table-ui > tr > td {
+            padding: 2px 4px 2px 4px;
+        }
+
+    .table-ui > tbody > tr, .table-ui > tbody > tr > td {
+        border: 1px solid #0094ff;
+        padding: 2px;
+        height: 30px;
     }
+
+        .table-ui > tbody > tr > td {
+            padding: 2px 4px 2px 4px;
+        }
+
+
 
 .table_title {
     text-align: center;

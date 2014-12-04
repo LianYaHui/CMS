@@ -49,7 +49,6 @@ public partial class xunjian_TaskDialog : System.Web.UI.Page
         txt_taskName.Text = DataView.ToString(info["TaskName"]);
         txt_beginDate.Value = DataView.ToDateString(info["TaskStartTime"], "yyyy-MM-dd");
         txt_EndDate.Value = DataView.ToDateString(info["TaskEndTime"], "yyyy-MM-dd");
-        txt_Taskpoint.Value = DataView.ToString(info["PointID"]);
 
         slt_taskCategory.Value = DataView.ToString(info["TaskCategory"]);
         slt_taskDegree.Value = DataView.ToString(info["TaskDegree"]);
