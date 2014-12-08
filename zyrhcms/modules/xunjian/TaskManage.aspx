@@ -140,9 +140,7 @@
             }
 
 
-            var $cpDialog = new EasyuiDialog((_path + "DevicePage.aspx?tid=" + row.ID), {
-                width: 900,
-                height: 400,
+            $deviceDialog.dialog({
                 title: "分配任务",
                 buttons: [{
                     text: '确认',
@@ -157,6 +155,10 @@
                             });
                         });
 
+                        if (sltrow.length == 0) {
+                            MessageBox.Alert("请选择一个设备");
+                            return;
+                        }
 
 
                         var info = {
@@ -170,7 +172,7 @@
                                 }),
                                 function (data) {
                                     if (data.d == 1) {
-                                        $cpDialog.dialog("close");
+                                        $deviceDialog.dialog("close");
                                         $dg_task.datagrid("reload");
 
                                         MessageBox.Show("保存成功");
@@ -181,10 +183,7 @@
                                 });
                     }
                 }]
-            }, "#task_cp_dialog");
-
-
-            $cpDialog.dialog("open");
+            }).dialog("open");
         });
 
         //新增

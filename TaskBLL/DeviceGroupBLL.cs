@@ -85,12 +85,19 @@ namespace TaskBLL
               .ExecuteNonQuery();
         }
 
+        public int Insert(String table, object info)
+        {
+            return db.CreateInsert(table)
+              .SetObject(info)
+              .ExecuteNonQuery();
+        }
+
         public DataTable GetGroupDeviceinfo(int groupID)
         {
             return db.CreateSelect()
                 .Select()
                 .From("Group_Device_Join")
-                .Where("isEnable=1 and GroupID = " + groupID )
+                .Where("isEnable=1 and GroupID = " + groupID)
                 .ToDataSet()
                 .Tables[0];
         }
@@ -168,6 +175,35 @@ where g.GroupID=?gid and g.isEnable=1";
             return db.CreatePagination()
                 .Set(baseSql, null)
                 .Pagination(currentPage, pageCount, out totalCount, null).Tables[0];
+        }
+
+        public DataRow GetGroupInfo(int gid)
+        {
+            return db.CreateSelect()
+                .From("Device_Group_Info")
+                .Select()
+                .Where("GroupID=" + gid)
+                .ToDataSet()
+                .Tables[0]
+                .Rows[0];
+        }
+
+        public int RemoveDeviceForGroup(int groupID, string[] deivceCode)
+        {
+            return db.CreateUpdate("Group_Device_Join")
+                .Set("isEnable=0,ExitDatetime=now()")
+                .SetParameter("?gid", groupID)
+                .Where(String.Format("GroupID=?gid and DeviceCode in ({0})", String.Join(",", deivceCode.Select(c => String.Format("'{0}'", c)).ToArray())))
+                .ExecuteNonQuery();
+        }
+
+        public int RemoveGroup(int groupID)
+        {
+            return db.CreateUpdate("Device_Group_Info")
+               .Set("isEnable=0")
+               .SetParameter("?gid", groupID)
+               .Where("GroupID=?gid ")
+               .ExecuteNonQuery();
         }
     }
 }

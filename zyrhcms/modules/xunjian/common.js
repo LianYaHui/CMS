@@ -149,7 +149,8 @@ var Farmat = {
 
 
 var $LineDialog = null,
-    $linePointDialog = null;
+    $linePointDialog = null,
+    $deviceDialog = null;
 
 $(function () {
     $LineDialog = new EasyuiDialog(_path + "LineDialog.aspx", {
@@ -162,5 +163,10 @@ $(function () {
         width: 650,
         height: 400,
         title: "选择巡检点"
+    });
+
+    $deviceDialog = new EasyuiDialog((_path + "DevicePage.aspx"), {
+        width: 900,
+        height: 400,
     });
 });

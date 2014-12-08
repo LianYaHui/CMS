@@ -46,12 +46,13 @@
 <div id="group_grid_tb">
     <a id="btn_addGroup" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
     <a id="btn_removeGroup" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
+    |
+    <a id="btn_GroupNode" class="easyui-linkbutton" iconcls="icon-tip" plain="true">查看群组聊天记录</a>
 </div>
 
 <div id="Group_device_grid_tb">
-    <a id="btn_addDevice" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
-    <a id="btn_editDevice" class="easyui-linkbutton" iconcls="icon-edit" plain="true">编辑</a>
-    <a id="btn_removeDevice" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
+    <a id="btn_addDevice" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增组成员</a>
+    <a id="btn_removeDevice" class="easyui-linkbutton" iconcls="icon-remove" plain="true">移除组成员</a>
 </div>
 
 <div id="group_dialog">
@@ -65,13 +66,13 @@
             onDblClickRow: function (index, row) {
                 $Group_device_grid.datagrid({
                     url: _path + "DataSource/DeviceJoinHandle.ashx?gid=" + row.GroupID,
-                    toolbar: (row.GroupBuildType === 200001 ? "" : '#Group_device_grid_tb')
-                });
+                    title: row.GroupName + "的组成员"
+                }).data("DeviceGroup", row);
             }
         });
 
         var $Group_device_grid = $("#Group_device_grid").datagrid({
-            singleSelect: true
+            singleSelect: false
         });
 
         var $dialog = new EasyuiDialog(_path + "GroupDetail.aspx", {
@@ -82,37 +83,22 @@
                 text: '确认',
                 iconCls: 'icon-ok',
                 handler: function () {
-                    var _id = $("#PointForm").data("id");
+                    var _id = $("#GroupForm").data("id");
                     _id = parseInt(_id || 0);
 
-                    //TODO
-                    return;
-
-                    Public.ajax(_path + "InnerFunction.asmx/SavePatrolPoint",
+                    Public.ajax(_path + "InnerFunction.asmx/SaveGroup",
                         JSON.stringify({
                             json: JSON.stringify({
-                                point_id: _id,
-                                point_name: $("#txt_PointName_pd").val(),
-                                radii: parseFloat($("#txt_radio_pd").val()),
-                                longitude: parseFloat($("#txt_longitude_pd").val()),
-                                latitude: parseFloat($("#txt_latitude_pd").val()),
-                                type_id: parseInt($("#slt_type_pd").val()),
-                                line_id: parseInt($("#slt_line_pd").val())
+                                GroupID: _id,
+                                GroupName: $("#txt_GroupName_gd").val()
                             })
                         }),
                         function (data) {
                             if (data.d == 1) {
-                                grid.datagrid("reload");
+                                $groupGrid.datagrid("reload");
+                                $dialog.dialog("close");
 
-                                if ($("#ck_continue_pd").is(':checked') === true) {
-                                    $dialog.dialog("refresh", _path + "PointDetail.aspx");
-                                }
-                                else {
-                                    $dialog.dialog("close");
-
-                                }
-
-                                MessageBox.Show("添加成功");
+                                MessageBox.Show("保存成功");
                             }
                             else {
                                 MessageBox.Alert("发生错误");
@@ -145,7 +131,7 @@
                 return;
             }
 
-
+            $dialog.dialog({ href: _path + "GroupDetail.aspx?gid=" + sltRow.GroupID }).dialog("open");
         });
 
         //remove
@@ -162,17 +148,127 @@
                 return;
             }
 
+            MessageBox.Confirm("确认该删除该群组吗?", "确认", function (ok) {
+                if (ok) {
+                    Public.ajax(_path + "InnerFunction.asmx/RemoveGroup",
+                                    JSON.stringify({
+                                        groupID: sltRow.GroupID
+                                    }),
+                                    function (data) {
+                                        if (data.d > 0) {
+                                            $groupGrid.datagrid("reload");
+
+                                            MessageBox.Show("操作成功");
+                                        }
+                                        else {
+                                            MessageBox.Alert("发生错误");
+                                        }
+                                    });
+                }
+            });
 
         });
 
-        $("#").click(function () {
+        //add device
+        $("#btn_addDevice").click(function () {
+            var group = $Group_device_grid.data("DeviceGroup");
 
+            if (!group) {
+                MessageBox.Alert("请先选择一个组");
+                return;
+            }
+
+            if (group.GroupBuildType === 200001) {
+                MessageBox.Alert("选择的组是系统自动生成的,不能新增或者移除组员");
+                return;
+            }
+
+            $deviceDialog.dialog({
+                title: "选择设备",
+                href: (_path + "DevicePage.aspx"),
+                buttons: [{
+                    text: '确认',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        var sltedRows = Q($("#dg_sltDevice").datagrid("getRows"));
+
+                        var sltrow = [];
+                        Q(sltedRows).ForEach(function (r) {
+                            sltrow.push(r.device_id);
+                        });
+
+                        if (sltrow.length == 0) {
+                            MessageBox.Alert("请选择一个设备");
+                            return;
+                        }
+
+                        Public.ajax(_path + "InnerFunction.asmx/AddDeviceToGroup",
+                                JSON.stringify({
+                                    groupID: group.GroupID,
+                                    deivceCode: sltrow
+                                }),
+                                function (data) {
+                                    if (data.d == 1) {
+                                        $deviceDialog.dialog("close");
+                                        $Group_device_grid.datagrid("reload");
+
+                                        MessageBox.Show("保存成功");
+                                    }
+                                    else {
+                                        MessageBox.Alert("发生错误");
+                                    }
+                                });
+                    }
+                }]
+            }).dialog("open");
         });
-        $("#").click(function () {
 
+        $("#btn_removeDevice").click(function () {
+            var group = $Group_device_grid.data("DeviceGroup");
+
+            if (!group) {
+                MessageBox.Alert("请先选择一个组");
+                return;
+            }
+
+            if (group.GroupBuildType === 200001) {
+                MessageBox.Alert("选择的组是系统自动生成的,不能新增或者移除组员");
+                return;
+            }
+
+            var sltRows = $Group_device_grid.datagrid("getSelections");
+
+            if (sltRows.length == 0) {
+                MessageBox.Alert("请至少选择一个组员");
+                return;
+            }
+
+            Public.ajax(_path + "InnerFunction.asmx/RemoveDeviceForGroup",
+                                           JSON.stringify({
+                                               groupID: group.GroupID,
+                                               deivceCode: Q(sltRows).Select("$.DeviceCode").ToArray()
+                                           }),
+                                           function (data) {
+                                               if (data.d > 0) {
+                                                   $Group_device_grid.datagrid("reload");
+                                                   MessageBox.Show("操作成功");
+                                               }
+                                               else {
+                                                   MessageBox.Alert("发生错误");
+                                               }
+                                           });
         });
-        $("#").click(function () {
 
+
+        $("#btn_GroupNode").click(function () {
+            var sltRow = $groupGrid.datagrid("getSelected");
+
+            if (!sltRow) {
+                MessageBox.Alert("请选择数据");
+                return;
+            }
+
+            MessageBox.Alert("ToDo");
         });
     });
 </script>

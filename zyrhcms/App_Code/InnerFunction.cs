@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Services;
 using MySql.Data.MySqlClient;
 using TaskBLL;
+using System.Data;
 
 /// <summary>
 /// InnerFunction 的摘要说明
@@ -296,5 +297,76 @@ public class InnerFunction : System.Web.Services.WebService
 
 
         return 1;
+    }
+
+
+
+    [WebMethod]
+    public int SaveGroup(String json)
+    {
+        var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
+        int id = Convert.ToInt32(info["GroupID"]);
+
+        if (id > 0)
+        {
+            db.CreateUpdate("Device_Group_Info")
+                .SetDictionary(info)
+                .Where("GroupID=" + id)
+                .ExecuteNonQuery();
+        }
+        else
+        {
+            info.Add("isEnable", true);
+            info.Add("GroupBuildType", 200002);
+            info.Add("CreateTime", DateTime.Now);
+
+            db.CreateInsert("Device_Group_Info")
+               .SetDictionary(info)
+               .ExecuteNonQuery();
+        }
+
+        return 1;
+    }
+
+    [WebMethod]
+    public int AddDeviceToGroup(int groupID, String[] deivceCode)
+    {
+        DeviceGroupBLL bll = new DeviceGroupBLL();
+
+        var JoinInfos = bll.GetGroupDeviceinfo(groupID).Rows.OfType<DataRow>();
+
+        foreach (String code in deivceCode)
+        {
+            if (JoinInfos.Count(d => Convert.ToString(d["DeviceCode"]).ToLower() == code.ToLower()) > 0)
+                continue;
+
+            var info = new
+            {
+                GroupID = groupID,
+                DeviceCode = code,
+                JoinDateTime = DateTime.Now,
+                isEnable = true
+            };
+
+
+            bll.Insert("Group_Device_Join", info);
+        }
+
+        return 1;
+    }
+
+    [WebMethod]
+    public int RemoveDeviceForGroup(int groupID, String[] deivceCode)
+    {
+        DeviceGroupBLL bll = new DeviceGroupBLL();
+
+        return bll.RemoveDeviceForGroup(groupID, deivceCode);
+    }
+
+    [WebMethod]
+    public int RemoveGroup(int groupID)
+    {
+        DeviceGroupBLL bll = new DeviceGroupBLL();
+        return bll.RemoveGroup(groupID);
     }
 }

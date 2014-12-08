@@ -8,11 +8,5 @@
             <input type="text" class="form-control" id="txt_GroupName_gd" runat="server" placeholder="群组名称" />
         </div>
     </div>
-
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" id="ck_continue_gd" />添加完成后继续
-        </label>
-    </div>
 </form>
 
