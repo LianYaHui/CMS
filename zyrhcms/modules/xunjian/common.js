@@ -150,7 +150,9 @@ var Farmat = {
 
 var $LineDialog = null,
     $linePointDialog = null,
-    $deviceDialog = null;
+    $deviceDialog = null,
+    $node_recard_dialog = null
+;
 
 $(function () {
     $LineDialog = new EasyuiDialog(_path + "LineDialog.aspx", {
@@ -168,5 +170,9 @@ $(function () {
     $deviceDialog = new EasyuiDialog((_path + "DevicePage.aspx"), {
         width: 900,
         height: 400,
+    });
+
+    $node_recard_dialog = new EasyuiDialog("", {
+        fit: true
     });
 });

@@ -1047,6 +1047,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
             TaskBLL.DeviceGroupBLL bll = new TaskBLL.DeviceGroupBLL();
             //
 
+            var group_row = bll.GetGroupInfo(GroupID);
 
             Deviceinfos = bll.GetGroupDevice(GroupID).ToDictionary();
             //TODO
@@ -1056,7 +1057,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
             {
                 Status = Status,
                 Msg = Msg,
-                Deviceinfos = Deviceinfos
+                GroupInfo = new { GroupName = group_row["GroupName"], Deviceinfos = Deviceinfos }
             };
 
             IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();

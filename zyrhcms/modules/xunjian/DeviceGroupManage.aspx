@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DeviceGroupManage.aspx.cs" Inherits="modules_xunjian_DeviceGroupManage" %>
 
 
-<form runat="server">
+<form runat="server" class="margin5">
     <div style="width: 50%" class="pull-left">
         <table id="Group_grid" title="群组管理" style="height: 540px"
             data-options="
@@ -194,8 +194,10 @@
 
                         var sltrow = [];
                         Q(sltedRows).ForEach(function (r) {
-                            sltrow.push(r.device_id);
+                            sltrow.push(r.index_code);
                         });
+
+                        
 
                         if (sltrow.length == 0) {
                             MessageBox.Alert("请选择一个设备");
@@ -260,6 +262,7 @@
         });
 
 
+
         $("#btn_GroupNode").click(function () {
             var sltRow = $groupGrid.datagrid("getSelected");
 
@@ -268,7 +271,10 @@
                 return;
             }
 
-            MessageBox.Alert("ToDo");
+            $node_recard_dialog.dialog({
+                href: _path + "GroupNodeList.aspx",
+                title: sltRow.GroupName + "的通讯记录"
+            }).dialog("open");
         });
     });
 </script>
