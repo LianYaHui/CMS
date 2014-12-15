@@ -7,24 +7,25 @@
 				rownumbers: true,
 				collapsible: true,
 				fitColumns: true,
-                toolbar:'#node_list_grid_tb'
+                toolbar:'#node_list_grid_tb',
+                pagination:true
 			">
         <thead>
             <tr>
-                <th data-options="field:'DeviceCode'" width="10%">设备编号</th>
-                <th data-options="field:'JoinDateTime'" width="75%">通讯内容</th>
-                <th data-options="field:'JoinDateTime',formatter:Farmat.DataTime" width="15%">通讯时间</th>
+                <th data-options="field:'deivceCode'" width="10%">设备编号</th>
+                <th data-options="field:'Contont'" width="75%">通讯内容</th>
+                <th data-options="field:'createTime',formatter:Farmat.DataTime" width="15%">通讯时间</th>
             </tr>
         </thead>
     </table>
     <div id="node_list_grid_tb" style="padding: 2px 5px;">
         从
-        <input class="easyui-datetimebox" style="width: 160px" />
+        <input id="nd_begin_date" class="easyui-datetimebox" style="width: 160px" />
         至
-        <input class="easyui-datetimebox" style="width: 160px" />
+        <input id="nd_end_date" class="easyui-datetimebox" style="width: 160px" />
         |
         设备编码
-        <input placeholder="设备编码" class="easyui-textbox" type="text" />
+        <input id="nd_device_code" placeholder="设备编码" class="easyui-textbox" type="text" />
 
         |
         <a id="btn_Search_node" class="easyui-linkbutton" iconcls="icon-search">查询</a>
@@ -35,8 +36,28 @@
                 height: $("#NodeFrom").height()
             });
 
-            $("#btn_Search_node").click(function () {
+            var $nd_begin_date = $("#nd_begin_date"),
+                $nd_end_date = $("#nd_end_date"),
+                $nd_device_code = $("#nd_device_code");
 
+
+
+            $("#btn_Search_node").click(function () {
+                var begin = $nd_begin_date.datetimebox("getValue");
+                var end = $nd_end_date.datetimebox("getValue");
+                var device = $nd_device_code.textbox("getValue");
+
+                var gid = $node_recard_dialog.data("groupID");
+
+                var where = " and ";
+
+                if (begin) where += (" and createTime>='" + begin + "'");
+                if (end) where += (" and createTime<='" + end + "'");
+                if (device) where += (" and deivceCode ='" + device + "'");
+
+                $nodeGrid.datagrid({
+                    url: encodeURI(_path + "GroupNodeList.aspx?action=get&w=" + where)
+                });
             });
         });
     </script>

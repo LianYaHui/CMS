@@ -205,5 +205,18 @@ where g.GroupID=?gid and g.isEnable=1";
                .Where("GroupID=?gid ")
                .ExecuteNonQuery();
         }
+
+        public DataTable SelectGroupNode(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
+        {
+            String sql = "select * from device_node_info where isEnable=1";
+
+            if (!String.IsNullOrEmpty(where))
+                sql += where;
+
+            return db.CreatePagination()
+                 .Set(sql, null)
+                 .Pagination(currentPage, pageCount, out totalCount, order)
+                 .Tables[0];
+        }
     }
 }

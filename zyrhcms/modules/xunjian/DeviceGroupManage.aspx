@@ -197,7 +197,7 @@
                             sltrow.push(r.index_code);
                         });
 
-                        
+
 
                         if (sltrow.length == 0) {
                             MessageBox.Alert("请选择一个设备");
@@ -274,7 +274,7 @@
             $node_recard_dialog.dialog({
                 href: _path + "GroupNodeList.aspx",
                 title: sltRow.GroupName + "的通讯记录"
-            }).dialog("open");
+            }).data("groupID", sltRow.GroupID).dialog("open");
         });
     });
 </script>

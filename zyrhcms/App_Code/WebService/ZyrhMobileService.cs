@@ -1067,4 +1067,36 @@ public class ZyrhMobileService : System.Web.Services.WebService
         }
         catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
     }
+
+    [WebMethod]
+    public int SendMessage(int groupId, String DeviceCode, String Message)
+    {
+        String Status = String.Empty;
+        String Msg = String.Empty;
+
+        try
+        {
+
+            TaskBLL.DeviceGroupBLL bll = new TaskBLL.DeviceGroupBLL();
+            //
+
+            var info = new
+            {
+                id = 0,
+                Contont = Message,
+                deivceCode = DeviceCode,
+                createTime = DateTime.Now,
+                isEnable = true,
+                GroupID = groupId
+            };
+
+            bll.Insert("Device_node_info", info);
+
+            IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
+            timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+
+            return 1;
+        }
+        catch (Exception ex) { return -1; }
+    }
 }
