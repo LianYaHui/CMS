@@ -68,16 +68,16 @@ public class InnerFunction : System.Web.Services.WebService
 
         if (id > 0)
         {
-
             db.CreateUpdate("patrol_line")
                 .SetDictionary(info)
                 .Where("line_id=" + id)
                 .ExecuteNonQuery();
-
         }
         else
         {
             info.Add("create_time", DateTime.Now);
+            info.Add("line_build_type", 0);
+
             db.CreateInsert("patrol_line")
                  .SetDictionary(info)
                  .ExecuteNonQuery();

@@ -49,7 +49,9 @@
 
                 var gid = $node_recard_dialog.data("groupID");
 
-                var where = " and ";
+                var where = " and GroupID=" + $node_recard_dialog.data("groupID");
+
+                
 
                 if (begin) where += (" and createTime>='" + begin + "'");
                 if (end) where += (" and createTime<='" + end + "'");

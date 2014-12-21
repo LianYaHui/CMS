@@ -144,6 +144,17 @@ var Farmat = {
 
         return "<a target='_blank' href='" + val + "'>" + val + "</a>";
     }
+    ,
+    SX: function (val, row) {
+        if (!val)
+            return "";
+
+        if (row.super_id === 0)
+            return "";
+
+        if (val === 10) return "上行";
+        else return "下行";
+    }
 };
 
 

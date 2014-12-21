@@ -14,12 +14,17 @@ public partial class modules_xunjian_PatrolLineDetail : System.Web.UI.Page
     {
         var _id = Request.QueryString["ID"] ?? "0";
         var super_id = Request["sid"] ?? "0";
+        txt_LineOrder.Text = Request["o"];
 
 
         int __id = Convert.ToInt32(_id);
 
         formPatroLine.Attributes["data-id"] = _id;
         formPatroLine.Attributes["data-sid"] = super_id;
+
+
+        
+
 
         if (__id > 0)
         {
@@ -34,6 +39,22 @@ public partial class modules_xunjian_PatrolLineDetail : System.Web.UI.Page
 
                 txt_endX.Value = DataView.ToString(info["end_latitude"]);
                 txt_endY.Value = DataView.ToString(info["end_longitude"]);
+
+                object superID = info["super_id"];
+
+
+                formPatroLine.Attributes["data-sid"] = DataView.ToString(superID);
+
+                //var superInfo = bll.GetPatrolLineByID(Convert.ToInt32(superID));
+
+                //if (superInfo != null && Convert.ToInt32(superInfo["super_id"]) == 0)
+                //{
+
+                //}
+
+
+
+                txt_LineOrder.Text = DataView.ToString(info["lineOrder"]);
             }
         }
 

@@ -14,9 +14,12 @@ public class PatrolLine : IHttpHandler
         context.Response.ContentType = "text/javascript";
         var superID = Convert.ToInt32(q["id"] ?? "0");
 
+        if (String.IsNullOrEmpty(q["r"]))
+            throw new ArgumentNullException("r");
+
         TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
 
-        var tb = bll.GetTreeLine(superID);
+        var tb = bll.GetTreeLine(superID, Convert.ToInt32(q["r"]));
 
         var dict = tb.ToDictionary();
 

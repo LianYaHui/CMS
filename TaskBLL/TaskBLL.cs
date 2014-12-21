@@ -87,12 +87,20 @@ where l.is_delete=0";
         }
 
 
-        public DataTable GetTreeLine(int superID)
+        public DataTable GetTreeLine(int superID, int lineSort)
         {
-            String sql = @"select l.line_id,l.create_time,l.line_name,line_count.c,u.name,(select count(*) from patrol_line cl where cl.super_id=l.line_id and cl.is_delete=0) as chilenCount
+            String sql = String.Format(@"select l.line_sort,l.lineOrder,l.super_id,l.line_id,l.create_time,l.line_name,line_count.c,u.name,(select count(*) from patrol_line cl where cl.super_id=l.line_id and cl.is_delete=0 AND cl.line_sort={0}) as chilenCount
 from patrol_line l left join control_unit u on l.unit_id=u.control_unit_id
-left join (select line_id,count(*) as c from patrol_point group by line_id) as line_count on line_count.line_id=l.line_id
-where l.is_delete=0 and l.super_id=" + superID;
+left join (select line_id,count(*) as c from patrol_point  group by line_id) as line_count on line_count.line_id=l.line_id
+where l.is_delete=0 and l.super_id={1}  $$sort order by l.lineOrder,l.line_id desc", lineSort, superID);
+
+            if (superID > 0)
+            {
+                sql = sql.Replace("$$sort", String.Format("and l.line_sort = {0}", lineSort));
+
+            }
+            else
+                sql = sql.Replace("$$sort", "");
 
             return db.FillDataSet(sql).Tables[0];
         }

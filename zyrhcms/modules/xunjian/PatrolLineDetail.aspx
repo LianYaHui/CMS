@@ -9,7 +9,7 @@
 </head>
 <body>
     <form id="formPatroLine" runat="server">
-        <table class="table-ui margin5" style="width: 400px;">
+        <table class="table-ui margin5" style="width: 500px;">
             <tr>
                 <td class="td-title">
                     <span>路线名称</span>
@@ -20,6 +20,27 @@
             </tr>
 
             <tr>
+                <td class="td-title">
+                    <span>排序标识</span>
+                </td>
+                <td colspan="3">
+                    <asp:TextBox ID="txt_LineOrder" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                </td>
+            </tr>
+
+            <tr id="tr_rv">
+                <td class="td-title">
+                    <span>上下行标识</span>
+                </td>
+                <td colspan="3">
+                    <select id="slt_revece_line" runat="server" class="form-control input-sm">
+                        <option value="10">上行</option>
+                        <option value="20">下行</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr >
                 <td class="td-title">
                     <span>起始点</span>
                 </td>
@@ -77,6 +98,19 @@
         </table>
 
         <script type="text/javascript">
+
+            $(function () {
+                var rv = "<%=Request.QueryString["r"]%>";
+                var sid = "<%=Request["sid"]%>";
+
+                if (rv) {
+                    $("#slt_revece_line").val(rv).attr("disabled", "disabled");
+                }
+
+                if (!sid) {
+                    $("#tr_rv").hide();
+                }
+            });
         </script>
     </form>
 </body>
