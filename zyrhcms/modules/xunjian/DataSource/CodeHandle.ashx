@@ -13,7 +13,7 @@ public class CodeHandle : IHttpHandler
         context.Response.ContentType = "text/javascript";
 
         var q = context.Request;
-        var db = new MySqlManageUtil();
+        var db = DBUtil.CreateMySqlDB();
         if (String.IsNullOrEmpty(q["id"]))
         {
 

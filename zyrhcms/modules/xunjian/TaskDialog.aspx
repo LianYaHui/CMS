@@ -91,7 +91,10 @@
     <div id="slt_grid_tb">
         <a id="btn_addPoint_slt" class="easyui-linkbutton" iconcls="icon-add" plain="true">添加</a>
         <a id="btn_dltPoint_slt" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
+        <a id="btn_drPoint_slt" class="easyui-linkbutton" iconcls="icon-add" plain="true">导入临时巡检点</a>
     </div>
+
+    <div id="tmp_upload_ts"></div>
 
     <script type="text/javascript">
         $(function () {
@@ -142,6 +145,29 @@
                 });
             });
 
+
+
+
+
+
+
+
+
+
+            var $dialog2 = new EasyuiDialog(_path + "UpLoadExcel.aspx", {
+                width: 400,
+                height: 200,
+                title: "导入excel"
+            }, "#tmp_upload_ts");
+
+
+
+
+            $("#btn_drPoint_slt").click(function(){
+                $dialog2.dialog({
+                    href:_path + "UpLoadExcel.aspx"
+                }).dialog("open");
+            });
         });
     </script>
 </form>

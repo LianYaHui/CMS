@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TaskBLL;
 
 public partial class modules_xunjian_SysCodeDetail : System.Web.UI.Page
 {
@@ -16,7 +17,7 @@ public partial class modules_xunjian_SysCodeDetail : System.Web.UI.Page
 
         CodeForm.Attributes["data-id"] = _id;
         String sqlFillType = "select * from codeinfo where CodeType =0 and Enable=1";
-        var db = new FoxzyForMySql.MySqlManageUtil();
+        var db = DBUtil.CreateMySqlDB();
         var _dataSet = db.FillDataSet(sqlFillType, null, System.Data.CommandType.Text);
 
         slt_codeType.Items.Add(new ListItem("父类", "0"));

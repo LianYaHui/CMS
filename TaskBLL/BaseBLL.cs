@@ -8,7 +8,7 @@ namespace TaskBLL
 {
     public class BaseBLL
     {
-        FoxzyForMySql.MySqlManageUtil db = new FoxzyForMySql.MySqlManageUtil();
+        FoxzyForMySql.MySqlManageUtil db = DBUtil.CreateMySqlDB();
 
         public DataTable GetDeviceinfo(int PageIndex, int PageSize, out int Count, String where = null, String order = null)
         {

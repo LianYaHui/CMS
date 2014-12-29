@@ -38,7 +38,7 @@
     <div class="form-group form-group-sm">
         <label for="txt_type_pd" class="col-sm-3 control-label">巡检路线区域</label>
         <div class="col-sm-9">
-            <input type="text" readonly class="form-control" id="txt_line_pd" runat="server" placeholder="巡检半径" style="cursor: pointer;" />
+            <input type="text" readonly class="form-control" id="txt_line_pd" runat="server" placeholder="巡检路线区域" style="cursor: pointer;" />
         </div>
     </div>
 
@@ -59,6 +59,8 @@
                             MessageBox.Alert("请选择一条路线或者区域");
                             return;
                         }
+
+                     
 
                         $("#txt_line_pd").val(LineInfo.line_name).data("line_id", LineInfo.line_id);
 

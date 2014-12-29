@@ -10,7 +10,7 @@ namespace TaskBLL
 {
     public class TaskBLL
     {
-        FoxzyForMySql.MySqlManageUtil db = new FoxzyForMySql.MySqlManageUtil();
+        FoxzyForMySql.MySqlManageUtil db = DBUtil.CreateMySqlDB();
 
         public int InsertLog(String LogStr)
         {
@@ -116,6 +116,17 @@ where l.is_delete=0 and l.super_id={1}  $$sort order by l.lineOrder,l.line_id de
             return db.FillDataSet(sql, pars).Tables[0].Rows[0];
         }
 
+        public DataRow GetPatrolLineByName(String LineName)
+        {
+            return db.CreateSelect()
+                .From("patrol_line")
+                .Select()
+                .Where("line_name=?name")
+                .SetParameter("?name", LineName)
+                .ToDataSet()
+                .Tables[0].Rows[0];
+        }
+
 
         public DataTable GetPatrolType(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
         {
@@ -140,6 +151,17 @@ where l.is_delete=0 and l.super_id={1}  $$sort order by l.lineOrder,l.line_id de
             };
 
             return db.FillDataSet(sql, pars).Tables[0].Rows[0];
+        }
+
+        public DataRow GetPatrolTypeByName(String Name)
+        {
+            return db.CreateSelect()
+               .From("patrol_point_type")
+               .Select()
+               .Where("type_name=?name")
+               .SetParameter("?name", Name)
+               .ToDataSet()
+               .Tables[0].Rows[0];
         }
 
 

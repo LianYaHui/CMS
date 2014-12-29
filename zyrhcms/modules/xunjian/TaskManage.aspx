@@ -50,7 +50,7 @@
 <script>
     $(function () {
         var $treeLine = $("#lineTree_task").treegrid({
-            url: _path + "DataSource/PatrolLine.ashx",
+            url: _path + "DataSource/PatrolLine.ashx?r=10",
             singleSelect: true,
             idField: 'line_id',
             animate: true,

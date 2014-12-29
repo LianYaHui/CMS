@@ -11,7 +11,7 @@ namespace TaskBLL
     public class DeviceGroupBLL
     {
 
-        FoxzyForMySql.MySqlManageUtil db = new FoxzyForMySql.MySqlManageUtil();
+        FoxzyForMySql.MySqlManageUtil db = DBUtil.CreateMySqlDB();
 
         /// <summary>
         /// 自动生成系统群组并更新成员

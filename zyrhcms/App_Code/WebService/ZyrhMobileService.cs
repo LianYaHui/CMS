@@ -29,8 +29,6 @@ public class ZyrhMobileService : System.Web.Services.WebService
 
     public ZyrhMobileService()
     {
-
-        FoxzyForMySql.MySqlManageUtil.ConncetionString = Public.CmsDBConnectionString;
         //
         // TODO: 在此处添加构造函数逻辑
         //

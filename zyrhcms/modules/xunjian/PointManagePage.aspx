@@ -53,7 +53,7 @@
     <script>
         $(function () {
             var $treeLine = $("#lineTree_point").treegrid({
-                url: _path + "DataSource/PatrolLine.ashx",
+                url: _path + "DataSource/PatrolLine.ashx?r=10",
                 singleSelect: true,
                 idField: 'line_id',
                 animate: true,
@@ -93,7 +93,7 @@
                                     longitude: parseFloat($("#txt_longitude_pd").val()),
                                     latitude: parseFloat($("#txt_latitude_pd").val()),
                                     type_id: parseInt($("#slt_type_pd").val()),
-                                    line_id: parseInt($("#slt_line_pd").val())
+                                    line_id: parseInt($("#txt_line_pd").data("line_id"))
                                 })
                             }),
                             function (data) {

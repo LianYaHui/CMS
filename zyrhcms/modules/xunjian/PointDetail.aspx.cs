@@ -34,6 +34,12 @@ public partial class modules_xunjian_PointDetail : System.Web.UI.Page
             txt_latitude_pd.Value = DataView.ToString(info["latitude"]);
             txt_radio_pd.Value = DataView.ToString(info["radii"]);
             PointForm.Attributes["data-id"] = _id;
+            try
+            {
+                txt_line_pd.Value = DataView.ToString(bll.GetPatrolLineByID(Convert.ToInt32(info["line_id"]))["line_name"]);
+                txt_line_pd.Attributes["data-line_id"] = DataView.ToString(info["line_id"]);
+            }
+            catch { }
             LineID = Convert.ToInt32(info["line_id"]);
         }
 

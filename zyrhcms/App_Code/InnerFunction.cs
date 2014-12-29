@@ -16,7 +16,7 @@ using System.Data;
 [System.Web.Script.Services.ScriptService]
 public class InnerFunction : System.Web.Services.WebService
 {
-    FoxzyForMySql.MySqlManageUtil db = new FoxzyForMySql.MySqlManageUtil();
+    FoxzyForMySql.MySqlManageUtil db = DBUtil.CreateMySqlDB();
 
     public InnerFunction()
     {

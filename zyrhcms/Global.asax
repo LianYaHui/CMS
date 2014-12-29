@@ -31,8 +31,8 @@
         {
             new DeviceStatusWebCheck().UpdateOvertimeDeviceStatus3G();
 
-            FoxzyForMySql.MySqlManageUtil.ConncetionString = Public.CmsDBConnectionString;
-       }
+            TaskBLL.DBUtil.ConnetionString = Public.CmsDBConnectionString;
+        }
         catch (Exception ex) { }
     }
 
