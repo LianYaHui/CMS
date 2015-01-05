@@ -29,6 +29,8 @@ public class ZyrhMobileService : System.Web.Services.WebService
 
     public ZyrhMobileService()
     {
+        TaskBLL.DBUtil.ConnetionString = Public.CmsDBConnectionString;
+
         //
         // TODO: 在此处添加构造函数逻辑
         //

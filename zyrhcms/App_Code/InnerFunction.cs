@@ -187,20 +187,17 @@ public class InnerFunction : System.Web.Services.WebService
     {
         var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
         int id = Convert.ToInt32(info["tid"]);
-
-        if (id > 0)
-        {
-            db.CreateUpdate("TaskDeviceInfo")
-                .Set("isDelete=1,deleteTime=?time")
-                .SetParameter("?time", DateTime.Now)
-                .Where("TaskID=" + id)
-                .ExecuteNonQuery();
-        }
+        TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
 
         var rowInfo = Convert.ToString(info["row"]).JsonStringToDictionary<List<Dictionary<String, Object>>>();
 
         foreach (var d in rowInfo)
         {
+            var data = bll.SelectTaskDevice(Convert.ToInt32(d["DeviceID"]), id);
+            if (data.Rows.Count > 0)
+                continue;
+
+
             d.Add("TaskID", id);
             d.Add("isDelete", false);
             d.Add("Create_time", DateTime.Now);

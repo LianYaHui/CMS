@@ -36,12 +36,14 @@
                 'sizeLimit': 10240000,
                 'multi': false,
                 onComplete: function (event, queueID, fileObj, response, data) {
-                    if (parseInt(response) > 0) {
-                        MessageBox.Show("导入成功。。。。,总计倒入" + response + "条数据");
-                    } else {
-                        MessageBox.Show("上传异常，请联系管理员。。。。");
+                    alert(response);
+                    response = JSON.parse(response);
+                    
+                    if (response.insertCount > 0) {
+                        MessageBox.Show("成功导入" + response.insertCount + "个巡检点");
+                        $("#dg_task_slt").datagrid("loadData", response.result);
                     }
-                    $("#fileupLoad-win").window("close");
+                    $("#tmp_upload_ts").dialog("close");
                 }
             });
 

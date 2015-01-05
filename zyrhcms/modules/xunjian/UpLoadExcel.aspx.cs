@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TaskBLL;
 
 public partial class modules_xunjian_UpLoadExcel : System.Web.UI.Page
 {
@@ -49,6 +50,7 @@ public partial class modules_xunjian_UpLoadExcel : System.Web.UI.Page
                 int _succCount = 0;
                 int waimmingCount = 0;
                 TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+                String guid = Guid.NewGuid().ToString();
 
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
@@ -56,6 +58,8 @@ public partial class modules_xunjian_UpLoadExcel : System.Web.UI.Page
                     {
                         var lineInfo = bll.GetPatrolLineByName(Convert.ToString(row["所属区域"]));
                         var pointTypeInfo = bll.GetPatrolTypeByName(Convert.ToString(row["巡检点类型"]));
+
+
 
                         var pointInfo = new
                         {
@@ -66,7 +70,8 @@ public partial class modules_xunjian_UpLoadExcel : System.Web.UI.Page
                             type_id = pointTypeInfo == null ? 0 : pointTypeInfo["type_id"],
                             line_id = lineInfo == null ? 0 : lineInfo["line_id"],
                             is_delete = false,
-                            area_id = 0
+                            area_id = 0,
+                            guid = guid
                         };
                         bll.Insert("patrol_point", pointInfo);
 
@@ -80,6 +85,14 @@ public partial class modules_xunjian_UpLoadExcel : System.Web.UI.Page
 
                 }
 
+                DataTable result = bll.SelectPointByGUID(guid);
+
+                Response.Write(new
+                {
+                    result = result.ToDictionary(),
+                    insertCount = _succCount
+                }.ObjectToJsonString());
+                Response.End();
                 break;
         }
     }

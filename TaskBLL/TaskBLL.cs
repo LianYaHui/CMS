@@ -32,17 +32,18 @@ namespace TaskBLL
         public DataTable GetTaskTableByUser(String userID, int TaskType)
         {
             String sql = @"select t.ID,tt.Value as TaskTypeText,td.Value as TaskDegreeTest,tc.Value as TaskCategoryTest,
-t.HelpUrl,p.Longitude,p.Latitude,t.Grade,t.TaskCategory,
-t.TaskDegree,t.TaskDescription,t.TaskEndTime,t.TaskStartTime,t.TaskType,
-t.TaskName,t.RoadId,t.taskLeave as 'Leave'
-from taskdeviceinfo u join InspectionTaskInfo t
-left join device_info d on u.DeviceID=d.device_id
-left join patrol_point p on p.point_id= t.PointID
-left join codeinfo tc on tc.Code=t.taskCategory
-left join codeinfo td on td.Code=t.TaskDegree
-left join codeinfo tt on tt.Code=t.TaskType
-where d.index_code=?user and u.isDelete=0 and t.isEnable=1 and NOW() BETWEEN t.TaskStartTime and t.TaskEndTime $$where
-order by t.ID desc";
+                        s.HelpWebUrl as HelpUrl,p.Longitude,p.Latitude,t.Grade,t.TaskCategory,
+                        t.TaskDegree,s.TaskDesc as TaskDescription,t.TaskEndTime,t.TaskStartTime,t.TaskType,
+                        t.TaskName,t.RoadId,t.taskLeave as 'Leave'
+                        from taskdeviceinfo u join InspectionTaskInfo t on t.ID=u.taskid
+                        left join device_info d on u.DeviceID=d.device_id
+                        left join patrol_point p on p.point_id= t.PointID
+                        left join codeinfo tc on tc.Code=t.taskCategory
+                        left join codeinfo td on td.Code=t.TaskDegree
+                        left join codeinfo tt on tt.Code=t.TaskType
+                        left join taskspecies s on s.Species_ID=t.SpeciesID
+                        where d.index_code=?user and u.isDelete=0 and NOW() BETWEEN t.TaskStartTime and t.TaskEndTime 
+                        order by t.ID desc";
 
             if (TaskType % 10000 == 0)
                 sql = sql.Replace("$$where", "");
@@ -337,5 +338,30 @@ where ut.isEnable=1";
         }
 
 
+
+        public DataTable SelectPointByGUID(string guid)
+        {
+            return db.CreateSelect()
+                .From("patrol_point as p")
+                .LeftJoin("patrol_line as l")
+                .On("l.line_id=p.line_id")
+                .Where("p.guid=?guid")
+                .SetParameter("?guid", guid)
+                .Select("p.point_id,l.line_name,p.point_name")
+                .ToDataSet()
+                .Tables[0];
+        }
+
+        public DataTable SelectTaskDevice(int deviceID, int taskID)
+        {
+            return db.CreateSelect()
+                .From("taskdeviceinfo")
+                .Select()
+                .Where("TaskID=?tid and DeviceID =?did and isDelete=0")
+                .SetParameter("?tid", taskID)
+                .SetParameter("?did", deviceID)
+                .ToDataSet()
+                .Tables[0];
+        }
     }
 }

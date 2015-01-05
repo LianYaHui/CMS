@@ -21,6 +21,9 @@
 
     void Application_Error(object sender, EventArgs e)
     {
+        var ex = Server.GetLastError();
+        TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+        bll.InsertLog(ex.ToString());
         // 在出现未处理的错误时运行的代码
     }
 
