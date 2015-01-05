@@ -2,16 +2,16 @@
 
 
 
-
-
-
 <form id="form1" runat="server">
     <table id="dg_taskUpLaod" title="任务汇报管理" style="height: 550px">
         <thead>
             <tr>
+                <th data-options="field:'execStatus',width:140,formatter:Farmat.execStatus">执行状态</th>
                 <th data-options="field:'FirstUpLoadTime',width:140,formatter:Farmat.Date">上报时间</th>
                 <th data-options="field:'TaskName',width:100">任务名称</th>
-                <th data-options="field:'Device_ID',width:100">设备标识</th>
+                <th data-options="field:'TaskStartTime',width:100,formatter:Farmat.Date">任务起始时间</th>
+                <th data-options="field:'TaskEndTime',width:100,formatter:Farmat.Date">任务结束时间</th>
+                <th data-options="field:'device_name',width:100">设备人员名称</th>
                 <th data-options="field:'MarkID',width:150">上报标识</th>
             </tr>
         </thead>

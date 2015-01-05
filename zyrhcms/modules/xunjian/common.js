@@ -126,10 +126,26 @@ var Farmat = {
         if (!PubStringFun.IsNullOrempty(val))
             return val.substr(0, 10);
     },
+    execStatus: function (val, row) {
+        var desc = "";
+        switch (val) {
+            case 1: desc = "未开始"
+                break;
+            case 2: desc = "执行中"
+                break;
+            case 3: desc = "未完成"
+                break;
+            case 4: desc = "已完成"
+                break;
+            default: desc = "未知"
+                break;
+        }
+        return desc;
+    },
     DateMonth: function (date) {
         return date.format("yyyy-MM");
     }
-    ,
+        ,
     DateYYYYMMDD: function (date) {
         return date.format("yyyy-MM-dd");
     },
@@ -144,7 +160,7 @@ var Farmat = {
 
         return "<a target='_blank' href='" + val + "'>" + val + "</a>";
     }
-    ,
+        ,
     SX: function (val, row) {
         if (!val)
             return "";

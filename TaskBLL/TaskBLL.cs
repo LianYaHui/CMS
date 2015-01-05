@@ -269,9 +269,11 @@ left join patrol_point p on t.pointID =p.point_id
 
         public DataTable GetUserTaskMapping(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
         {
-            String sql = @"Select ut.*,t.TaskName from UserTaskMappingInfo ut
-left JOIN inspectiontaskinfo t on t.ID=ut.TaskID
-where ut.isEnable=1";
+            String sql = @"select td.*,tm.*,d.device_name,t.TaskName,t.TaskStartTime,t.TaskEndTime from taskdeviceinfo td 
+                        left join UserTaskMappingInfo tm on tm.dt_id=td.tdID
+                        left join device_info d on td.deviceID =d.device_id
+                        left join inspectiontaskinfo t on td.taskid=t.ID
+                        where td.isdelete=0";
 
             return db.CreatePagination()
                 .Set(sql, null)
