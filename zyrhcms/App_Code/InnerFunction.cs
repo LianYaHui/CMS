@@ -216,14 +216,14 @@ public class InnerFunction : System.Web.Services.WebService
     public int SaveLeaderDesc(String json)
     {
         var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
-        int id = Convert.ToInt32(info["ID"]);
+        int id = Convert.ToInt32(info["tdID"]);
 
         info.Add("descDate", DateTime.Now);
         info.Add("leaderName", "");
 
-        return db.CreateUpdate("UserTaskMappingInfo")
+        return db.CreateUpdate("taskdeviceinfo")
             .SetDictionary(info)
-            .Where("ID=" + id)
+            .Where("tdID=" + id)
             .ExecuteNonQuery();
     }
 

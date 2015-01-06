@@ -36,6 +36,11 @@
                 width: 450,
                 height: 200,
                 title: "请输入信息已帮助更好的完成任务",
+                onOpen: function () {
+                    var sltRow = $grid.datagrid("getSelected");
+
+                    $("#txt_utDesc").val(sltRow.leaderDesc);
+                },
                 buttons: [{
                     text: '确认',
                     iconCls: 'icon-ok',
@@ -47,7 +52,7 @@
                         Public.ajax(_path + "InnerFunction.asmx/SaveLeaderDesc",
                            JSON.stringify({
                                json: JSON.stringify({
-                                   ID: __id,
+                                   tdID: __id,
                                    leaderDesc: desc
                                })
                            }),
@@ -81,7 +86,7 @@
                     onDblClickRow: function (index, row) {
                         $mesDialog
                             .dialog({
-                                href: _path + "UpLoadTaskMes.aspx?id=" + row.ID
+                                href: _path + "UpLoadTaskMes.aspx?id=" + row.tdID
                             })
                             .dialog("open");
                     },
@@ -96,7 +101,8 @@
                     return;
                 }
                 //
-                $descDialog.data("UT_ID", sltRow.ID).dialog("open");
+
+                $descDialog.data("UT_ID", sltRow.tdID).dialog("open");
             });
         });
     </script>

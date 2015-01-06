@@ -269,7 +269,7 @@ left join patrol_point p on t.pointID =p.point_id
 
         public DataTable GetUserTaskMapping(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
         {
-            String sql = @"select td.*,tm.*,d.device_name,t.TaskName,t.TaskStartTime,t.TaskEndTime from taskdeviceinfo td 
+            String sql = @"select td.*,tm.ID,d.device_name,t.TaskName,t.TaskStartTime,t.TaskEndTime from taskdeviceinfo td 
                         left join UserTaskMappingInfo tm on tm.dt_id=td.tdID
                         left join device_info d on td.deviceID =d.device_id
                         left join inspectiontaskinfo t on td.taskid=t.ID
@@ -364,6 +364,36 @@ left join patrol_point p on t.pointID =p.point_id
                 .SetParameter("?did", deviceID)
                 .ToDataSet()
                 .Tables[0];
+        }
+
+        public DataRow SelectDeviceTaskByID(int tdid)
+        {
+            var data = db.CreateSelect()
+                .From("taskdeviceinfo")
+                .Select()
+                .Where("tdID=?tdid")
+                .SetParameter("?tdid", tdid)
+                .ToDataSet()
+                .Tables[0];
+
+            if (data.Rows.Count > 0)
+                return data.Rows[0];
+            else return null;
+        }
+
+        public DataRow GetTaskMappingByDTID(int tdid)
+        {
+            var data = db.CreateSelect()
+                .From("UserTaskMappingInfo")
+                .Select()
+                .Where("dt_id=?tdid")
+                .SetParameter("?tdid", tdid)
+                .ToDataSet()
+                .Tables[0];
+
+            if (data.Rows.Count > 0)
+                return data.Rows[0];
+            else return null;
         }
     }
 }

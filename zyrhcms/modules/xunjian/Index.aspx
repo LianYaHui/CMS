@@ -64,7 +64,7 @@
 
                 <div title="任务上报">
                     <ul>
-                        <li class="menu-li" data-url="UpLoadTask.aspx">上报结果</li>
+                        <li class="menu-li" data-url="UpLoadTask.aspx">任务汇报</li>
                     </ul>
                 </div>
 

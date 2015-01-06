@@ -23,12 +23,16 @@ public partial class modules_xunjian_UpLoadTaskMes : System.Web.UI.Page
         if (String.IsNullOrEmpty(_id))
             return;
 
-        System.Data.DataRow info = bll.GetDeviceTaskInfo(Convert.ToInt32(_id));
+        System.Data.DataRow info = bll.SelectDeviceTaskByID(Convert.ToInt32(_id));
 
         sp_leaderDesc.InnerHtml = String.Format("<p>{0}</p><p>{1}</p>",
             TaskBLL.DataView.ToString(info["leaderDesc"]),
             TaskBLL.DataView.ToDateString(info["descDate"], "yyyy-MM-dd HH:mm:ss"));
 
+        var tmInfo = bll.GetTaskMappingByDTID(Convert.ToInt32(info["tdID"]));
+
+        if (tmInfo == null)
+            return;
         String mark = DataView.ToString(info["MarkID"]);
 
         if (String.IsNullOrEmpty(mark))
