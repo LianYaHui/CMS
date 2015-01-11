@@ -42,7 +42,7 @@ namespace TaskBLL
                         left join codeinfo td on td.Code=t.TaskDegree
                         left join codeinfo tt on tt.Code=t.TaskType
                         left join taskspecies s on s.Species_ID=t.SpeciesID
-                        where d.index_code=?user and u.isDelete=0 and NOW() BETWEEN t.TaskStartTime and t.TaskEndTime 
+                        where d.index_code=?user and u.isDelete=0 and NOW() BETWEEN t.TaskStartTime and t.TaskEndTime $$where
                         order by t.ID desc";
 
             if (TaskType % 10000 == 0)

@@ -90,6 +90,22 @@
                         SpeciesID: $("#slt_taskSpecies").val()
                     };
 
+                    var endDate = parseInt(info.TaskEndTime.ReplaceAll("-", "")),
+                        beigiDate = parseInt(info.TaskStartTime.ReplaceAll("-", "")),
+                        nowDate = parseInt(new Date().format("yyyyMMdd"));
+
+                    if (beigiDate > endDate) {
+                        MessageBox.Alert("开始日期不能大于结束日期");
+                        return;
+                    }
+
+                    if (nowDate > endDate) {
+                        MessageBox.Alert("结束日期不能小于当前日期");
+                        return;
+                    }
+
+
+
                     if (_id > 0) {//update
                         info.ID = _id;
                         info.PointID = Q($("#dg_task_slt").datagrid("getRows")).Select("$.point_id").First();

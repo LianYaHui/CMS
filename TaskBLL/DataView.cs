@@ -41,5 +41,35 @@ namespace TaskBLL
                 return nullVal;
             }
         }
+
+        public static double ToDouble(object obj, double nullVal = 0)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return nullVal;
+
+            try
+            {
+                return Convert.ToDouble(obj);
+            }
+            catch
+            {
+                return nullVal;
+            }
+        }
+
+        public static DateTime ToDateTime(object obj, DateTime nullVal)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return nullVal;
+
+            try
+            {
+                return Convert.ToDateTime(obj);
+            }
+            catch
+            {
+                return nullVal;
+            }
+        }
     }
 }

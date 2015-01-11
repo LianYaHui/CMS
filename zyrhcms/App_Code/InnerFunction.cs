@@ -260,21 +260,28 @@ public class InnerFunction : System.Web.Services.WebService
         foreach (int id in pointIDs)
         {
             var info = json.JsonStringToDictionary<Dictionary<String, Object>>();
-
             info.Add("PointID", id);
-            info.Add("isEnable", true);
-            info.Add("CreateTime", DateTime.Now);
-            info.Add("Grade", 0);
 
-            info.Add("RoadId", 0);
-            info.Add("TaskFaultID", 0);
-            info.Add("taskLeave", 0);
 
-            db.CreateInsert("inspectiontaskinfo")
-                 .SetDictionary(info)
-                 .ExecuteNonQuery();
+
+            InsertTask(info);
         }
         return 1;
+    }
+
+    private void InsertTask(Dictionary<string, object> info)
+    {
+        info.Add("isEnable", true);
+        info.Add("CreateTime", DateTime.Now);
+        info.Add("Grade", 0);
+
+        info.Add("RoadId", 0);
+        info.Add("TaskFaultID", 0);
+        info.Add("taskLeave", 0);
+
+        db.CreateInsert("inspectiontaskinfo")
+             .SetDictionary(info)
+             .ExecuteNonQuery();
     }
 
     [WebMethod]
@@ -286,13 +293,13 @@ public class InnerFunction : System.Web.Services.WebService
         if (id > 0)
         {
             db.CreateUpdate("inspectiontaskinfo")
-                .SetDictionary(info)
+                .Set("isEnable=0")
                 .Where("ID=" + id)
                 .ExecuteNonQuery();
         }
 
-
-
+        info["ID"] = 0;
+        InsertTask(info);
         return 1;
     }
 

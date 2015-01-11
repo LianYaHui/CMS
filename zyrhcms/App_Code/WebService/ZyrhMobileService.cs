@@ -14,7 +14,7 @@ using Zyrh.Model.Device;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using TaskBLL;
-using Model;
+
 using System.Linq;
 using System.Data;
 
@@ -599,7 +599,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
                 Status = Status,
                 Msg = Msg,
                 TaskInfos = list
-            };
+            }; 
 
             IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
             timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
