@@ -36,13 +36,15 @@ namespace TaskBLL
                         t.TaskDegree,s.TaskDesc as TaskDescription,t.TaskEndTime,t.TaskStartTime,t.TaskType,
                         t.TaskName,t.RoadId,t.taskLeave as 'Leave'
                         from taskdeviceinfo u join InspectionTaskInfo t on t.ID=u.taskid
+                        left join UserTaskMappingInfo tm on tm.dt_id=u.tdID
                         left join device_info d on u.DeviceID=d.device_id
                         left join patrol_point p on p.point_id= t.PointID
                         left join codeinfo tc on tc.Code=t.taskCategory
                         left join codeinfo td on td.Code=t.TaskDegree
                         left join codeinfo tt on tt.Code=t.TaskType
                         left join taskspecies s on s.Species_ID=t.SpeciesID
-                        where d.index_code=?user and u.isDelete=0 and NOW() BETWEEN t.TaskStartTime and t.TaskEndTime $$where
+                        where d.index_code=?user and u.isDelete=0 
+                        and tm.dt_id is NULL $$where
                         order by t.ID desc";
 
             if (TaskType % 10000 == 0)
@@ -269,9 +271,10 @@ left join patrol_point p on t.pointID =p.point_id
 
         public DataTable GetUserTaskMapping(int currentPage, int pageCount, out int totalCount, String where = null, String order = null)
         {
-            String sql = @"select td.*,tm.ID,d.device_name,t.TaskName,t.TaskStartTime,t.TaskEndTime from taskdeviceinfo td 
+            String sql = @"select td.*,tm.ID,d.device_name,t.TaskName,t.TaskStartTime,t.TaskEndTime,c.Value as upResult from taskdeviceinfo td 
                         left join UserTaskMappingInfo tm on tm.dt_id=td.tdID
                         left join device_info d on td.deviceID =d.device_id
+                        left Join codeinfo c on c.code=tm.taskResult
                         left join inspectiontaskinfo t on td.taskid=t.ID
                         where td.isdelete=0";
 
@@ -388,6 +391,36 @@ left join patrol_point p on t.pointID =p.point_id
                 .Select()
                 .Where("dt_id=?tdid")
                 .SetParameter("?tdid", tdid)
+                .ToDataSet()
+                .Tables[0];
+
+            if (data.Rows.Count > 0)
+                return data.Rows[0];
+            else return null;
+        }
+
+        public DataRow GetDtByTaskIDAndUser(int taskId, int userID)
+        {
+            var data = db.CreateSelect()
+                .From("taskdeviceinfo")
+                .Select()
+                .Where("TaskID=?tid and DeviceID = ?uid and isDelete=0")
+                .SetParameter("?tid", taskId)
+                .SetParameter("?uid", userID)
+                .ToDataSet()
+                .Tables[0];
+
+            if (data.Rows.Count > 0)
+                return data.Rows[0];
+            else return null;
+        }
+
+        public DataRow GetUserTaskMappingInfoBydtID(int tdID)
+        {
+            var data = db.CreateSelect()
+                .From("UserTaskMappingInfo")
+                .Select()
+                .Where("dt_id=" + tdID)
                 .ToDataSet()
                 .Tables[0];
 

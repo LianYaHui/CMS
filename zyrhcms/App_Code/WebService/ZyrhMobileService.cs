@@ -3,18 +3,15 @@ using System.Web;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web.Services;
-using System.Web.Services.Protocols;
 using System.Text;
 using System.Xml;
 using Zyrh.BLL;
 using Zyrh.BLL.Device;
 using Zyrh.Common;
-using Zyrh.Model;
 using Zyrh.Model.Device;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using TaskBLL;
-
 using System.Linq;
 using System.Data;
 
@@ -70,6 +67,8 @@ public class ZyrhMobileService : System.Web.Services.WebService
             Msg = ex.Message
         };
 
+        TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+        bll.InsertLog("捕获异常:" + ex.ToString());
         return JsonConvert.SerializeObject(obj);
     }
     #endregion
@@ -538,23 +537,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
 
 
     #region  任务下载
-    [WebMethod(Description = "<div style=\"line-height:20px;\">任务下载（功能未完成）"
-        + "<br />参数说明：UserName: 用户名，Token: 校验码"
-        + "<br />成功：<br /><span style=\"background:#eee;display:inline-block;\">"
-        + "&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?>"
-        + "<br />&lt;Result>"
-        + "<br />&lt;Status>Success&lt;/Status>&lt;Msg>&lt;/Msg>"
-        + "<br />&lt;TaskInfo>"
-
-        + "<br />&lt;/TaskInfo>"
-        + "<br />&lt;/Result>"
-        + "</span>"
-        + "<br />失败：<br /><span style=\"background:#eee;display:inline-block;\">"
-        + "&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?>"
-        + "&lt;Result>&lt;Status>Failed&lt;/Status>&lt;Msg>&lt;![CDATA[错误信息]]>&lt;/Msg>&lt;/Result>"
-        + "</span>"
-        + "</div>"
-    )]
+    [WebMethod]
     public string TaskDownload(string UserName, string Token, int Tasksource)
     {
         String Status = String.Empty;
@@ -584,28 +567,23 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
-                bll.InsertLog(Tasksource.ToString());
-
                 var usertable = bll.GetTaskTableByUser(UserName, Tasksource);
-
                 list = usertable.ToDictionary();
                 Status = "Success";
             }
-
-
 
             var obj = new
             {
                 Status = Status,
                 Msg = Msg,
                 TaskInfos = list
-            }; 
+            };
 
             IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
             timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
             String result = JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, timeFormat);
-            bll.InsertLog("return JSON:" + result);
+            bll.InsertLog(Tasksource + " return JSON:" + result);
             return result;
         }
         catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
@@ -663,7 +641,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
 
                 if (usertable.Rows.Count == 0)
                 {
-                    return ResonseErrorInfoJSON(new Exception("找不到该ID的值"));
+                    return ResonseErrorInfoJSON(new Exception("找不到该任务"));
                 }
                 String std = Convert.ToString(usertable.Rows[0][0]);
 
@@ -679,11 +657,8 @@ public class ZyrhMobileService : System.Web.Services.WebService
                     .Select(r => Convert.ToString(r["text"]))
                 };
 
-
                 Status = "Success";
-
             }
-
 
             var obj = new
             {
@@ -699,18 +674,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
     #endregion
 
     #region  任务汇报
-    [WebMethod(Description = "<div style=\"line-height:20px;\">任务汇报（功能未完成）"
-        + "<br />参数说明：UserName: 用户名，Token: 校验码，TaskInfo: 任务信息"
-        + "<br />成功：<br /><span style=\"background:#eee;display:inline-block;\">"
-        + "&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?>"
-        + "&lt;Result>&lt;Status>Success&lt;/Status>&lt;Msg>&lt;/Msg>&lt;/Result>"
-        + "</span>"
-        + "<br />失败：<br /><span style=\"background:#eee;display:inline-block;\">"
-        + "&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?>"
-        + "&lt;Result>&lt;Status>Failed&lt;/Status>&lt;Msg>&lt;![CDATA[错误信息]]>&lt;/Msg>&lt;/Result>"
-        + "</span>"
-        + "</div>"
-    )]
+    [WebMethod]
     public string TaskReport(string UserName, string Token, string TaskInfo)
     {
         String Status = String.Empty;
@@ -739,8 +703,49 @@ public class ZyrhMobileService : System.Web.Services.WebService
             else
             {
                 TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
-                bll.InsertLog(TaskInfo);
+                TaskBLL.BaseBLL baseBll = new BaseBLL();
+                //TODO
+                var jsonInfo = TaskInfo.JsonStringToDictionary<List<Dictionary<String, object>>>();
+                var upInfo = jsonInfo[0];
+                bll.InsertLog("in TaskReport:" + TaskInfo);
 
+                var DeviceInfo = baseBll.GetDeviceinfoByCode(UserName);
+
+                var DeviceTaskInfo = bll.GetDtByTaskIDAndUser(Convert.ToInt32(upInfo["taskId"]), Convert.ToInt32(DeviceInfo["device_id"]));
+
+                int tdID = Convert.ToInt32(upInfo["tdID"]);
+                var TaskMappinpInfo = bll.GetTaskMappingByDTID(tdID);
+
+                //更新基础上报信息
+                var info = new Dictionary<String, Object>();
+                info.Add("FirstUpLoadTime", DateTime.Now);
+                info.Add("taskupDescriotion", upInfo["taskupDescriotion"]);
+                info.Add("longitude", upInfo["longitude"]);
+                info.Add("latitude", upInfo["latitude"]);
+                info.Add("dt_id", tdID);
+                info.Add("taskResult", upInfo["codetype"]);
+
+                var db = DBUtil.CreateMySqlDB();
+                if (TaskMappinpInfo == null)
+                {
+                    info.Add("ID", 0);
+                    info.Add("MarkID", upInfo["marked"]);
+                    info.Add("isEnable", true);
+                    info.Add("Device_ID", UserName);
+
+
+                    db.CreateInsert("UserTaskMappingInfo")
+                        .SetDictionary(info)
+                        .ExecuteNonQuery();
+                }
+                else
+                {
+                    db
+                    .CreateUpdate("UserTaskMappingInfo")
+                    .SetDictionary(info)
+                    .Where("ID=" + TaskMappinpInfo["ID"])
+                    .ExecuteNonQuery();
+                }
 
                 //
                 Status = "Success";
@@ -764,19 +769,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
     #endregion
 
     #region  更新任务
-    [WebMethod(Description = "<div style=\"line-height:20px;\">更新任务（功能未完成）"
-        + "<br />更新任务中的图片音视频信息"
-        + "<br />参数说明：UserName: 用户名，Token: 校验码，TaskInfo: 任务信息"
-        + "<br />成功：<br /><span style=\"background:#eee;display:inline-block;\">"
-        + "&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?>"
-        + "&lt;Result>&lt;Status>Success&lt;/Status>&lt;Msg>&lt;/Msg>&lt;/Result>"
-        + "</span>"
-        + "<br />失败：<br /><span style=\"background:#eee;display:inline-block;\">"
-        + "&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?>"
-        + "&lt;Result>&lt;Status>Failed&lt;/Status>&lt;Msg>&lt;![CDATA[错误信息]]>&lt;/Msg>&lt;/Result>"
-        + "</span>"
-        + "</div>"
-    )]
+    [WebMethod]
     public string UpdateTask(string UserName, string Token, string TaskInfo)
     {
         String Status = String.Empty;
@@ -805,7 +798,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
             else
             {
                 TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
-                bll.InsertLog(TaskInfo);
+                bll.InsertLog("in UpdateTask :" + TaskInfo);
 
                 //进行检验
                 Status = "Success";
@@ -892,8 +885,12 @@ public class ZyrhMobileService : System.Web.Services.WebService
     )]
     public String UploadTask(string UserName, string Token, string TaskInfos)
     {
+        TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
+        bll.InsertLog("in UploadTask:" + TaskInfos);
+
         String Status = String.Empty;
         String Msg = String.Empty;
+
         Dictionary<String, Object> info = TaskInfos.JsonStringToDictionary<Dictionary<String, Object>>();
 
         try
@@ -918,10 +915,6 @@ public class ZyrhMobileService : System.Web.Services.WebService
             }
             else
             {
-                TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
-                bll.InsertLog("in UploadTask:" + TaskInfos);
-
-                //
                 Status = "Success";
                 //TODO
 
@@ -944,13 +937,43 @@ public class ZyrhMobileService : System.Web.Services.WebService
 
                     bll.Insert("uploadtaskinfo", imgInfo);
                 }
+                //音频
+                String audioUrl = Convert.ToString(info["audioUrl"]);
+                if (!String.IsNullOrEmpty(audioUrl))
+                {
+                    var imgInfo = new
+                    {
+                        ID = 0,
+                        UpLoadType = Convert.ToInt32(TaskBLL.UpLoadFileType.Audio),
+                        UpLoadURL = audioUrl,
+                        MarkID = markID,
+                        UploadDate = DateTime.Now,
+                        isEnable = true,
+                        FileName = Helper.GetFileName(audioUrl, false)
+                    };
 
+                    bll.Insert("uploadtaskinfo", imgInfo);
+                }
+                //视屏
+                String vidioUrl = null;
+                if (info.ContainsKey("vidioUrl"))
+                    vidioUrl = Convert.ToString(info["vidioUrl"]);
+                if (!String.IsNullOrEmpty(vidioUrl))
+                {
+                    var imgInfo = new
+                    {
+                        ID = 0,
+                        UpLoadType = Convert.ToInt32(TaskBLL.UpLoadFileType.Vidio),
+                        UpLoadURL = vidioUrl,
+                        MarkID = markID,
+                        UploadDate = DateTime.Now,
+                        isEnable = true,
+                        FileName = Helper.GetFileName(vidioUrl, false)
+                    };
 
-
-
-
+                    bll.Insert("uploadtaskinfo", imgInfo);
+                }
             }
-
 
             var obj = new
             {

@@ -42,5 +42,20 @@ namespace TaskBLL
                 .ToDataSet()
                 .Tables[0];
         }
+
+        public DataRow GetDeviceinfoByCode(String Code)
+        {
+            var data = db.CreateSelect()
+                .From("device_info")
+                .Select()
+                .Where("index_code=?code")
+                .SetParameter("?code", Code)
+                .ToDataSet()
+                .Tables[0];
+
+            if (data.Rows.Count > 0)
+                return data.Rows[0];
+            else return null;
+        }
     }
 }
