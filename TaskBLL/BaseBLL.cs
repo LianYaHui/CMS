@@ -21,6 +21,24 @@ namespace TaskBLL
                 .Tables[0];
         }
 
+
+        public DataTable GetTaskDeivce(int PageIndex, int PageSize, out int Count, String where = null, String order = null)
+        {
+            String sql = @"select device_id,index_code,device_name,create_time,
+			 (select count(*) from taskdeviceinfo t where t.DeviceID=d.device_id and t.isDelete=0) as AllCount,
+			 (select count(*) from taskdeviceinfo t where t.DeviceID=d.device_id and t.isDelete=0 and t.firstUpLoadTime is null) as UnSuccCount,
+			 (select count(*) from taskdeviceinfo t where t.DeviceID=d.device_id and t.isDelete=0 and t.firstUpLoadTime is NOT null) as SuccCount,
+			 (select count(*) from taskdeviceinfo t join inspectiontaskinfo t2 on t2.ID = t.TaskID where (Now() BETWEEN t2.TaskStartTime and t2.TaskEndTime) and  t.DeviceID=d.device_id and t.isDelete=0 and t.firstUpLoadTime is null) as tasingCount
+from device_info d where 1=1" + where;
+
+            return db.CreatePagination()
+                .Set(sql, null)
+                .Pagination(PageIndex, PageSize, out Count, order)
+                .Tables[0];
+        }
+
+
+
         public DataTable GetDeviceInfoByIDs(String deviceIDs)
         {
             return db.CreateSelect()

@@ -85,6 +85,10 @@
                             <a href="../../default.aspx">返回首页</a>
                         </span>
                     </div>
+
+                    <div class="easyui-panel" title="设备任务分配" style="width: 100%;" id="panel_main">
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -99,7 +103,9 @@
             $acc.accordion("unselect", 0);
 
 
-
+            $("#panel_main").panel({
+                href: _path + "DeviceTask.aspx"
+            });
 
             //Tabs
             $("#nav-left-div div ul li").click(function () {

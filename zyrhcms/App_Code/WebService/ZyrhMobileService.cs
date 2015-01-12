@@ -583,7 +583,7 @@ public class ZyrhMobileService : System.Web.Services.WebService
             timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
             String result = JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, timeFormat);
-            bll.InsertLog(Tasksource + " return JSON:" + result);
+            bll.InsertLog(Tasksource + "In TaskDownload-> return JSON:" + result);
             return result;
         }
         catch (Exception ex) { return this.ResonseErrorInfoJSON(ex); }
