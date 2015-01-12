@@ -756,6 +756,12 @@ public class ZyrhMobileService : System.Web.Services.WebService
                     .ExecuteNonQuery();
                 }
 
+                db.CreateUpdate("taskdeviceinfo")
+                    .Set("firstUpLoadTime = Now()")
+                    .Where("tdID = " + tdID)
+                    .ExecuteNonQuery();
+
+
                 //
                 Status = "Success";
                 //TODO

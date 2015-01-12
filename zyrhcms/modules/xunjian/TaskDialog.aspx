@@ -91,6 +91,8 @@
     <div id="slt_grid_tb">
         <a id="btn_addPoint_slt" class="easyui-linkbutton" iconcls="icon-add" plain="true">添加</a>
         <a id="btn_dltPoint_slt" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
+
+        <a class="easyui-linkbutton" iconcls="icon-edit" href="<%=Public.WebDir%>/modules/xunjian/导入模板.xlsx" plain="true">下载Excel模板</a>
         <a id="btn_drPoint_slt" class="easyui-linkbutton" iconcls="icon-add" plain="true">导入临时巡检点</a>
     </div>
 
