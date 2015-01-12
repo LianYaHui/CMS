@@ -27,10 +27,8 @@
                     <th data-options="field:'point_name',width:180">巡检点名称</th>
                     <th data-options="field:'latitude',width:80">纬度</th>
                     <th data-options="field:'longitude',width:80">经度</th>
-                    <th data-options="field:'radii',width:180">巡检半径</th>
                     <th data-options="field:'type_name',width:180">巡检点类型</th>
                     <th data-options="field:'line_name',width:180">所属路线</th>
-                    <th data-options="field:'uName',width:180">组织机构</th>
                     <th data-options="field:'create_time',width:180,formatter:Farmat.DataTime">创建时间</th>
                 </tr>
             </thead>
@@ -76,7 +74,7 @@
             var $dialog = new EasyuiDialog(_path + "PointDetail.aspx", {
                 width: 450,
                 height: 400,
-                title: "巡检点类型明细",
+                title: "巡检点明细",
                 buttons: [{
                     text: '确认',
                     iconCls: 'icon-ok',
@@ -89,7 +87,7 @@
                                 json: JSON.stringify({
                                     point_id: _id,
                                     point_name: $("#txt_PointName_pd").val(),
-                                    radii: parseFloat($("#txt_radio_pd").val()),
+                                    radii: 0,
                                     longitude: parseFloat($("#txt_longitude_pd").val()),
                                     latitude: parseFloat($("#txt_latitude_pd").val()),
                                     type_id: parseInt($("#slt_type_pd").val()),

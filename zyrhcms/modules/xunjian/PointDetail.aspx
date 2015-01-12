@@ -21,13 +21,6 @@
     </div>
 
     <div class="form-group form-group-sm">
-        <label for="txt_radio_pd" class="col-sm-3 control-label">巡检半径</label>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" id="txt_radio_pd" runat="server" placeholder="巡检半径" />
-        </div>
-    </div>
-
-    <div class="form-group form-group-sm">
         <label for="txt_type_pd" class="col-sm-3 control-label">巡检点类型</label>
         <div class="col-sm-9">
             <select class="form-control" id="slt_type_pd" runat="server">
