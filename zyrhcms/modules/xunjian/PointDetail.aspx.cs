@@ -32,7 +32,7 @@ public partial class modules_xunjian_PointDetail : System.Web.UI.Page
             txt_PointName_pd.Value = DataView.ToString(info["point_name"]);
             txt_longitude_pd.Value = DataView.ToString(info["longitude"]);
             txt_latitude_pd.Value = DataView.ToString(info["latitude"]);
-            txt_radio_pd.Value = DataView.ToString(info["radii"]);
+
             PointForm.Attributes["data-id"] = _id;
             try
             {

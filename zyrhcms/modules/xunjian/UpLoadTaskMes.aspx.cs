@@ -35,7 +35,7 @@ public partial class modules_xunjian_UpLoadTaskMes : System.Web.UI.Page
 
             if (tmInfo == null)
                 return;
-            String mark = DataView.ToString(info["MarkID"]);
+            String mark = DataView.ToString(tmInfo["MarkID"]);
 
             if (String.IsNullOrEmpty(mark))
                 return;
@@ -75,12 +75,16 @@ public partial class modules_xunjian_UpLoadTaskMes : System.Web.UI.Page
 
             StringBuilder text = new StringBuilder();
 
-            text.Append(info["taskupDescriotion"]);
+            text.Append(tmInfo["taskupDescriotion"]);
             upTextDiv.InnerHtml = text.ToString();
 
-            upLevel.InnerHtml = CodeReader.GetValByCode(DataView.ToInt32(info["taskResult"], 0));
+            upLevel.InnerHtml = CodeReader.GetValByCode(DataView.ToInt32(tmInfo["taskResult"], 0));
         }
-        catch (Exception ex) { }
+        catch (Exception ex)
+        {
+            bll.InsertLog(ex.ToString());
+
+        }
 
     }
 }

@@ -243,7 +243,7 @@
 
                 try
                 {
-                    $.each(audio_url,function(i,a){
+                    $.each(vidio_url,function(i,a){
                         VidiodownHtml+=("<p><a href='"+a.m4v+"' target='_blank'>"+a.title+"</a></p>");
                     });
                 }catch(e){
