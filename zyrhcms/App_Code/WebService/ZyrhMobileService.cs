@@ -705,8 +705,17 @@ public class ZyrhMobileService : System.Web.Services.WebService
                 TaskBLL.TaskBLL bll = new TaskBLL.TaskBLL();
                 TaskBLL.BaseBLL baseBll = new BaseBLL();
                 //TODO
-                var jsonInfo = TaskInfo.JsonStringToDictionary<List<Dictionary<String, object>>>();
-                var upInfo = jsonInfo[0];
+
+                Dictionary<String, object> upInfo = null;
+
+                if (TaskInfo[0] == '[')
+                {
+                    var jsonInfo = TaskInfo.JsonStringToDictionary<List<Dictionary<String, object>>>();
+                    upInfo = jsonInfo[0];
+                }
+                else
+                    upInfo = TaskInfo.JsonStringToDictionary<Dictionary<String, object>>();
+
                 bll.InsertLog("in TaskReport:" + TaskInfo);
 
                 var DeviceInfo = baseBll.GetDeviceinfoByCode(UserName);
@@ -916,7 +925,6 @@ public class ZyrhMobileService : System.Web.Services.WebService
             else
             {
                 Status = "Success";
-                //TODO
 
                 String markID = Convert.ToString(info["mark"]);
 
@@ -956,8 +964,8 @@ public class ZyrhMobileService : System.Web.Services.WebService
                 }
                 //视屏
                 String vidioUrl = null;
-                if (info.ContainsKey("vidioUrl"))
-                    vidioUrl = Convert.ToString(info["vidioUrl"]);
+                if (info.ContainsKey("videoUrl"))
+                    vidioUrl = Convert.ToString(info["videoUrl"]);
                 if (!String.IsNullOrEmpty(vidioUrl))
                 {
                     var imgInfo = new

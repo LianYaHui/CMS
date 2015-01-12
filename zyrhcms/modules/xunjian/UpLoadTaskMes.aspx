@@ -18,7 +18,22 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h3>文本</h3>
+                    <h3>上报故障等级</h3>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="padding10">
+            </div>
+            <div class="row">
+                <div class="col-md-12" runat="server" id="upLevel">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>上报文本信息</h3>
                     <hr />
                 </div>
             </div>
@@ -110,6 +125,13 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-12">
+                    <p>音频下载列表</p>
+                    <div id="div_Audio_down">
+                        无
+                    </div>
+                </div>
             </div>
             <div class="margin5">
             </div>
@@ -176,13 +198,29 @@
                             </div>
                         </div>
                     </div>
+
+
+                </div>
+
+                <div class="col-md-12">
+                    <p>视屏下载列表</p>
+                    <div id="div_Vidio_down">无</div>
                 </div>
             </div>
         </div>
         <script>
             $(document).ready(function () {
                 var audio_url = <%=AudioUrl%>;
+                var downHtml="";
 
+                $.each(audio_url,function(i,a){
+                    downHtml+=("<p><a href='"+a.mp3+"' target='_blank'>"+a.title+"</a></p>");
+                });  
+                if(!downHtml){
+                    downHtml="没有上传音频";
+                }
+
+                $("#div_Audio_down").html(downHtml);
 
                 new jPlayerPlaylist({
                     jPlayer: "#audio_div_player",
@@ -199,9 +237,26 @@
 
 
 
-                var  vidio_url=[{
-                    title:"hello",
-                    m4a:"/mv1401056103181955.mp4"}];
+                var  vidio_url=<%=VidioUrl%>;
+
+                var VidiodownHtml="";
+
+                try
+                {
+                    $.each(audio_url,function(i,a){
+                        VidiodownHtml+=("<p><a href='"+a.m4v+"' target='_blank'>"+a.title+"</a></p>");
+                    });
+                }catch(e){
+                    
+                }
+
+                if(!VidiodownHtml){
+                    VidiodownHtml="没有上传视频";
+                }
+
+                $("#div_Vidio_down").html(VidiodownHtml);
+
+
 
                 new jPlayerPlaylist({
                     jPlayer: "#vidio_div_player",

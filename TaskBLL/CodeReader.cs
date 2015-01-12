@@ -9,7 +9,7 @@ namespace TaskBLL
 {
     public class CodeReader
     {
-        public static FoxzyForMySql.MySqlManageUtil db = DBUtil.CreateMySqlDB();
+        static FoxzyForMySql.MySqlManageUtil db = DBUtil.CreateMySqlDB();
 
         public static DataTable GetCodeByType(int type)
         {
@@ -32,6 +32,17 @@ namespace TaskBLL
             };
 
             return db.FillDataSet(sql, pars).Tables[0];
+        }
+
+        public static String GetValByCode(int code)
+        {
+            var data = db.CreateSelect()
+                .From("CodeInfo")
+                .Select("VALUE")
+                .Where("code=" + code)
+                .ExecuteScalar();
+
+            return Convert.ToString(data);
         }
     }
 }
